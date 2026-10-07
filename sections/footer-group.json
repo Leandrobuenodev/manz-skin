@@ -1,0 +1,64 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "b2287118-3b3d-439f-a225-7338ba8cc8f3": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Links Úteis",
+            "menu": "footer"
+          }
+        },
+        "1cacc0a2-768c-4d3b-b3a8-12c697960a6c": {
+          "type": "text",
+          "settings": {
+            "heading": "Contato",
+            "subtext": "<p>e-Mail: manzskinn@gmail.com<br/><a href=\"https://wa.me/5511942503000?text=Ol%C3%A1+Manz%2C+tudo+bem%3F+Poderiam+me+ajudar%3F\" target=\"_blank\" title=\"https://wa.me/5511942503000?text=Ol%C3%A1+Manz%2C+tudo+bem%3F+Poderiam+me+ajudar%3F\">Whatsapp: (11) 94250 3000</a></p>"
+          }
+        },
+        "090775a6-1c5c-41ac-bc39-a7e99e0e8570": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Logo_ManzSkin.png",
+            "image_width": 130,
+            "alignment": "center"
+          }
+        }
+      },
+      "block_order": [
+        "b2287118-3b3d-439f-a225-7338ba8cc8f3",
+        "1cacc0a2-768c-4d3b-b3a8-12c697960a6c",
+        "090775a6-1c5c-41ac-bc39-a7e99e0e8570"
+      ],
+      "settings": {
+        "color_scheme": "accent-1",
+        "newsletter_enable": false,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": false,
+        "show_social": true,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "payment_enable": false,
+        "show_policy": false,
+        "margin_top": 0,
+        "padding_top": 44,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

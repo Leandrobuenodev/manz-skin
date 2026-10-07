@@ -1,0 +1,224 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image-with-text": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "acessórios",
+            "heading_size": "h2"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "ver todos",
+            "button_link": "shopify://products/faixa-de-skincare",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/IMG_2665.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "center",
+        "content_layout": "overlap",
+        "section_color_scheme": "background-1",
+        "color_scheme": "accent-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "51d7bb85-0bb1-4580-bb1c-49e9b0f7a466": {
+      "type": "collection-list",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 5,
+        "color_scheme": "background-1",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "bb9a6b7b-1cbe-4012-9f3a-5048371e13be": {
+      "type": "rich-text",
+      "blocks": {
+        "template--20364170101040__bb9a6b7b-1cbe-4012-9f3a-5048371e13be-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "it's more than skincare!",
+            "heading_size": "h2"
+          }
+        },
+        "template--20364170101040__bb9a6b7b-1cbe-4012-9f3a-5048371e13be-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Nossa missão é conectar pessoas ao que há de mais puro e eficaz na<strong> natureza</strong>, proporcionando uma experiência de <strong>autocuidado consciente, transformador e alinhado aos princípios de sustentabilidade.</strong> Cada produto que desenvolvemos reflete nosso compromisso com a beleza natural, o bem-estar e a harmonia, através de fórmulas <strong>veganas, biodegradáveis e de alta qualidade. </strong>Valorizamos a saúde, a praticidade e a eficiência em cada detalhe, entregando soluções que respeitam a natureza e promovem um cuidado <em>equilibrado e</em> <em>autêntico </em>para todos.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--20364170101040__bb9a6b7b-1cbe-4012-9f3a-5048371e13be-heading-1",
+        "template--20364170101040__bb9a6b7b-1cbe-4012-9f3a-5048371e13be-text-1"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "accent-1",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "2e1b09c8-3275-4189-9674-24c3e63d2f86": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "best sellers",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "destaques",
+        "products_to_show": 5,
+        "columns_desktop": 5,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "outline",
+        "enable_desktop_slider": false,
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": true,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "6c2b191d-2676-4c8e-8f8e-24d86aafca9e": {
+      "type": "multicolumn",
+      "blocks": {
+        "template--20364170101040__6c2b191d-2676-4c8e-8f8e-24d86aafca9e-column-1": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/1_2d44e9c3-c8f9-432a-b9fc-0b208ac4794b.png",
+            "title": "vegano",
+            "text": "<p>todos nossos produtos são veganos e não testados em animais.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "template--20364170101040__6c2b191d-2676-4c8e-8f8e-24d86aafca9e-column-2": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/2_67c83563-104f-4616-a0bc-b52cfe4f90a9.png",
+            "title": "natural",
+            "text": "<p>utilizamos somente os melhores ingredientes naturais. </p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "template--20364170101040__6c2b191d-2676-4c8e-8f8e-24d86aafca9e-column-3": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/4.png",
+            "title": "reciclavel",
+            "text": "<p>utilizamos embalagens recicláveis e ecologicamente corretas.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "ea9b0d3c-afad-4e79-8a0b-0a26b05356ed": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/3.png",
+            "title": "biodegradável",
+            "text": "<p>produtos biodegradáveis e que não prejudicam o meio ambiente.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--20364170101040__6c2b191d-2676-4c8e-8f8e-24d86aafca9e-column-1",
+        "template--20364170101040__6c2b191d-2676-4c8e-8f8e-24d86aafca9e-column-2",
+        "template--20364170101040__6c2b191d-2676-4c8e-8f8e-24d86aafca9e-column-3",
+        "ea9b0d3c-afad-4e79-8a0b-0a26b05356ed"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "column_alignment": "center",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "accent-1",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "08743a13-50ac-40ca-955a-e9b3dbda3c62": {
+      "type": "collage",
+      "blocks": {
+        "653179b6-b2df-4ad8-b260-f852376a4fc6": {
+          "type": "collection",
+          "settings": {
+            "collection": "body"
+          }
+        }
+      },
+      "block_order": [
+        "653179b6-b2df-4ad8-b260-f852376a4fc6"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "desktop_layout": "right",
+        "mobile_layout": "column",
+        "card_styles": "product-card-wrapper",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image-with-text",
+    "51d7bb85-0bb1-4580-bb1c-49e9b0f7a466",
+    "bb9a6b7b-1cbe-4012-9f3a-5048371e13be",
+    "2e1b09c8-3275-4189-9674-24c3e63d2f86",
+    "6c2b191d-2676-4c8e-8f8e-24d86aafca9e",
+    "08743a13-50ac-40ca-955a-e9b3dbda3c62"
+  ]
+}
