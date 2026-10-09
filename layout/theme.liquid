@@ -282,6 +282,7 @@
     </script>
     {%- if request.page_type == 'index' -%}
       {{ 'manz-hero-v1.css' | asset_url | stylesheet_tag }}
+      {{ 'manz-hero-v2.css' | asset_url | stylesheet_tag }}
       <link rel="preload" href="{{ 'manz-bodoni-moda-latin.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
       <link rel="preload" href="{{ 'manz-jost-light-latin.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
       <script src="{{ 'manz-hero-gsap.min.js' | asset_url }}" defer="defer"></script>
@@ -289,7 +290,7 @@
     {%- endif -%}
   </head>
 
-  <body class="gradient{% if request.page_type == 'index' and content_for_layout contains 'data-manz-hero' %} manz-hero-page{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient{% if request.page_type == 'index' and content_for_layout contains 'data-manz-hero' %} manz-hero-page{% endif %}{% if request.page_type == 'index' and content_for_layout contains 'data-manz-hero-v2' %} manz-hero-v2-active{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR" class="js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <title>Manz Skin — Hero V2 · Prévia local</title>
+    <link rel="preload" href="../../assets/manz-bodoni-moda-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../../assets/manz-jost-light-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../../assets/base.css">
+    <link rel="stylesheet" href="../../assets/component-menu-drawer.css">
+    <link rel="stylesheet" href="../hero-v1/local.css">
+    <link rel="stylesheet" href="../../assets/manz-hero-v1.css">
+    <link rel="stylesheet" href="../../assets/manz-hero-v2.css">
+    <link rel="stylesheet" href="local-v2.css">
+    <script src="../../assets/global.js" defer></script>
+    <script src="../../assets/manz-hero-gsap.min.js" defer></script>
+    <script src="../../assets/manz-hero-v1.js" defer></script>
+    <script src="../hero-v1/local.js" defer></script>
+  </head>
+  <body class="manz-hero-page manz-hero-v2-active">
+    <a class="local-skip-link" href="#MainContent">Pular para o conteúdo</a>
+    <main id="MainContent" tabindex="-1">
+      <section class="section-manz-hero-v2">
+        <manz-hero class="manz-hero-shell manz-hero-v2-shell" data-manz-hero data-manz-hero-v2 data-animate="true" style="--manz-hero-v2-frame-width: 90vw; --manz-hero-v2-frame-height: 60vw; --manz-hero-v2-panel-bottom-gap: calc((100svh - min(60vw, 93.333svh)) / 2); --manz-hero-v2-radius: 14px; --manz-hero-v2-background-x: 50%; --manz-hero-v2-background-y: 52%; --manz-hero-v2-portrait-x: 50%; --manz-hero-v2-portrait-y: 50%; --manz-hero-v2-portrait-mobile-x: 50%; --manz-hero-v2-portrait-mobile-y: 45%;">
+          <div class="manz-hero-v2" aria-labelledby="ManzHeroV2Title-local">
+            <div class="manz-hero-v2__background" aria-hidden="true">
+              <img class="manz-hero-v2__background-image" src="../../assets/manz-hero-v2-soaps-1920.jpg" srcset="../../assets/manz-hero-v2-soaps-960.jpg 960w, ../../assets/manz-hero-v2-soaps-1920.jpg 1920w, ../../assets/manz-hero-v2-soaps-2880.jpg 2880w" sizes="100vw" width="2880" height="1920" alt="" loading="eager" fetchpriority="high">
+            </div>
+            <div class="manz-hero-v2__panel">
+              <div class="section-header shopify-section-group-header-group">
+      <div class="header-wrapper">
+        <header class="header header--top-center header--mobile-center page-width header--has-menu header--has-account">
+          <nav class="manz-hero-nav" aria-label="Navegação principal">
+            <a class="manz-hero-nav__link" href="#MainContent" aria-current="page">INÍCIO</a>
+            <span class="manz-hero-nav__link" aria-disabled="true">SABONETES</span>
+            <span class="manz-hero-nav__link" aria-disabled="true">ACESSÓRIOS</span>
+            <span class="manz-hero-nav__link" aria-disabled="true">RASTREAMENTO DE PEDIDOS</span>
+          </nav>
+
+          <header-drawer data-breakpoint="tablet">
+            <details id="Details-menu-drawer-container" class="menu-drawer-container">
+              <summary class="header__icon header__icon--menu header__icon--summary link focus-inset" aria-label="Menu" aria-expanded="false">
+                <span>
+                  <svg class="icon icon-hamburger" viewBox="0 0 18 16" fill="none" aria-hidden="true"><path d="M1 .5a.5.5 0 100 1h15.71a.5.5 0 000-1H1zM.5 8a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1A.5.5 0 01.5 8zm0 7a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1a.5.5 0 01-.5-.5z" fill="currentColor"/></svg>
+                  <svg class="icon icon-close" viewBox="0 0 18 17" fill="none" aria-hidden="true"><path d="M1 1l16 15M17 1 1 16" stroke="currentColor" stroke-width="1"/></svg>
+                </span>
+              </summary>
+              <div id="menu-drawer" class="menu-drawer motion-reduce">
+                <div class="menu-drawer__inner-container">
+                  <div class="menu-drawer__navigation-container">
+                    <nav class="menu-drawer__navigation" aria-label="Menu mobile">
+                      <ul class="menu-drawer__menu has-submenu list-menu" role="list">
+                        <li class="manz-hero-drawer-links">
+                          <nav class="manz-hero-nav manz-hero-nav--mobile" aria-label="Navegação mobile">
+                            <a class="manz-hero-nav__link" href="#MainContent">INÍCIO</a>
+                            <span class="manz-hero-nav__link" aria-disabled="true">SABONETES</span>
+                            <span class="manz-hero-nav__link" aria-disabled="true">ACESSÓRIOS</span>
+                            <span class="manz-hero-nav__link" aria-disabled="true">RASTREAMENTO DE PEDIDOS</span>
+                          </nav>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </details>
+          </header-drawer>
+
+          <div class="header__heading">
+            <a class="header__heading-link link link--text focus-inset" href="#MainContent" aria-label="Manz Skin, início"><span class="manz-hero-wordmark">manzskin</span></a>
+          </div>
+
+          <div class="header__icons">
+            <span class="header__search">
+              <button class="header__icon header__icon--search link focus-inset" type="button" aria-label="Busca — visual nesta prévia" aria-disabled="true" title="Busca disponível na loja Shopify">
+                <svg class="icon icon-search" viewBox="0 0 18 19" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.03 11.68A5.784 5.784 0 112.85 3.5a5.784 5.784 0 018.18 8.18zm.26 1.12a6.78 6.78 0 11.72-.7l5.4 5.4a.5.5 0 11-.71.7l-5.41-5.4z" fill="currentColor"/></svg>
+              </button>
+            </span>
+            <button class="header__icon header__icon--account link focus-inset small-hide" type="button" aria-label="Perfil — visual nesta prévia" aria-disabled="true" title="Perfil disponível na loja Shopify">
+              <svg class="icon icon-account" viewBox="0 0 18 19" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 4.5a3 3 0 116 0 3 3 0 01-6 0zm3-4a4 4 0 100 8 4 4 0 000-8zm5.58 12.15c1.12.82 1.83 2.24 1.91 4.85H1.51c.08-2.6.79-4.03 1.9-4.85C4.66 11.75 6.5 11.5 9 11.5s4.35.26 5.58 1.15zM9 10.5c-2.5 0-4.65.24-6.17 1.35C1.27 12.98.5 14.93.5 18v.5h17V18c0-3.07-.77-5.02-2.33-6.15-1.52-1.1-3.67-1.35-6.17-1.35z" fill="currentColor"/></svg>
+            </button>
+            <button class="header__icon header__icon--cart link focus-inset" type="button" aria-label="Carrinho — visual nesta prévia" aria-disabled="true" title="Carrinho disponível na loja Shopify">
+              <svg class="icon icon-cart-empty" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="m15.75 11.8h-3.16l-.77 11.6a5 5 0 0 0 4.99 5.34h7.38a5 5 0 0 0 4.99-5.33l-.78-11.61zm0 1h-2.22l-.71 10.67a4 4 0 0 0 3.99 4.27h7.38a4 4 0 0 0 4-4.27l-.72-10.67h-2.22v.63a4.75 4.75 0 1 1 -9.5 0zm8.5 0h-7.5v.63a3.75 3.75 0 1 0 7.5 0z" fill="currentColor" fill-rule="evenodd"/></svg>
+            </button>
+          </div>
+        </header>
+      </div>
+    </div>
+
+              <img class="manz-hero__image manz-hero-v2__portrait" src="../../assets/manz-hero-v1-1920.jpg" srcset="../../assets/manz-hero-v1-960.jpg 960w, ../../assets/manz-hero-v1-1920.jpg 1920w, ../../assets/manz-hero-v1-2880.jpg 2880w" sizes="(min-width: 750px) 90vw, 100vw" width="2880" height="1920" alt="Três modelos à beira-mar na campanha Manz Skin" loading="eager" fetchpriority="high">
+              <div class="manz-hero-v2__copy-shade" aria-hidden="true"></div>
+              <a class="manz-hero-v2__cta" href="https://manz.skin/collections/all" target="_blank" rel="noopener">
+                Ver todos os produtos <span aria-hidden="true">→</span>
+              </a>
+            </div>
+            <div class="manz-hero__copy manz-hero-v2__copy">
+              <p class="manz-hero__eyebrow">MANZ SKIN · NATURAL SKINCARE</p>
+              <h1 id="ManzHeroV2Title-local" class="manz-hero__title">
+                <span class="manz-hero__line"><span class="manz-hero__line-inner">Beyond the</span></span>
+                <span class="manz-hero__line"><span class="manz-hero__line-inner">Skin.</span></span>
+                </h1>
+                <p class="manz-hero__caption">Natureza, beleza e autenticidade.</p>
+              </div>
+          </div>
+        </manz-hero>
+      </section>
+    </main>
+  </body>
+</html>

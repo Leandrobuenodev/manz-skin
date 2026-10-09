@@ -1,0 +1,111 @@
+{% comment %}
+  Alternative, editor-configurable homepage Hero. The existing V1 section and
+  homepage configuration remain untouched so the two concepts can be compared.
+{% endcomment %}
+<manz-hero
+  class="manz-hero-shell manz-hero-v2-shell"
+  data-manz-hero
+  data-manz-hero-v2
+  data-animate="{{ section.settings.animate }}"
+  style="--manz-hero-v2-frame-width: {{ section.settings.frame_width }}vw; --manz-hero-v2-frame-height: {{ section.settings.frame_width | times: 0.6667 }}vw; --manz-hero-v2-panel-bottom-gap: calc((100svh - min(var(--manz-hero-v2-frame-height), 93.333svh)) / 2); --manz-hero-v2-radius: {{ section.settings.frame_radius }}px; --manz-hero-v2-background-x: {{ section.settings.background_focus_x }}%; --manz-hero-v2-background-y: {{ section.settings.background_focus_y }}%; --manz-hero-v2-portrait-x: {{ section.settings.portrait_focus_x }}%; --manz-hero-v2-portrait-y: {{ section.settings.portrait_focus_y }}%; --manz-hero-v2-portrait-mobile-x: {{ section.settings.portrait_mobile_focus_x }}%; --manz-hero-v2-portrait-mobile-y: {{ section.settings.portrait_mobile_focus_y }}%;"
+>
+  <div class="manz-hero-v2" aria-labelledby="ManzHeroV2Title-{{ section.id }}">
+    <div class="manz-hero-v2__background" aria-hidden="true">
+      {%- if section.settings.background_image != blank -%}
+        {{ section.settings.background_image | image_url: width: 2880 | image_tag:
+          class: 'manz-hero-v2__background-image',
+          widths: '960, 1440, 1920, 2400, 2880',
+          sizes: '100vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: ''
+        }}
+      {%- else -%}
+        <img
+          class="manz-hero-v2__background-image"
+          src="{{ 'manz-hero-v2-soaps-1920.jpg' | asset_url }}"
+          srcset="{{ 'manz-hero-v2-soaps-960.jpg' | asset_url }} 960w, {{ 'manz-hero-v2-soaps-1920.jpg' | asset_url }} 1920w, {{ 'manz-hero-v2-soaps-2880.jpg' | asset_url }} 2880w"
+          sizes="100vw"
+          width="2880"
+          height="1920"
+          alt=""
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- endif -%}
+    </div>
+
+    <div class="manz-hero-v2__panel">
+      {%- if section.settings.portrait_image != blank -%}
+        {{ section.settings.portrait_image | image_url: width: 2880 | image_tag:
+          class: 'manz-hero__image manz-hero-v2__portrait',
+          widths: '960, 1440, 1920, 2400, 2880',
+          sizes: '(min-width: 750px) 90vw, 100vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: section.settings.portrait_alt
+        }}
+      {%- else -%}
+        <img
+          class="manz-hero__image manz-hero-v2__portrait"
+          src="{{ 'manz-hero-v1-1920.jpg' | asset_url }}"
+          srcset="{{ 'manz-hero-v1-960.jpg' | asset_url }} 960w, {{ 'manz-hero-v1-1920.jpg' | asset_url }} 1920w, {{ 'manz-hero-v1-2880.jpg' | asset_url }} 2880w"
+          sizes="(min-width: 750px) 90vw, 100vw"
+          width="2880"
+          height="1920"
+          alt="{{ section.settings.portrait_alt | escape }}"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- endif -%}
+      <div class="manz-hero-v2__copy-shade" aria-hidden="true"></div>
+      <a class="manz-hero-v2__cta" href="{{ routes.all_products_collection_url }}">
+        Ver todos os produtos <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <div class="manz-hero__copy manz-hero-v2__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="manz-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h1 id="ManzHeroV2Title-{{ section.id }}" class="manz-hero__title">
+        <span class="manz-hero__line"><span class="manz-hero__line-inner">{{ section.settings.heading_line_one | escape }}</span></span>
+        {%- if section.settings.heading_line_two != blank -%}
+          <span class="manz-hero__line"><span class="manz-hero__line-inner">{{ section.settings.heading_line_two | escape }}</span></span>
+        {%- endif -%}
+      </h1>
+      {%- if section.settings.caption != blank -%}
+        <p class="manz-hero__caption">{{ section.settings.caption | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</manz-hero>
+
+{% schema %}
+{
+  "name": "Manz — Hero V2",
+  "tag": "section",
+  "class": "section-manz-hero-v2",
+  "limit": 1,
+  "enabled_on": { "templates": ["index"] },
+  "settings": [
+    { "type": "image_picker", "id": "background_image", "label": "Fotografia de fundo", "info": "Sem seleção, usa a versão otimizada de DSC01903.JPG incluída no tema." },
+    { "type": "image_picker", "id": "portrait_image", "label": "Fotografia principal", "info": "Sem seleção, usa a versão otimizada de DSC01982.JPG incluída no tema." },
+    { "type": "text", "id": "portrait_alt", "label": "Descrição da fotografia principal", "default": "Três modelos à beira-mar na campanha Manz Skin" },
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeno", "default": "MANZ SKIN · NATURAL SKINCARE" },
+    { "type": "text", "id": "heading_line_one", "label": "Título — primeira linha", "default": "Beyond the" },
+    { "type": "text", "id": "heading_line_two", "label": "Título — segunda linha", "default": "Skin." },
+    { "type": "text", "id": "caption", "label": "Texto complementar", "default": "Natureza, beleza e autenticidade." },
+    { "type": "range", "id": "frame_width", "label": "Largura do painel — desktop", "min": 72, "max": 94, "step": 1, "unit": "%", "default": 90 },
+    { "type": "range", "id": "frame_radius", "label": "Arredondamento do painel", "min": 6, "max": 24, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "background_focus_x", "label": "Enquadramento horizontal — fundo", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+    { "type": "range", "id": "background_focus_y", "label": "Enquadramento vertical — fundo", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 52 },
+    { "type": "range", "id": "portrait_focus_x", "label": "Enquadramento horizontal — painel", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+    { "type": "range", "id": "portrait_focus_y", "label": "Enquadramento vertical — painel", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+    { "type": "range", "id": "portrait_mobile_focus_x", "label": "Enquadramento horizontal — mobile", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+    { "type": "range", "id": "portrait_mobile_focus_y", "label": "Enquadramento vertical — mobile", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 45 },
+    { "type": "checkbox", "id": "animate", "label": "Animação de entrada", "default": true }
+  ],
+  "presets": [{ "name": "Manz — Hero V2" }]
+}
+{% endschema %}
