@@ -1,0 +1,397 @@
+@font-face {
+  font-family: 'Manz Bodoni';
+  src: url('manz-bodoni-moda-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manz Jost';
+  src: url('manz-jost-light-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+/* All storefront overrides are restricted to a homepage containing the Hero. */
+.manz-hero-page {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.manz-hero-page #MainContent,
+.manz-hero-page .section-manz-hero-v1,
+.manz-hero-page .manz-hero-shell {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.manz-hero-shell {
+  display: block;
+}
+
+.manz-hero {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  border-radius: 0;
+  color: #fff;
+}
+
+.manz-hero__image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: var(--manz-hero-focus-x, 50%) var(--manz-hero-focus-y, 50%);
+  transform-origin: center;
+}
+
+.manz-hero__shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgb(0 0 0 / var(--manz-hero-overlay-top, 0.15)) 0%, transparent 24%),
+    linear-gradient(0deg, rgb(0 0 0 / var(--manz-hero-overlay-bottom, 0.22)) 0%, transparent 48%);
+}
+
+.manz-hero__copy {
+  position: absolute;
+  right: clamp(20px, 4vw, 64px);
+  bottom: clamp(22px, 3.2svh, 42px);
+  left: clamp(20px, 2.3vw, 40px);
+  max-width: 860px;
+  color: #fff;
+}
+
+.manz-hero__eyebrow,
+.manz-hero__caption {
+  margin: 0;
+  font-family: 'Manz Jost', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.manz-hero__eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.manz-hero__title {
+  margin: 14px 0 16px;
+  font-family: 'Manz Bodoni', 'Times New Roman', serif;
+  font-size: clamp(82px, 8.4vw, 156px);
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+  color: #fff;
+}
+
+.manz-hero__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+
+.manz-hero__line-inner {
+  display: block;
+}
+
+.manz-hero__caption {
+  letter-spacing: 0.075em;
+}
+
+.manz-hero-wordmark,
+.manz-hero-nav,
+.manz-hero-drawer-links {
+  display: none;
+}
+
+.manz-hero-page .announcement-bar-section {
+  display: none;
+}
+
+.manz-hero-page .section-header {
+  position: absolute !important;
+  z-index: 5;
+  top: 0 !important;
+  right: 0;
+  left: 0;
+  margin: 0;
+  border: 0;
+  transform: none !important;
+  transition: none !important;
+}
+
+.manz-hero-page .header-wrapper {
+  --color-foreground: 255, 255, 255;
+  background: transparent;
+  border: 0;
+}
+
+.manz-hero-page .header {
+  position: relative;
+  display: flex;
+  min-height: 68px;
+  align-items: center;
+  justify-content: space-between;
+  max-width: none;
+  width: 100%;
+  padding: 6px clamp(14px, 2.3vw, 40px);
+  column-gap: 0;
+}
+
+.manz-hero-page .header > .header__heading,
+.manz-hero-page .header > .header__heading-link {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  transform: translate(-50%, -50%);
+}
+
+.manz-hero-page .header__heading-link {
+  padding: 5px 0;
+  color: #fff;
+  text-decoration: none;
+}
+
+.manz-hero-page .header__heading-link > :not(.manz-hero-wordmark) {
+  display: none;
+}
+
+.manz-hero-page .manz-hero-wordmark {
+  display: block;
+  font-family: 'Manz Bodoni', 'Times New Roman', serif;
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  color: #fff;
+}
+
+.manz-hero-page .header > .header__search,
+.manz-hero-page .header__inline-menu {
+  display: none;
+}
+
+.manz-hero-page .header__icons {
+  gap: 2px;
+  padding: 0;
+  margin: 0 0 0 auto;
+}
+
+.manz-hero-page .header__icons .header__search {
+  display: inline-flex;
+}
+
+.manz-hero-page .header__icon {
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  color: #fff;
+}
+
+.manz-hero-page .header__icon--account {
+  /* Override Sense's mobile .small-hide while retaining its account-enabled guard. */
+  display: flex !important;
+}
+
+.manz-hero-page .header__icon .icon {
+  width: 17px;
+  height: 17px;
+}
+
+.manz-hero-page .header__icon--cart .icon {
+  width: 36px;
+  height: 36px;
+}
+
+.manz-hero-page .cart-count-bubble {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 60%);
+}
+
+.manz-hero-page .header > header-drawer {
+  display: block;
+  margin-left: -10px;
+}
+
+.manz-hero-page .menu-drawer {
+  --color-foreground: 255, 255, 255;
+  background: rgb(0 0 0 / 82%);
+  color: #fff;
+  border: 0;
+}
+
+.manz-hero-page .menu-drawer__menu > li:not(.manz-hero-drawer-links) {
+  display: none;
+}
+
+.manz-hero-page .manz-hero-drawer-links {
+  display: block;
+}
+
+.manz-hero-page .manz-hero-nav--mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 25px;
+}
+
+.manz-hero-page .manz-hero-nav__link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-family: 'Manz Jost', sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.4;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.manz-hero-page a:focus-visible,
+.manz-hero-page button:focus-visible,
+.manz-hero-page summary:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* Keep the native search modal's surface and inputs readable when opened. */
+.manz-hero-page .search-modal {
+  --color-foreground: 18, 18, 18;
+  color: rgb(var(--color-foreground));
+}
+
+@media (min-width: 990px) {
+  .manz-hero-page .header > header-drawer {
+    display: none;
+  }
+
+  .manz-hero-page .header > .manz-hero-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 1.6vw, 26px);
+    max-width: calc(50% - 80px);
+  }
+
+  .manz-hero-page .header > .manz-hero-nav .manz-hero-nav__link {
+    font-size: clamp(10px, 0.78vw, 12px);
+  }
+}
+
+@media (max-width: 989px) {
+  .manz-hero__image {
+    object-position: var(--manz-hero-focus-mobile-x, 50%) var(--manz-hero-focus-y, 50%);
+  }
+
+  .manz-hero__title {
+    font-size: clamp(72px, 11vw, 104px);
+  }
+}
+
+@media (max-width: 480px) {
+  .manz-hero-page .header {
+    min-height: 64px;
+    padding-inline: 12px;
+  }
+
+  .manz-hero-page .manz-hero-wordmark {
+    font-size: 34px;
+  }
+
+  .manz-hero-page .header__icons {
+    gap: 0;
+  }
+
+  .manz-hero-page .header__icons .header__icon {
+    width: 36px;
+    min-height: 44px;
+  }
+
+  .manz-hero__copy {
+    left: 20px;
+    bottom: max(26px, env(safe-area-inset-bottom));
+  }
+
+  .manz-hero__title {
+    font-size: clamp(66px, 17vw, 82px);
+    margin-top: 13px;
+  }
+
+  .manz-hero__eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+
+  .manz-hero__caption {
+    font-size: 12px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .manz-hero__copy {
+    bottom: 18px;
+  }
+
+  .manz-hero__title {
+    font-size: clamp(38px, 10svh, 56px);
+    margin-block: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .manz-hero-page .manz-hero-wordmark {
+    font-size: 30px;
+  }
+
+  .manz-hero__title {
+    font-size: 62px;
+  }
+
+  .manz-hero__eyebrow {
+    font-size: 9px;
+  }
+
+  .manz-hero-page .header__icons .header__search {
+    position: absolute;
+    left: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manz-hero-page .header,
+  .manz-hero-page .header__icon .icon {
+    animation: none;
+    transition: none;
+  }
+}

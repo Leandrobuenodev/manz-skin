@@ -1,0 +1,71 @@
+{% comment %}Homepage-only editorial hero. Header remains the existing header section.{% endcomment %}
+<manz-hero
+  class="manz-hero-shell"
+  data-manz-hero
+  data-animate="{{ section.settings.animate }}"
+  style="--manz-hero-focus-x: {{ section.settings.focus_desktop }}%; --manz-hero-focus-mobile-x: {{ section.settings.focus_mobile }}%; --manz-hero-focus-y: {{ section.settings.focus_vertical }}%; --manz-hero-overlay-top: {{ section.settings.overlay | times: 0.03 | at_most: 0.16 }}; --manz-hero-overlay-bottom: {{ section.settings.overlay | times: 0.044 | at_most: 0.24 }};"
+>
+  <div class="manz-hero" aria-labelledby="ManzHeroTitle-{{ section.id }}">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 3200 | image_tag:
+        class: 'manz-hero__image',
+        widths: '960, 1440, 1920, 2400, 2880, 3200',
+        sizes: '(max-aspect-ratio: 3/2) 150svh, 100vw',
+        loading: 'eager',
+        fetchpriority: 'high',
+        alt: section.settings.image_alt
+      }}
+    {%- else -%}
+      <img
+        class="manz-hero__image"
+        src="{{ 'manz-hero-v1-1920.jpg' | asset_url }}"
+        srcset="{{ 'manz-hero-v1-960.jpg' | asset_url }} 960w, {{ 'manz-hero-v1-1920.jpg' | asset_url }} 1920w, {{ 'manz-hero-v1-2880.jpg' | asset_url }} 2880w"
+        sizes="(max-aspect-ratio: 3/2) 150svh, 100vw"
+        width="2880"
+        height="1920"
+        alt="{{ section.settings.image_alt | escape }}"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- endif -%}
+    <div class="manz-hero__shade" aria-hidden="true"></div>
+    <div class="manz-hero__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="manz-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h1 id="ManzHeroTitle-{{ section.id }}" class="manz-hero__title">
+        <span class="manz-hero__line"><span class="manz-hero__line-inner">{{ section.settings.heading_line_one | escape }}</span></span>
+        {%- if section.settings.heading_line_two != blank -%}
+          <span class="manz-hero__line"><span class="manz-hero__line-inner">{{ section.settings.heading_line_two | escape }}</span></span>
+        {%- endif -%}
+      </h1>
+      {%- if section.settings.caption != blank -%}
+        <p class="manz-hero__caption">{{ section.settings.caption | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</manz-hero>
+
+{% schema %}
+{
+  "name": "Manz — Hero V1",
+  "tag": "section",
+  "class": "section-manz-hero-v1",
+  "limit": 1,
+  "enabled_on": { "templates": ["index"] },
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Fotografia", "info": "Sem imagem selecionada, usa a versão otimizada de DSC01982.JPG incluída no tema." },
+    { "type": "text", "id": "image_alt", "label": "Descrição da fotografia", "default": "Três modelos à beira-mar na campanha Manz Skin" },
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeno", "default": "MANZ SKIN · NATURAL SKINCARE" },
+    { "type": "text", "id": "heading_line_one", "label": "Título — primeira linha", "default": "Beyond the" },
+    { "type": "text", "id": "heading_line_two", "label": "Título — segunda linha", "default": "Skin." },
+    { "type": "text", "id": "caption", "label": "Texto complementar", "default": "Natureza, beleza e autenticidade." },
+    { "type": "range", "id": "focus_desktop", "label": "Enquadramento horizontal — desktop", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+    { "type": "range", "id": "focus_mobile", "label": "Enquadramento horizontal — mobile", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+    { "type": "range", "id": "focus_vertical", "label": "Enquadramento vertical", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+    { "type": "range", "id": "overlay", "label": "Gradiente sutil nas bordas", "min": 0, "max": 20, "step": 1, "unit": "%", "default": 5 },
+    { "type": "checkbox", "id": "animate", "label": "Animação de entrada", "default": true }
+  ],
+  "presets": [{ "name": "Manz — Hero V1" }]
+}
+{% endschema %}

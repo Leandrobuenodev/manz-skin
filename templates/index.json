@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "manz-hero-v1": {
+      "type": "manz-hero-v1",
+      "settings": {}
+    },
     "image-with-text": {
       "type": "image-with-text",
       "blocks": {
@@ -214,6 +218,7 @@
     }
   },
   "order": [
+    "manz-hero-v1",
     "image-with-text",
     "51d7bb85-0bb1-4580-bb1c-49e9b0f7a466",
     "bb9a6b7b-1cbe-4012-9f3a-5048371e13be",

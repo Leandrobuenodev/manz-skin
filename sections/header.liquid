@@ -155,6 +155,9 @@
     endif
   -%}
   <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
+    {%- if request.page_type == 'index' -%}
+      {% render 'manz-hero-navigation' %}
+    {%- endif -%}
     {%- liquid
       if section.settings.menu != blank
         render 'header-drawer'
@@ -170,6 +173,7 @@
         <h1 class="header__heading">
       {%- endif -%}
           <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+            {%- if request.page_type == 'index' -%}<span class="manz-hero-wordmark">manzskin</span>{%- endif -%}
             {%- if settings.logo != blank -%}
               <div class="header__heading-logo-wrapper">
                 {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
@@ -210,6 +214,7 @@
         <h1 class="header__heading">
       {%- endif -%}
           <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+            {%- if request.page_type == 'index' -%}<span class="manz-hero-wordmark">manzskin</span>{%- endif -%}
             {%- if settings.logo != blank -%}
               <div class="header__heading-logo-wrapper">
                 {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
@@ -501,6 +506,14 @@
   "class": "section-header",
   "max_blocks": 3,
   "settings": [
+    {
+      "type": "header",
+      "content": "Hero V1 — links da homepage",
+      "info": "Usa os links existentes do menu automaticamente. Configure aqui somente se precisar substituir ou completar um destino. O header editorial aparece apenas quando a Hero V1 está na homepage."
+    },
+    { "type": "url", "id": "hero_soaps_link", "label": "Link de Sabonetes" },
+    { "type": "url", "id": "hero_accessories_link", "label": "Link de Acessórios" },
+    { "type": "url", "id": "hero_tracking_link", "label": "Link de Rastreamento de pedidos" },
     {
       "type": "select",
       "id": "logo_position",

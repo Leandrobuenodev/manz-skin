@@ -1,0 +1,84 @@
+/* Minimal theme variables for standalone HTML. Visual Hero rules live in assets/. */
+:root {
+  --font-body-family: sans-serif;
+  --font-body-style: normal;
+  --font-body-weight: 300;
+  --font-body-scale: 1;
+  --font-heading-family: serif;
+  --font-heading-style: normal;
+  --font-heading-weight: 400;
+  --font-heading-scale: 1;
+  --color-background: 255, 255, 255;
+  --color-foreground: 255, 255, 255;
+  --color-shadow: 0, 0, 0;
+  --duration-default: 200ms;
+  --drawer-shadow-horizontal-offset: 0px;
+  --drawer-shadow-vertical-offset: 0px;
+  --drawer-shadow-blur-radius: 0px;
+  --drawer-shadow-opacity: 0;
+  --drawer-border-width: 0px;
+  --drawer-border-opacity: 0;
+  --header-height: 68px;
+  font-size: 62.5%;
+}
+
+body {
+  display: block;
+  width: 100%;
+  margin: 0;
+  background: #fff;
+}
+
+html {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#MainContent,
+.section-manz-hero-v1,
+.manz-hero-shell {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header__heading-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.header__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: none;
+}
+
+.menu-drawer-container {
+  display: flex;
+}
+
+.list-menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.local-skip-link {
+  position: absolute;
+  z-index: 10;
+  top: 10px;
+  left: 12px;
+  padding: 8px;
+  transform: translateY(-200%);
+  background: #fff;
+  color: #000;
+  font: 14px sans-serif;
+}
+
+.local-skip-link:focus {
+  transform: none;
+}

@@ -21,6 +21,9 @@
         <div class="menu-drawer__navigation-container">
           <nav class="menu-drawer__navigation">
             <ul class="menu-drawer__menu has-submenu list-menu" role="list">
+              {%- if request.page_type == 'index' -%}
+                <li class="manz-hero-drawer-links">{% render 'manz-hero-navigation', mobile: true %}</li>
+              {%- endif -%}
               {%- for link in section.settings.menu.links -%}
                 <li>
                   {%- if link.links != blank -%}
