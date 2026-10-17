@@ -1,0 +1,60 @@
+<section class="manz-soaps-benefits" aria-label="Compromissos Manz Skin">
+  <div class="manz-soaps-benefits__inner page-width">
+    <ul class="manz-soaps-benefits__list" role="list">
+      {%- for block in section.blocks -%}
+        <li class="manz-soaps-benefits__item" {{ block.shopify_attributes }}>
+          {% render 'manz-soaps-benefit-icon', icon: block.settings.icon %}
+          <span class="manz-soaps-benefits__label">{{ block.settings.label | escape }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefícios sabonetes",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefício",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícone",
+          "options": [
+            { "value": "natural", "label": "Ingredientes naturais" },
+            { "value": "paraben_free", "label": "Sem parabenos" },
+            { "value": "cruelty_free", "label": "Não testado em animais" },
+            { "value": "vegan", "label": "Vegano" },
+            { "value": "biodegradable", "label": "Biodegradável" }
+          ],
+          "default": "natural"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Ingredientes naturais"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefícios sabonetes",
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "natural", "label": "Ingredientes naturais" } },
+        { "type": "benefit", "settings": { "icon": "paraben_free", "label": "Sem parabenos" } },
+        { "type": "benefit", "settings": { "icon": "cruelty_free", "label": "Cruelty free" } },
+        { "type": "benefit", "settings": { "icon": "vegan", "label": "Vegano" } },
+        { "type": "benefit", "settings": { "icon": "biodegradable", "label": "Biodegradáveis" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

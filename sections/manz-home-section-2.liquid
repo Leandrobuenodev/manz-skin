@@ -1,0 +1,76 @@
+{% liquid
+  assign soap_collection = section.settings.soap_collection
+%}
+
+{{ 'manz-home-section-2.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="manz-home-section-2"
+  aria-labelledby="ManzHomeSection2Heading-{{ section.id }}"
+>
+  <div class="manz-home-section-2__composition">
+    <figure class="manz-home-section-2__portrait">
+      {%- if section.settings.editorial_image != blank -%}
+        {{ section.settings.editorial_image | image_url: width: 1400 | image_tag:
+          class: 'manz-home-section-2__portrait-image',
+          widths: '640, 854, 1100, 1400',
+          sizes: '(min-width: 990px) 40vw, 100vw',
+          loading: 'lazy'
+        }}
+      {%- elsif section.settings.show_theme_fallback -%}
+        <img
+          class="manz-home-section-2__portrait-image"
+          src="{{ 'manz-home-section-2-model.jpeg' | asset_url }}"
+          width="854"
+          height="1280"
+          alt="Modelo Manz Skin segurando uma composição de sabonetes artesanais"
+          loading="lazy"
+        >
+      {%- else -%}
+        <div class="manz-home-section-2__portrait-placeholder" aria-hidden="true"></div>
+      {%- endif -%}
+    </figure>
+
+    <div class="manz-home-section-2__copy">
+      {%- if section.settings.heading != blank -%}
+        <h2 id="ManzHomeSection2Heading-{{ section.id }}" class="manz-home-section-2__heading">
+          {{ section.settings.heading | escape }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.mission != blank -%}
+        <p class="manz-home-section-2__mission">{{ section.settings.mission | escape }}</p>
+      {%- endif -%}
+
+      {%- if soap_collection != blank and section.settings.cta_label != blank -%}
+        <a class="manz-home-section-2__cta" href="{{ soap_collection.url | escape }}">
+          {{ section.settings.cta_label | escape }}
+          <span aria-hidden="true">→</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Manifesto editorial",
+  "tag": "section",
+  "class": "section-manz-home-section-2",
+  "limit": 1,
+  "enabled_on": { "templates": ["index"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "It's more than skincare!" },
+    { "type": "textarea", "id": "mission", "label": "Texto da missão", "default": "Nossa missão é conectar pessoas ao que há de mais puro e eficaz na natureza, proporcionando uma experiência de autocuidado consciente, transformador e alinhado aos princípios de sustentabilidade. Cada produto que desenvolvemos reflete nosso compromisso com a beleza natural, o bem-estar e a harmonia, através de fórmulas veganas, biodegradáveis e de alta qualidade. Valorizamos a saúde, a praticidade e a eficiência em cada detalhe, entregando soluções que respeitam a natureza e promovem um cuidado equilibrado e autêntico para todos." },
+    { "type": "video", "id": "soap_video", "label": "Vídeo legado — preservado, não exibido" },
+    { "type": "image_picker", "id": "media_image", "label": "Imagem alternativa legada — não exibida" },
+    { "type": "image_picker", "id": "editorial_image", "label": "Fotografia editorial" },
+    { "type": "checkbox", "id": "show_theme_fallback", "label": "Usar a fotografia original se a imagem estiver vazia", "info": "Desative para mostrar um espaço neutro até escolher outra fotografia.", "default": true },
+    { "type": "text", "id": "media_label", "label": "Legenda legada — não exibida", "default": "Produto em destaque" },
+    { "type": "checkbox", "id": "remove_green_background", "label": "Remoção de fundo legada — não utilizada", "default": true },
+    { "type": "collection", "id": "soap_collection", "label": "Coleção de sabonetes" },
+    { "type": "text", "id": "cta_label", "label": "Texto do link", "default": "Conheça nossos sabonetes" }
+  ],
+  "presets": [{ "name": "Manifesto editorial" }]
+}
+{% endschema %}

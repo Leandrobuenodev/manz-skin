@@ -11,10 +11,11 @@
     <link rel="stylesheet" href="../../assets/component-menu-drawer.css">
     <link rel="stylesheet" href="local.css">
     <link rel="stylesheet" href="../../assets/manz-hero-v1.css">
+    <link rel="stylesheet" href="../preview-ui.css">
     <script src="../../assets/global.js" defer></script>
-    <script src="../../assets/manz-hero-gsap.min.js" defer></script>
     <script src="../../assets/manz-hero-v1.js" defer></script>
     <script src="local.js" defer></script>
+    <script src="../navigation.js" defer></script>
   </head>
   <body class="manz-hero-page">
     <a class="local-skip-link" href="#MainContent">Pular para o conteúdo</a>
@@ -22,10 +23,10 @@
       <div class="header-wrapper">
         <header class="header header--top-center header--mobile-center page-width header--has-menu header--has-account">
           <nav class="manz-hero-nav" aria-label="Navegação principal">
-            <a class="manz-hero-nav__link" href="#MainContent" aria-current="page">INÍCIO</a>
-            <span class="manz-hero-nav__link" aria-disabled="true">SABONETES</span>
-            <span class="manz-hero-nav__link" aria-disabled="true">ACESSÓRIOS</span>
-            <span class="manz-hero-nav__link" aria-disabled="true">RASTREAMENTO DE PEDIDOS</span>
+            <a class="manz-hero-nav__link" href="#" data-local-route="home" aria-current="page">INÍCIO</a>
+            <a class="manz-hero-nav__link" href="#" data-local-route="soaps">SABONETES</a>
+            <a class="manz-hero-nav__link" href="#" data-local-route="accessories">ACESSÓRIOS</a>
+            <a class="manz-hero-nav__link" href="#" data-local-route="tracking">RASTREAMENTO DE PEDIDOS</a>
           </nav>
 
           <header-drawer data-breakpoint="tablet">
@@ -43,10 +44,10 @@
                       <ul class="menu-drawer__menu has-submenu list-menu" role="list">
                         <li class="manz-hero-drawer-links">
                           <nav class="manz-hero-nav manz-hero-nav--mobile" aria-label="Navegação mobile">
-                            <a class="manz-hero-nav__link" href="#MainContent">INÍCIO</a>
-                            <span class="manz-hero-nav__link" aria-disabled="true">SABONETES</span>
-                            <span class="manz-hero-nav__link" aria-disabled="true">ACESSÓRIOS</span>
-                            <span class="manz-hero-nav__link" aria-disabled="true">RASTREAMENTO DE PEDIDOS</span>
+                            <a class="manz-hero-nav__link" href="#" data-local-route="home">INÍCIO</a>
+                            <a class="manz-hero-nav__link" href="#" data-local-route="soaps">SABONETES</a>
+                            <a class="manz-hero-nav__link" href="#" data-local-route="accessories">ACESSÓRIOS</a>
+                            <a class="manz-hero-nav__link" href="#" data-local-route="tracking">RASTREAMENTO DE PEDIDOS</a>
                           </nav>
                         </li>
                       </ul>
@@ -58,7 +59,7 @@
           </header-drawer>
 
           <div class="header__heading">
-            <a class="header__heading-link link link--text focus-inset" href="#MainContent" aria-label="Manz Skin, início"><span class="manz-hero-wordmark">manzskin</span></a>
+            <a class="header__heading-link link link--text focus-inset" href="#" data-local-route="home" aria-label="Manz Skin, início"><span class="manz-hero-wordmark">manzskin</span></a>
           </div>
 
           <div class="header__icons">
@@ -80,10 +81,9 @@
 
     <main id="MainContent" tabindex="-1">
       <section class="section-manz-hero-v1">
-        <manz-hero class="manz-hero-shell" data-manz-hero data-animate="true" style="--manz-hero-focus-x: 50%; --manz-hero-focus-mobile-x: 50%; --manz-hero-focus-y: 50%; --manz-hero-overlay-top: 0.15; --manz-hero-overlay-bottom: 0.22;">
+        <manz-hero class="manz-hero-shell" data-manz-hero style="--manz-hero-focus-x: 50%; --manz-hero-focus-mobile-x: 50%; --manz-hero-focus-y: 50%;">
           <div class="manz-hero" aria-labelledby="ManzHeroTitle-local">
-            <img class="manz-hero__image" src="../../assets/manz-hero-v1-1920.jpg" srcset="../../assets/manz-hero-v1-960.jpg 960w, ../../assets/manz-hero-v1-1920.jpg 1920w, ../../assets/manz-hero-v1-2880.jpg 2880w" sizes="(max-aspect-ratio: 3/2) 150svh, 100vw" width="2880" height="1920" alt="Três modelos à beira-mar na campanha Manz Skin" loading="eager" fetchpriority="high">
-            <div class="manz-hero__shade" aria-hidden="true"></div>
+            <img class="manz-hero__image" src="../../assets/manz-hero-slide-01-original.png" srcset="../../assets/manz-hero-slide-01-original.png 1672w" sizes="(max-aspect-ratio: 3/2) 150svh, 100vw" width="1672" height="941" alt="Tr&#234;s modelos na praia ao entardecer, com luz dourada" loading="eager" fetchpriority="high" decoding="async">
             <div class="manz-hero__copy">
               <p class="manz-hero__eyebrow">MANZ SKIN · NATURAL SKINCARE</p>
               <h1 id="ManzHeroTitle-local" class="manz-hero__title">
@@ -92,6 +92,7 @@
               </h1>
               <p class="manz-hero__caption">Natureza, beleza e autenticidade.</p>
             </div>
+            <a class="manz-hero__cta" href="#" data-local-route="all-products">Ver todos os produtos <span aria-hidden="true">→</span></a>
           </div>
         </manz-hero>
       </section>

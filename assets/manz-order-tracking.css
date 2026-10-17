@@ -1,0 +1,393 @@
+@font-face {
+  font-family: "Manz Bodoni";
+  src: url("manz-bodoni-moda-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Manz Jost";
+  src: url("manz-jost-light-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 300 600;
+  font-display: swap;
+}
+
+.manz-order-tracking,
+.manz-order-tracking * {
+  box-sizing: border-box;
+}
+
+.manz-order-tracking {
+  --manz-tracking-ink: #302c26;
+  --manz-tracking-muted: #625d53;
+  --manz-tracking-paper: #f5f1ea;
+  --manz-tracking-stone: #e9e2d8;
+  --manz-tracking-line: #302c2626;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 91% 14%, #b5a78b14 0, transparent 29rem),
+    var(--manz-tracking-paper);
+  color: var(--manz-tracking-ink);
+}
+
+.manz-order-tracking .page-width {
+  width: min(100% - 48px, 1160px);
+  max-width: 1160px;
+  margin-inline: auto;
+  padding: 0;
+}
+
+.manz-order-tracking__inner {
+  padding-block: clamp(44px, 7vw, 88px) clamp(54px, 8vw, 104px) !important;
+}
+
+.manz-order-tracking__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 68px);
+  margin-bottom: clamp(38px, 6vw, 70px);
+}
+
+.manz-order-tracking__intro--with-image {
+  grid-template-columns: minmax(0, 1.12fr) minmax(280px, 0.88fr);
+}
+
+.manz-order-tracking__intro-copy {
+  max-width: 720px;
+}
+
+.manz-order-tracking__eyebrow {
+  margin: 0 0 14px;
+  color: #777163;
+  font-family: "Manz Jost", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .19em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.manz-order-tracking__title,
+.manz-order-tracking__section-title {
+  margin: 0;
+  color: var(--manz-tracking-ink);
+  font-family: "Manz Bodoni", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -.035em;
+}
+
+.manz-order-tracking__title {
+  max-width: 12ch;
+  font-size: clamp(44px, 7vw, 76px);
+  line-height: .99;
+}
+
+.manz-order-tracking__intro-text,
+.manz-order-tracking__option-copy,
+.manz-order-tracking__steps-intro,
+.manz-order-tracking__step-copy,
+.manz-order-tracking__help-text {
+  color: var(--manz-tracking-muted);
+  font-family: "Manz Jost", sans-serif;
+  font-size: 14px;
+  font-weight: 350;
+  line-height: 1.65;
+}
+
+.manz-order-tracking__intro-text {
+  max-width: 56ch;
+  margin-top: 18px;
+  font-size: 15px;
+}
+
+.manz-order-tracking__intro-text p,
+.manz-order-tracking__option-copy p,
+.manz-order-tracking__steps-intro p,
+.manz-order-tracking__step-copy p,
+.manz-order-tracking__help-text p {
+  margin: 0;
+}
+
+.manz-order-tracking__image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--manz-tracking-stone);
+}
+
+.manz-order-tracking__image-wrap::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ffffff30;
+  content: "";
+  pointer-events: none;
+}
+
+.manz-order-tracking__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.manz-order-tracking__options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.manz-order-tracking__option {
+  display: flex;
+  min-height: 275px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(24px, 3vw, 38px);
+  border: 1px solid var(--manz-tracking-line);
+  border-radius: 4px;
+  background: #fffdfa9c;
+}
+
+.manz-order-tracking__option--account {
+  background: #eee8df8c;
+}
+
+.manz-order-tracking__icon {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 25px;
+  color: #777163;
+}
+
+.manz-order-tracking__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.35;
+}
+
+.manz-order-tracking__option-title {
+  margin: 0;
+  color: var(--manz-tracking-ink);
+  font-family: "Manz Bodoni", Georgia, serif;
+  font-size: clamp(25px, 3vw, 33px);
+  font-weight: 400;
+  letter-spacing: -.025em;
+  line-height: 1.12;
+}
+
+.manz-order-tracking__option-copy {
+  max-width: 50ch;
+  margin-top: 12px;
+}
+
+.manz-order-tracking__button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: auto;
+  padding: 11px 19px;
+  border: 1px solid var(--manz-tracking-ink);
+  border-radius: 999px;
+  font-family: "Manz Jost", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.manz-order-tracking__button:hover {
+  border-color: #51483e;
+  background: #51483e;
+  color: #fff;
+}
+
+.manz-order-tracking__button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.manz-order-tracking__button--primary {
+  margin-top: 24px;
+  background: var(--manz-tracking-ink);
+  color: #fff;
+}
+
+.manz-order-tracking__button--secondary {
+  margin-top: 24px;
+  background: transparent;
+  color: var(--manz-tracking-ink);
+}
+
+.manz-order-tracking__steps {
+  display: grid;
+  grid-template-columns: minmax(220px, .72fr) minmax(0, 1.8fr);
+  gap: clamp(30px, 6vw, 82px);
+  align-items: start;
+  padding-block: clamp(45px, 7vw, 76px);
+  border-bottom: 1px solid var(--manz-tracking-line);
+}
+
+.manz-order-tracking__section-title {
+  font-size: clamp(32px, 4.5vw, 46px);
+  line-height: 1.04;
+}
+
+.manz-order-tracking__steps-intro {
+  max-width: 38ch;
+  margin-top: 12px;
+}
+
+.manz-order-tracking__step-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.manz-order-tracking__step {
+  min-width: 0;
+  padding-top: 4px;
+}
+
+.manz-order-tracking__step-number {
+  display: inline-block;
+  margin-bottom: 21px;
+  color: #8a806f;
+  font-family: "Manz Jost", sans-serif;
+  font-size: 11px;
+  letter-spacing: .12em;
+}
+
+.manz-order-tracking__step-title {
+  margin: 0;
+  color: var(--manz-tracking-ink);
+  font-family: "Manz Jost", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.manz-order-tracking__step-copy {
+  margin-top: 7px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.manz-order-tracking__help {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding-top: clamp(36px, 6vw, 60px);
+}
+
+.manz-order-tracking__help-copy {
+  max-width: 62ch;
+}
+
+.manz-order-tracking__help-text {
+  margin-top: 10px;
+}
+
+.manz-order-tracking__help .manz-order-tracking__button {
+  flex: 0 0 auto;
+  margin-top: 0;
+}
+
+@media (max-width: 989px) {
+  .manz-order-tracking__steps {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 749px) {
+  .manz-order-tracking .page-width {
+    width: min(100% - 36px, 600px);
+  }
+
+  .manz-order-tracking__intro--with-image {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .manz-order-tracking__title {
+    max-width: 11ch;
+  }
+
+  .manz-order-tracking__intro-text {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+
+  .manz-order-tracking__options {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .manz-order-tracking__option {
+    min-height: auto;
+    padding: 24px 21px;
+  }
+
+  .manz-order-tracking__icon {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 18px;
+  }
+
+  .manz-order-tracking__option-title {
+    font-size: 29px;
+  }
+
+  .manz-order-tracking__button {
+    width: 100%;
+  }
+
+  .manz-order-tracking__step-list {
+    grid-template-columns: 1fr;
+    gap: 21px;
+  }
+
+  .manz-order-tracking__step {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    column-gap: 8px;
+    padding-top: 0;
+  }
+
+  .manz-order-tracking__step-number {
+    grid-row: span 2;
+    margin: 1px 0 0;
+  }
+
+  .manz-order-tracking__step-copy {
+    grid-column: 2;
+  }
+
+  .manz-order-tracking__help {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manz-order-tracking__button {
+    transition: none;
+  }
+}

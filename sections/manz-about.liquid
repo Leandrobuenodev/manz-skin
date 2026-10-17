@@ -1,0 +1,305 @@
+{{ 'manz-about.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign cta_url = section.settings.cta_link | default: routes.all_products_collection_url
+  assign page_heading = section.settings.page_heading | default: page.title
+  assign show_theme_fallback = section.settings.show_theme_fallback
+  assign plate_image = section.settings.plate_image
+  assign mobile_plate_image = section.settings.mobile_plate_image
+-%}
+<div class="manz-about-stage">
+<section class="manz-about" data-manz-about-campaign aria-labelledby="ManzAboutTitle-{{ section.id }}">
+  <div class="manz-about__plate" aria-hidden="true">
+    {%- if plate_image != blank or show_theme_fallback -%}
+      <picture class="manz-about__plate-picture">
+        {%- if mobile_plate_image != blank -%}
+          <source media="(max-width: 1099px)" srcset="{{ mobile_plate_image | image_url: width: 1800 }}">
+        {%- endif -%}
+        {%- render 'manz-about-image',
+          image: plate_image,
+          fallback_asset: 'manz-about-approved-landscape-1672x941.png',
+          fallback_width: 1672, fallback_height: 941,
+          image_class: 'manz-about__plate-image',
+          sizes: '100vw', loading: 'eager', fetchpriority: 'high'
+        -%}
+      </picture>
+    {%- endif -%}
+  </div>
+
+  <div class="manz-about__editorial">
+    <div class="manz-about__opening">
+      {%- if section.settings.show_eyebrows and section.settings.eyebrow != blank -%}
+        <p class="manz-about__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if page_heading != blank -%}
+        <h1 class="manz-about__page-title" id="ManzAboutTitle-{{ section.id }}">{{ page_heading | escape }}</h1>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <p class="manz-about__subtitle">{{ section.settings.heading | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <div class="manz-about__intro rte">{{ section.settings.intro }}</div>
+      {%- endif -%}
+      {%- if section.settings.show_hero_note and section.settings.hero_note != blank -%}
+        <p class="manz-about__note">{{ section.settings.hero_note | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="manz-about__chapters">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign block_layout = block.settings.layout
+          if block_layout == blank
+            case forloop.index
+              when 1
+                assign block_layout = 'mission'
+              when 2
+                assign block_layout = 'connection'
+              when 3
+                assign block_layout = 'invitation'
+              else
+                assign block_layout = 'editorial'
+            endcase
+          endif
+          assign title_parts = block.settings.heading | split: 'SelfCare'
+          assign mission_parts = block.settings.heading | split: 'Visão'
+          assign connection_parts = block.settings.heading | split: 'Natureza'
+        -%}
+        <article class="manz-about__article manz-about__article--{{ block_layout }}" {{ block.shopify_attributes }}>
+          {%- if section.settings.show_eyebrows and block.settings.eyebrow != blank -%}
+            <p class="manz-about__eyebrow">{{ block.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+          {%- if block.settings.heading != blank -%}
+            <h2 class="manz-about__article-title">
+              {%- if block_layout == 'invitation' and block.settings.heading contains 'SelfCare' -%}
+                {{ title_parts.first | escape }}<em>SelfCare</em>{{ title_parts[1] | escape }}
+              {%- elsif block_layout == 'mission' and block.settings.heading contains 'Visão' -%}
+                {{ mission_parts.first | escape }}<br>Visão{{ mission_parts.last | escape }}
+              {%- elsif block_layout == 'connection' and block.settings.heading contains 'Natureza' -%}
+                {{ connection_parts.first | escape }}<br>Natureza{{ connection_parts.last | escape }}
+              {%- else -%}
+                {{ block.settings.heading | escape }}
+              {%- endif -%}
+            </h2>
+          {%- endif -%}
+          {%- if block.settings.copy != blank -%}
+            <div class="manz-about__copy rte">{{ block.settings.copy }}</div>
+          {%- endif -%}
+          {%- if block_layout == 'invitation' and section.settings.cta_label != blank and cta_url != blank -%}
+            <a class="manz-about__cta" href="{{ cta_url | escape }}">{{ section.settings.cta_label | escape }} <span aria-hidden="true">→</span></a>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+</div>
+
+{% schema %}
+{
+  "name": "Quem somos nós",
+  "tag": "section",
+  "class": "section-manz-about",
+  "enabled_on": {
+    "templates": [
+      "page"
+    ]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "plate_image",
+      "label": "Composição visual (plate)",
+      "info": "Imagem completa, sem textos. Prefira proporção 4:3 e mantenha a área central livre para os textos. Substitui a plate padrão."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_plate_image",
+      "label": "Imagem editorial para mobile",
+      "info": "Opcional. Sem seleção, o mobile usa um recorte responsivo da plate desktop."
+    },
+    {
+      "type": "text",
+      "id": "page_heading",
+      "label": "Título da página",
+      "default": "Quem somos nós?"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_eyebrows",
+      "label": "Exibir textos de apoio opcionais",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hero_note",
+      "label": "Exibir frase decorativa opcional",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Texto de apoio opcional",
+      "default": "SOBRE NÓS · NOSSA ESSÊNCIA",
+      "info": "Exibido quando a opção de textos de apoio estiver ativada."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Subtítulo editorial",
+      "default": "It’s more than skincare!"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Apresentação",
+      "default": "<p>A manzskin é um refugio do autocuidado onde a essência é viver uma vida plena, em harmonia com o seu corpo, sua mente e o nosso planeta.</p>"
+    },
+    {
+      "type": "text",
+      "id": "hero_note",
+      "label": "Frase decorativa opcional",
+      "default": "Mais natureza para o seu dia a dia.",
+      "info": "Exibida somente quando a opção correspondente estiver ativada."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_theme_fallback",
+      "label": "Usar a plate aprovada quando o seletor estiver vazio",
+      "default": true,
+      "info": "Desative para mostrar somente o fundo creme quando não houver uma composição selecionada."
+    },
+    {
+      "type": "header",
+      "content": "Fotos antigas (sem uso atual)"
+    },
+    {
+      "type": "image_picker",
+      "id": "intro_side_image",
+      "label": "Foto A — argilas, superior esquerda",
+      "info": "Configuração anterior preservada. Não é usada na composição atual; selecione a imagem completa no campo Composição visual (plate)."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Foto B — sabonetes sobre a pele, meio esquerdo",
+      "info": "Configuração anterior preservada. Não é usada na composição atual; selecione a imagem completa no campo Composição visual (plate)."
+    },
+    {
+      "type": "image_picker",
+      "id": "mission_image",
+      "label": "Foto D — três modelos, superior direita",
+      "info": "Configuração anterior preservada. Não é usada na composição atual; selecione a imagem completa no campo Composição visual (plate)."
+    },
+    {
+      "type": "image_picker",
+      "id": "connection_image",
+      "label": "Foto C — natureza, inferior esquerda",
+      "info": "Configuração anterior preservada. Não é usada na composição atual; selecione a imagem completa no campo Composição visual (plate)."
+    },
+    {
+      "type": "image_picker",
+      "id": "closing_image",
+      "label": "Foto E — retrato, inferior direita",
+      "info": "Configuração anterior preservada. Não é usada na composição atual; selecione a imagem completa no campo Composição visual (plate)."
+    },
+    {
+      "type": "header",
+      "content": "Botão de encerramento"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto do botão",
+      "default": "Conheça nossos produtos"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link do botão",
+      "info": "Se estiver vazio, o botão usa a rota Shopify de todos os produtos."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chapter",
+      "name": "Bloco editorial",
+      "settings": [
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Composição visual",
+          "default": "editorial",
+          "options": [
+            {
+              "value": "mission",
+              "label": "Missão, visão e valores"
+            },
+            {
+              "value": "connection",
+              "label": "Conexão com a natureza"
+            },
+            {
+              "value": "invitation",
+              "label": "Convite e botão"
+            },
+            {
+              "value": "editorial",
+              "label": "Texto editorial simples"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Linha de apoio"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título"
+        },
+        {
+          "type": "richtext",
+          "id": "copy",
+          "label": "Texto"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Quem somos nós",
+      "blocks": [
+        {
+          "type": "chapter",
+          "settings": {
+            "layout": "mission",
+            "eyebrow": "Nossa missão",
+            "heading": "Nossa Missão, Visão e Valores:",
+            "copy": "<p>Inspirados na beleza única e na diversidade da natureza, criamos produtos que se adaptam a todos os tipos de pele, buscando o bem estar de dentro pra fora.</p><p>Dedicada a nutrir sua pele com amor e consciência, nossa fundadora e alquimista, Carol, é o coração e a mente criativa por trás de tudo, transformando ingredientes naturais em produtos incríveis.</p><p>Paltados no cuidado com o todo, criamos uma linha 100% vegana, artesanal, terapêutica, livre de sulfatos e parabenos, biodegradável, hipoalergênica e ecoamorosa.</p>"
+          }
+        },
+        {
+          "type": "chapter",
+          "settings": {
+            "layout": "connection",
+            "eyebrow": "Nossa história",
+            "heading": "A Conexão com a Natureza e o Equilíbrio Interior",
+            "copy": "<p>Integrando a faculdade de Ciências Biológicas, o artesanto herdado da família, a paixão pela natureza e a vontade de empreender, a Ca fundou a ManzSkin em 2018.</p><p>O compromisso com o veganismo e a sustentabilidade se tornou essencial à medida que mergulhamos em nosso propósito. A escolha dos ingredientes ideais não é apenas sobre eficácia, mas também sobre respeito pelo meio ambiente.</p><p>Em um mundo de aparências, decidimos unir ética + aesthetics para criar um skincare sustentável. Inspirando uma revolução no autocuidado consciente, em que a conexão com a natureza e a busca pelo equilíbrio interior são prioridades.</p>"
+          }
+        },
+        {
+          "type": "chapter",
+          "settings": {
+            "layout": "invitation",
+            "eyebrow": "Um novo capítulo",
+            "heading": "Junte-se à Nova Era do SelfCare",
+            "copy": "<p>Mergulhe conosco na criação de uma sintonia de bem-estar, onde o brilho da sua pele se iguala ao brilho da sua alma. Prepare-se para uma jornada onde a beleza vai muito além da superfície.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

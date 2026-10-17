@@ -1,0 +1,344 @@
+{{ 'manz-order-tracking.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign editorial_image = section.settings.editorial_image
+  assign editorial_alt = editorial_image.alt | default: section.settings.heading
+-%}
+
+<section
+  class="manz-order-tracking"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="ManzOrderTrackingTitle-{{ section.id }}"
+  {% else %}
+    aria-label="Rastreamento de pedidos"
+  {% endif %}
+>
+  <div class="manz-order-tracking__inner page-width">
+    <header class="manz-order-tracking__intro{% if editorial_image != blank %} manz-order-tracking__intro--with-image{% endif %}">
+      <div class="manz-order-tracking__intro-copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="manz-order-tracking__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="manz-order-tracking__title" id="ManzOrderTrackingTitle-{{ section.id }}">
+            {{ section.settings.heading | escape }}
+          </h1>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <div class="manz-order-tracking__intro-text">{{ section.settings.intro }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if editorial_image != blank -%}
+        <figure class="manz-order-tracking__image-wrap">
+          {{ editorial_image | image_url: width: 1800 | image_tag:
+            class: 'manz-order-tracking__image',
+            widths: '480, 720, 960, 1200, 1600, 1800',
+            sizes: '(min-width: 990px) 42vw, 100vw',
+            loading: 'lazy',
+            decoding: 'async',
+            alt: editorial_alt
+          }}
+        </figure>
+      {%- endif -%}
+    </header>
+
+    <div class="manz-order-tracking__options">
+      <article class="manz-order-tracking__option manz-order-tracking__option--tracking">
+        <span class="manz-order-tracking__icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="18.5" stroke="currentColor" />
+            <path d="M24 13.5v11l7 4.5M15.5 8.5l-4 4M32.5 8.5l4 4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        {%- if section.settings.tracking_card_heading != blank -%}
+          <h2 class="manz-order-tracking__option-title">{{ section.settings.tracking_card_heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.tracking_card_copy != blank -%}
+          <div class="manz-order-tracking__option-copy">{{ section.settings.tracking_card_copy }}</div>
+        {%- endif -%}
+        {%- if section.settings.tracking_service_url != blank and section.settings.tracking_button_label != blank -%}
+          <a class="manz-order-tracking__button manz-order-tracking__button--primary" href="{{ section.settings.tracking_service_url | escape }}">
+            {{ section.settings.tracking_button_label | escape }}
+            <span aria-hidden="true">→</span>
+          </a>
+        {%- endif -%}
+      </article>
+
+      {%- if shop.customer_accounts_enabled and section.settings.show_account_option -%}
+        <article class="manz-order-tracking__option manz-order-tracking__option--account">
+          <span class="manz-order-tracking__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="16.5" r="6.5" stroke="currentColor" />
+              <path d="M10.5 39c1.7-7.1 6.6-10.5 13.5-10.5S35.8 31.9 37.5 39" stroke="currentColor" stroke-linecap="round" />
+            </svg>
+          </span>
+          {%- if section.settings.account_card_heading != blank -%}
+            <h2 class="manz-order-tracking__option-title">{{ section.settings.account_card_heading | escape }}</h2>
+          {%- endif -%}
+          {%- if section.settings.account_card_copy != blank -%}
+            <div class="manz-order-tracking__option-copy">{{ section.settings.account_card_copy }}</div>
+          {%- endif -%}
+          {%- if section.settings.account_button_label != blank -%}
+            <a class="manz-order-tracking__button manz-order-tracking__button--secondary" href="{{ routes.account_url }}">
+              {{ section.settings.account_button_label | escape }}
+              <span aria-hidden="true">→</span>
+            </a>
+          {%- endif -%}
+        </article>
+      {%- endif -%}
+    </div>
+
+    <section
+      class="manz-order-tracking__steps"
+      {% if section.settings.steps_heading != blank %}
+        aria-labelledby="ManzOrderTrackingSteps-{{ section.id }}"
+      {% else %}
+        aria-label="Etapas para acompanhar a entrega"
+      {% endif %}
+    >
+      <div class="manz-order-tracking__steps-heading">
+        {%- if section.settings.steps_heading != blank -%}
+          <h2 class="manz-order-tracking__section-title" id="ManzOrderTrackingSteps-{{ section.id }}">
+            {{ section.settings.steps_heading | escape }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.steps_intro != blank -%}
+          <div class="manz-order-tracking__steps-intro">{{ section.settings.steps_intro }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <ol class="manz-order-tracking__step-list">
+          {%- for block in section.blocks -%}
+            <li class="manz-order-tracking__step" {{ block.shopify_attributes }}>
+              <span class="manz-order-tracking__step-number" aria-hidden="true">0{{ forloop.index }}</span>
+              {%- if block.settings.title != blank -%}
+                <h3 class="manz-order-tracking__step-title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.copy != blank -%}
+                <div class="manz-order-tracking__step-copy">{{ block.settings.copy }}</div>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ol>
+      {%- endif -%}
+    </section>
+
+    <aside
+      class="manz-order-tracking__help"
+      {% if section.settings.help_heading != blank %}
+        aria-labelledby="ManzOrderTrackingHelp-{{ section.id }}"
+      {% else %}
+        aria-label="Ajuda sobre pedidos"
+      {% endif %}
+    >
+      <div class="manz-order-tracking__help-copy">
+        {%- if section.settings.help_heading != blank -%}
+          <h2 class="manz-order-tracking__section-title" id="ManzOrderTrackingHelp-{{ section.id }}">
+            {{ section.settings.help_heading | escape }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.help_copy != blank -%}
+          <div class="manz-order-tracking__help-text">{{ section.settings.help_copy }}</div>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.help_url != blank and section.settings.help_button_label != blank -%}
+        <a class="manz-order-tracking__button manz-order-tracking__button--secondary" href="{{ section.settings.help_url | escape }}">
+          {{ section.settings.help_button_label | escape }}
+          <span aria-hidden="true">→</span>
+        </a>
+      {%- endif -%}
+    </aside>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rastreamento Manz Skin",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "enabled_on": {
+    "templates": ["page"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Apresentação"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Identificador",
+      "default": "MANZ SKIN · SEU PEDIDO"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Acompanhe seu pedido."
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Texto de apresentação",
+      "default": "<p>Consulte as informações de envio e acompanhe a entrega do seu pedido pelos canais de rastreamento disponibilizados após a postagem.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "editorial_image",
+      "label": "Fotografia editorial",
+      "info": "Opcional. Se não houver imagem selecionada, a apresentação ocupa toda a largura."
+    },
+    {
+      "type": "header",
+      "content": "Rastreamento externo"
+    },
+    {
+      "type": "text",
+      "id": "tracking_card_heading",
+      "label": "Título da opção",
+      "default": "Rastreamento da entrega"
+    },
+    {
+      "type": "richtext",
+      "id": "tracking_card_copy",
+      "label": "Orientação",
+      "default": "<p>Após a postagem, use o código ou link de envio recebido. Se houver um portal externo configurado pela loja, o botão de acesso aparecerá aqui.</p>"
+    },
+    {
+      "type": "text",
+      "id": "tracking_button_label",
+      "label": "Texto do botão externo",
+      "default": "Abrir rastreamento"
+    },
+    {
+      "type": "url",
+      "id": "tracking_service_url",
+      "label": "Link do serviço de rastreamento",
+      "info": "Deixe vazio até confirmar o serviço e o endereço corretos. O botão fica oculto sem um link."
+    },
+    {
+      "type": "header",
+      "content": "Pedidos na Shopify"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account_option",
+      "label": "Exibir opção de conta quando as contas de cliente estiverem ativas",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "account_card_heading",
+      "label": "Título da opção de conta",
+      "default": "Pedidos na sua conta Shopify"
+    },
+    {
+      "type": "richtext",
+      "id": "account_card_copy",
+      "label": "Orientação sobre a conta",
+      "default": "<p>Se você usa uma conta de cliente na loja, consulte seus pedidos por aqui. As informações de envio dependem dos dados registrados no pedido.</p>"
+    },
+    {
+      "type": "text",
+      "id": "account_button_label",
+      "label": "Texto do botão da conta",
+      "default": "Acessar minha conta"
+    },
+    {
+      "type": "header",
+      "content": "Como acompanhar sua entrega"
+    },
+    {
+      "type": "text",
+      "id": "steps_heading",
+      "label": "Título da seção",
+      "default": "Como acompanhar sua entrega"
+    },
+    {
+      "type": "richtext",
+      "id": "steps_intro",
+      "label": "Texto de apoio",
+      "default": "<p>As informações de acompanhamento são disponibilizadas após a postagem do pedido.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Ajuda"
+    },
+    {
+      "type": "text",
+      "id": "help_heading",
+      "label": "Título da ajuda",
+      "default": "Precisa de ajuda?"
+    },
+    {
+      "type": "richtext",
+      "id": "help_copy",
+      "label": "Texto da ajuda",
+      "default": "<p>Se não localizar as informações de envio, entre em contato com a equipe Manz Skin pelo canal de atendimento da loja.</p>"
+    },
+    {
+      "type": "text",
+      "id": "help_button_label",
+      "label": "Texto do botão de ajuda",
+      "default": "Falar com a Manz Skin"
+    },
+    {
+      "type": "url",
+      "id": "help_url",
+      "label": "Link do canal de atendimento",
+      "info": "Pode ser uma página de contato, e-mail ou canal de atendimento confirmado. O botão fica oculto sem um link."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Etapa",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Aguarde a confirmação do envio"
+        },
+        {
+          "type": "richtext",
+          "id": "copy",
+          "label": "Texto",
+          "default": "<p>As informações de acompanhamento são disponibilizadas após a postagem do pedido.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rastreamento Manz Skin",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Aguarde a confirmação do envio",
+            "copy": "<p>As informações de acompanhamento são disponibilizadas após a postagem do pedido.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Consulte o código ou link recebido",
+            "copy": "<p>Use as informações de envio compartilhadas pela loja nos canais de atendimento ou na notificação de envio.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Acompanhe pelo canal indicado",
+            "copy": "<p>As atualizações dependem das informações disponibilizadas pela transportadora ou pelo serviço de rastreamento.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

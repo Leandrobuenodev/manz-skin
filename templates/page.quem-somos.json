@@ -1,0 +1,56 @@
+{
+  "sections": {
+    "main": {
+      "type": "manz-about",
+      "blocks": {
+        "mission": {
+          "type": "chapter",
+          "settings": {
+            "layout": "mission",
+            "eyebrow": "O que nos move",
+            "heading": "Nossa Missão, Visão e Valores:",
+            "copy": "<p>Inspirados na beleza única e na diversidade da natureza, criamos produtos que se adaptam a todos os tipos de pele, buscando o bem estar de dentro pra fora.</p><p>Dedicada a nutrir sua pele com amor e consciência, nossa fundadora e alquimista, Carol, é o coração e a mente criativa por trás de tudo, transformando ingredientes naturais em produtos incríveis.</p><p>Paltados no cuidado com o todo, criamos uma linha 100% vegana, artesanal, terapêutica, livre de sulfatos e parabenos, biodegradável, hipoalergênica e ecoamorosa.</p>"
+          }
+        },
+        "connection": {
+          "type": "chapter",
+          "settings": {
+            "layout": "connection",
+            "eyebrow": "Beleza em equilíbrio",
+            "heading": "A Conexão com a Natureza e o Equilíbrio Interior",
+            "copy": "<p>Integrando a faculdade de Ciências Biológicas, o artesanto herdado da família, a paixão pela natureza e a vontade de empreender, a Ca fundou a ManzSkin em 2018.</p><p>O compromisso com o veganismo e a sustentabilidade se tornou essencial à medida que mergulhamos em nosso propósito. A escolha dos ingredientes ideais não é apenas sobre eficácia, mas também sobre respeito pelo meio ambiente.</p><p>Em um mundo de aparências, decidimos unir ética + aesthetics para criar um skincare sustentável. Inspirando uma revolução no autocuidado consciente, em que a conexão com a natureza e a busca pelo equilíbrio interior são prioridades.</p>"
+          }
+        },
+        "invitation": {
+          "type": "chapter",
+          "settings": {
+            "layout": "invitation",
+            "eyebrow": "Um novo capítulo",
+            "heading": "Junte-se à Nova Era do SelfCare",
+            "copy": "<p>Mergulhe conosco na criação de uma sintonia de bem-estar, onde o brilho da sua pele se iguala ao brilho da sua alma. Prepare-se para uma jornada onde a beleza vai muito além da superfície.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "mission",
+        "connection",
+        "invitation"
+      ],
+      "settings": {
+        "eyebrow": "BELEZA NATURAL, VIDA REAL",
+        "heading": "It’s more than skincare!",
+        "intro": "<p>A manzskin é um refugio do autocuidado onde a essência é viver uma vida plena, em harmonia com o seu corpo, sua mente e o nosso planeta.</p>",
+        "hero_note": "Mais natureza para o seu dia a dia.",
+        "show_theme_fallback": true,
+        "cta_label": "Conheça nossos produtos",
+        "cta_link": "",
+        "page_heading": "Quem somos nós?",
+        "show_eyebrows": false,
+        "show_hero_note": false
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

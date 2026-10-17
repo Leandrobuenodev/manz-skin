@@ -143,6 +143,39 @@
 
 <{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
   {%- liquid
+    assign manz_soaps_internal_header = false
+    if request.page_type == 'collection' and template.suffix == 'sabonetes'
+      assign manz_soaps_internal_header = true
+    endif
+
+    assign manz_about_internal_header = false
+    if request.page_type == 'page' and template.suffix == 'quem-somos'
+      assign manz_about_internal_header = true
+    endif
+
+    assign manz_custom_internal_header = false
+    assign manz_internal_header_variant = ''
+    assign manz_internal_header_back_label = ''
+    assign manz_internal_header_cta_label = ''
+    assign manz_internal_header_cta_url = ''
+    assign manz_internal_header_search_id = ''
+
+    if manz_soaps_internal_header
+      assign manz_custom_internal_header = true
+      assign manz_internal_header_variant = 'manz-soaps-header'
+      assign manz_internal_header_back_label = '← Voltar'
+      assign manz_internal_header_cta_label = 'Ver todos os produtos'
+      assign manz_internal_header_cta_url = routes.all_products_collection_url
+      assign manz_internal_header_search_id = 'Search-In-Modal-Manz-Soaps'
+    elsif manz_about_internal_header
+      assign manz_custom_internal_header = true
+      assign manz_internal_header_variant = 'manz-about-header'
+      assign manz_internal_header_back_label = '← Voltar ao início'
+      assign manz_internal_header_cta_label = 'Explorar produtos'
+      assign manz_internal_header_cta_url = section.settings.about_products_link | default: routes.all_products_collection_url
+      assign manz_internal_header_search_id = 'Search-In-Modal-Manz-About'
+    endif
+
     assign social_links = false
     assign localization_forms = false
 
@@ -154,21 +187,57 @@
       assign localization_forms = true
     endif
   -%}
-  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
+  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}{% if manz_custom_internal_header %} {{ manz_internal_header_variant }}{% endif %}">
+    {%- if manz_custom_internal_header -%}
+      <a class="{{ manz_internal_header_variant }}__back link focus-inset" href="{{ routes.root_url }}">{{ manz_internal_header_back_label }}</a>
+      <a class="{{ manz_internal_header_variant }}__wordmark link focus-inset" href="{{ routes.root_url }}" aria-label="Manz Skin — início">manzskin</a>
+      <div class="{{ manz_internal_header_variant }}__actions">
+        <a class="{{ manz_internal_header_variant }}__all-products link focus-inset" href="{{ manz_internal_header_cta_url }}">{{ manz_internal_header_cta_label }} <span aria-hidden="true">{% if manz_about_internal_header %}↗{% else %}→{% endif %}</span></a>
+        <div class="{{ manz_internal_header_variant }}__search">{% render 'header-search', input_id: manz_internal_header_search_id %}</div>
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset small-hide">
+            {% render 'icon-account' %}
+            <span class="visually-hidden">
+              {%- if customer -%}{{ 'customer.account_fallback' | t }}{%- else -%}{{ 'customer.log_in' | t }}{%- endif -%}
+            </span>
+          </a>
+        {%- endif -%}
+        <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+          {%- liquid
+            if cart == empty
+              render 'icon-cart-empty'
+            else
+              render 'icon-cart'
+            endif
+          -%}
+          <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+          {%- if cart != empty -%}
+            <div class="cart-count-bubble">
+              {%- if cart.item_count < 100 -%}
+                <span aria-hidden="true">{{ cart.item_count }}</span>
+              {%- endif -%}
+              <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+            </div>
+          {%- endif -%}
+        </a>
+      </div>
+    {%- endif -%}
     {%- if request.page_type == 'index' -%}
       {% render 'manz-hero-navigation' %}
     {%- endif -%}
     {%- liquid
-      if section.settings.menu != blank
+      if section.settings.menu != blank and manz_custom_internal_header == false
         render 'header-drawer'
       endif
 
-      if section.settings.logo_position == 'top-center' or section.settings.menu == blank
-        render 'header-search', input_id: 'Search-In-Modal-1'
+      if manz_custom_internal_header == false
+        if section.settings.logo_position == 'top-center' or section.settings.menu == blank
+          render 'header-search', input_id: 'Search-In-Modal-1'
+        endif
       endif
     -%}
 
-    {%- if section.settings.logo_position != 'middle-center' -%}
+    {%- if section.settings.logo_position != 'middle-center' and manz_custom_internal_header == false -%}
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
       {%- endif -%}
@@ -200,7 +269,7 @@
     {%- endif -%}
 
     {%- liquid
-      if section.settings.menu != blank
+      if section.settings.menu != blank and manz_custom_internal_header == false
         if section.settings.menu_type_desktop == 'dropdown'
           render 'header-dropdown-menu'
         elsif section.settings.menu_type_desktop != 'drawer'
@@ -209,7 +278,7 @@
       endif
     %}
 
-    {%- if section.settings.logo_position == 'middle-center' -%}
+    {%- if section.settings.logo_position == 'middle-center' and manz_custom_internal_header == false -%}
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
       {%- endif -%}
@@ -240,6 +309,7 @@
       {%- endif -%}
     {%- endif -%}
 
+    {%- unless manz_custom_internal_header -%}
     <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
       <div class="desktop-localization-wrapper">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
@@ -341,6 +411,7 @@
         {%- endif -%}
       </a>
     </div>
+    {%- endunless -%}
   </header>
 </{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>
 
@@ -514,6 +585,13 @@
     { "type": "url", "id": "hero_soaps_link", "label": "Link de Sabonetes" },
     { "type": "url", "id": "hero_accessories_link", "label": "Link de Acessórios" },
     { "type": "url", "id": "hero_tracking_link", "label": "Link de Rastreamento de pedidos" },
+    { "type": "header", "content": "Página Quem somos nós" },
+    {
+      "type": "url",
+      "id": "about_products_link",
+      "label": "Destino de Conheça nossos produtos",
+      "info": "Em branco, usa a rota nativa de todos os produtos."
+    },
     {
       "type": "select",
       "id": "logo_position",

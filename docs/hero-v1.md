@@ -10,7 +10,7 @@ python local-preview/hero-v1/serve.py
 
 Abra **http://localhost:8000/local-preview/hero-v1/**.
 Redimensione a janela ou use o modo de dispositivos do navegador para conferir desktop e mobile.
-Recarregue para repetir a animação. Com `prefers-reduced-motion: reduce`, a entrada é estática.
+A entrada da Hero permanece estática; a prévia atual do carrossel fica em http://localhost:8001/local-preview/hero-v2/.
 
 ## Implementação
 
@@ -20,8 +20,8 @@ Recarregue para repetir a animação. Com `prefers-reduced-motion: reduce`, a en
 - Desktop: centro da fotografia. Mobile: corte central autorizado, com rostos laterais parcialmente fora da viewport.
 - Título/logo: Bodoni Moda regular, optical size 96. Navegação e textos pequenos: Jost 300. Arquivos WOFF2 locais com suporte aos acentos portugueses.
 - A tipografia foi ampliada em V2; gradientes discretos cobrem somente as áreas superior e inferior, preservando a fotografia no centro.
-- Animação: GSAP 3.13.0, vendorizado, timeline de 1,9 s. Nenhum plugin ou animação de scroll.
-- A Hero usa um custom element para inicializar e limpar a animação durante atualizações do Theme Editor.
+- Entrada: sem animação de movimento; o título, o header e o CTA permanecem na posição final durante a inicialização.
+- O carrossel usa JavaScript nativo, aguarda a primeira imagem e limpa seus listeners quando o Theme Editor atualiza a section.
 
 ## Shopify e limites da prévia
 
@@ -46,5 +46,3 @@ Os breakpoints de desktop, mobile, telas de 320 px e landscape foram revisados e
 
 - [Bodoni Moda / Google Fonts](https://github.com/google/fonts/tree/main/ofl/bodonimoda): SIL Open Font License, cópia em `docs/licenses/bodoni-moda-OFL.txt`.
 - [Jost / Google Fonts](https://github.com/google/fonts/tree/main/ofl/jost): SIL Open Font License, cópia em `docs/licenses/jost-OFL.txt`.
-- [GSAP 3.13.0](https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js): aviso de licença preservado no arquivo; [licença padrão](https://gsap.com/standard-license/).
-- [Timeline](https://gsap.com/docs/v3/GSAP/Timeline/) e [gsap.matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia()/): documentação utilizada para a sequência e a preferência de movimento reduzido.

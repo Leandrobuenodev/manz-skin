@@ -10,8 +10,113 @@
 {
   "sections": {
     "manz-hero-v1": {
-      "type": "manz-hero-v1",
-      "settings": {}
+      "type": "manz-hero-v2",
+      "settings": {
+        "show_fallback_background": true,
+        "carousel_interval": 5,
+        "cta_label": "Ver todos os produtos",
+        "cta_link": ""
+      },
+      "blocks": {
+        "slide_01": {
+          "type": "slide",
+          "settings": {
+            "alt": "Retrato das três mulheres à beira-mar na campanha Manz Skin",
+            "focus_x": 50,
+            "focus_y": 50,
+            "mobile_focus_x": 50,
+            "mobile_focus_y": 50,
+            "image_fit": "cover",
+            "use_theme_fallback": true
+          }
+        },
+        "slide_02": {
+          "type": "slide",
+          "settings": {
+            "alt": "Modelo ruiva segurando um sabonete artesanal Manz Skin",
+            "focus_x": 50,
+            "focus_y": 40,
+            "mobile_focus_x": 50,
+            "mobile_focus_y": 50,
+            "image_fit": "cover",
+            "use_theme_fallback": true
+          }
+        },
+        "slide_03": {
+          "type": "slide",
+          "settings": {
+            "alt": "Três modelos com roupas de praia na campanha Manz Skin",
+            "focus_x": 50,
+            "focus_y": 50,
+            "mobile_focus_x": 50,
+            "mobile_focus_y": 50,
+            "image_fit": "cover",
+            "use_theme_fallback": true
+          }
+        },
+        "slide_04": {
+          "type": "slide",
+          "settings": {
+            "alt": "Sabonetes artesanais acompanhados de ingredientes naturais e argilas",
+            "focus_x": 50,
+            "focus_y": 52,
+            "mobile_focus_x": 50,
+            "mobile_focus_y": 50,
+            "image_fit": "cover",
+            "use_theme_fallback": true
+          }
+        }
+      },
+      "block_order": ["slide_01", "slide_02", "slide_03", "slide_04"]
+    },
+    "manz-more-than-skincare": {
+      "type": "manz-more-than-skincare",
+      "settings": { "show_theme_fallback": true, "cta_collection": "body" },
+      "blocks": {
+        "pillar_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "vegan",
+            "title": "vegano",
+            "text": "todos nossos produtos são veganos e não testados em animais."
+          }
+        },
+        "pillar_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "natural",
+            "title": "natural",
+            "text": "utilizamos somente os melhores ingredientes naturais."
+          }
+        },
+        "pillar_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "recycle",
+            "title": "reciclável",
+            "text": "utilizamos embalagens recicláveis e ecologicamente corretas."
+          }
+        },
+        "pillar_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "biodegradable",
+            "title": "biodegradável",
+            "text": "produtos biodegradáveis e que não prejudicam o meio ambiente."
+          }
+        }
+      },
+      "block_order": [
+        "pillar_1",
+        "pillar_2",
+        "pillar_3",
+        "pillar_4"
+      ]
+    },
+    "manz-home-section-2": {
+      "disabled": true,
+      "type": "manz-home-section-2",
+      "settings": { "show_theme_fallback": true, "soap_collection": "body" }
     },
     "image-with-text": {
       "type": "image-with-text",
@@ -27,7 +132,8 @@
           "type": "button",
           "settings": {
             "button_label": "ver todos",
-            "button_link": "shopify://products/faixa-de-skincare",
+            "button_link": "",
+            "button_collection": "",
             "button_style_secondary": false
           }
         }
@@ -219,6 +325,8 @@
   },
   "order": [
     "manz-hero-v1",
+    "manz-more-than-skincare",
+    "manz-home-section-2",
     "image-with-text",
     "51d7bb85-0bb1-4580-bb1c-49e9b0f7a466",
     "bb9a6b7b-1cbe-4012-9f3a-5048371e13be",

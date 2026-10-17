@@ -1,0 +1,97 @@
+{%- liquid
+  assign slide_blocks = hero_section.blocks
+  assign slide_count = slide_blocks.size
+  assign image_class = 'manz-hero__image manz-hero-carousel__image'
+  if version == 'v2'
+    assign image_class = image_class | append: ' manz-hero-v2__portrait'
+  endif
+  if slide_count == 0 and legacy_image != blank
+    assign slide_count = 1
+  endif
+-%}
+<div
+  class="manz-hero-carousel__viewport"
+  id="ManzHeroCarousel-{{ hero_section.id }}"
+  data-manz-carousel-viewport
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="Fotografias da campanha Manz Skin"
+>
+  <div class="manz-hero-carousel__track" data-manz-carousel-track>
+    {%- if slide_blocks.size > 0 -%}
+      {%- for block in slide_blocks -%}
+        {%- liquid
+          assign slide_alt = block.settings.alt
+          assign focus_x = block.settings.focus_x | default: 50
+          assign focus_y = block.settings.focus_y | default: 50
+          assign mobile_focus_x = block.settings.mobile_focus_x | default: focus_x
+          assign mobile_focus_y = block.settings.mobile_focus_y | default: focus_y
+          assign image_fit = block.settings.image_fit | default: 'cover'
+          assign image_loading = 'lazy'
+          assign image_priority = 'low'
+          if forloop.first
+            assign image_loading = 'eager'
+            assign image_priority = 'high'
+          endif
+          case forloop.index
+            when 1
+              assign default_alt = 'Retrato das três mulheres à beira-mar na campanha Manz Skin'
+            when 2
+              assign default_alt = 'Modelo ruiva segurando um sabonete artesanal Manz Skin'
+            when 3
+              assign default_alt = 'Três modelos com roupas de praia na campanha Manz Skin'
+            when 4
+              assign default_alt = 'Sabonetes artesanais acompanhados de ingredientes naturais e argilas'
+            else
+              assign default_alt = 'Fotografia da campanha Manz Skin'
+          endcase
+          assign slide_alt = slide_alt | default: default_alt
+        -%}
+        <div
+          class="manz-hero-carousel__slide"
+          data-manz-carousel-slide
+          data-slide-index="{{ forloop.index0 }}"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="{{ forloop.index }} de {{ slide_count }}"
+          {% unless forloop.first %}aria-hidden="true"{% endunless %}
+          style="--manz-hero-slide-focus-x: {{ focus_x }}%; --manz-hero-slide-focus-y: {{ focus_y }}%; --manz-hero-slide-mobile-x: {{ mobile_focus_x }}%; --manz-hero-slide-mobile-y: {{ mobile_focus_y }}%; --manz-hero-slide-fit: {{ image_fit }};"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 2880 | image_tag:
+              class: image_class,
+              widths: '960, 1440, 1920, 2400, 2880',
+              sizes: sizes,
+              loading: image_loading,
+              fetchpriority: image_priority,
+              alt: slide_alt
+            }}
+          {%- elsif block.settings.use_theme_fallback -%}
+            {% render 'manz-hero-carousel-fallback-image', index: forloop.index, version: version, image_class: image_class, sizes: sizes, alt: slide_alt, loading: image_loading, fetchpriority: image_priority %}
+          {%- else -%}
+            <div class="manz-hero-carousel__empty" aria-hidden="true"></div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- elsif legacy_image != blank -%}
+      <div
+        class="manz-hero-carousel__slide"
+        data-manz-carousel-slide
+        data-slide-index="0"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="1 de 1"
+      >
+        {{ legacy_image | image_url: width: 2880 | image_tag:
+          class: image_class,
+          widths: '960, 1440, 1920, 2400, 2880',
+          sizes: sizes,
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: legacy_alt | default: legacy_image.alt
+        }}
+      </div>
+    {%- endif -%}
+  </div>
+</div>

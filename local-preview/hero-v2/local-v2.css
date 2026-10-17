@@ -10,11 +10,6 @@ body.manz-hero-v2-active .section-header {
   transform: none !important;
 }
 
-body.manz-hero-v2-active .section-header::before {
-  height: clamp(112px, 17svh, 174px);
-  background: linear-gradient(180deg, rgb(0 0 0 / 46%) 0%, rgb(0 0 0 / 24%) 54%, transparent 100%);
-}
-
 body.manz-hero-v2-active .section-header .header-wrapper {
   background: transparent;
   border: 0;
@@ -35,14 +30,25 @@ body.manz-hero-v2-active .section-header .header > .manz-hero-nav {
 
 body.manz-hero-v2-active .section-header .manz-hero-nav__link {
   min-height: 44px;
-  font-size: clamp(11px, 0.83vw, 13px);
-  letter-spacing: 0.13em;
-  text-shadow: 0 1px 8px rgb(0 0 0 / 22%);
+  color: #fff;
+  font-size: clamp(11px, 0.88vw, 13px);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 68%), 0 2px 12px rgb(0 0 0 / 28%);
 }
 
 body.manz-hero-v2-active .section-header .header__heading-link,
 body.manz-hero-v2-active .section-header .header__icon {
-  text-shadow: 0 1px 8px rgb(0 0 0 / 22%);
+  text-shadow: 0 1px 10px rgb(0 0 0 / 35%);
+}
+
+body.manz-hero-v2-active .section-header .manz-hero-wordmark {
+  font-size: 48px;
+}
+
+body.manz-hero-v2-active .section-header .header__icon {
+  color: #fff;
+  filter: drop-shadow(0 1px 4px rgb(0 0 0 / 38%));
 }
 
 .manz-hero-v2-shell .manz-hero__copy {
@@ -88,17 +94,13 @@ body.manz-hero-v2-active .section-header .header__icon {
   }
 
   .manz-hero-v2__panel {
-    overflow: visible;
-    border-radius: 0;
-    background: transparent;
+    overflow: hidden;
+    border-radius: var(--manz-hero-v2-radius, 14px);
+    background: #302b25;
   }
 
   .manz-hero-v2__panel:has(header-drawer details[open]) {
     z-index: 4;
-  }
-
-  .manz-hero-v2__portrait {
-    border-radius: 8px;
   }
 
   .manz-hero-v2-shell .manz-hero__copy {
@@ -129,25 +131,23 @@ body.manz-hero-v2-active .section-header .header__icon {
 }
 
 @media (max-width: 749px) {
+  .manz-hero-v2__panel {
+    border-radius: 8px;
+  }
+
   body.manz-hero-v2-active .section-header .header {
     min-height: 64px;
     padding-inline: 12px;
   }
 
   body.manz-hero-v2-active .manz-hero-wordmark {
-    font-size: 34px;
+    font-size: 36px;
   }
 
   body.manz-hero-v2-active .section-header .header__icon {
     min-width: 36px;
     width: 36px;
     min-height: 44px;
-  }
-
-  .manz-hero-v2__copy-shade {
-    display: block;
-    inset: 52% 0 0;
-    background: linear-gradient(0deg, rgb(0 0 0 / 42%) 0%, rgb(0 0 0 / 16%) 55%, transparent 100%);
   }
 
   body.manz-hero-v2-active .section-header .manz-hero-nav--mobile .manz-hero-nav__link {
@@ -213,7 +213,7 @@ body.manz-hero-v2-active .section-header .header__icon {
 
 @media (max-width: 360px) {
   body.manz-hero-v2-active .manz-hero-wordmark {
-    font-size: 24px;
+    font-size: 26px;
   }
 
   body.manz-hero-v2-active .section-header .header__icons .header__search {

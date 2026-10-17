@@ -1,0 +1,241 @@
+{{ 'manz-more-than-skincare.css' | asset_url | stylesheet_tag }}
+{% liquid
+  assign cta_url = section.settings.cta_collection.url | default: section.settings.cta_link
+%}
+<section class="manz-more" aria-labelledby="ManzMoreHeading-{{ section.id }}" style="--manz-more-section-background: {{ section.settings.section_background }}; --manz-more-heading-color: {{ section.settings.heading_color }}; --manz-more-body-color: {{ section.settings.body_color }}; --manz-more-button-background: {{ section.settings.button_background }}; --manz-more-button-text-color: {{ section.settings.button_text_color }}; --manz-more-features-background: {{ section.settings.features_background }}; --manz-more-features-text-color: {{ section.settings.features_text_color }}">
+  <div class="manz-more__main">
+    <div class="manz-more__plate" aria-hidden="true">
+      {% if section.settings.plate_image != blank %}
+        {{ section.settings.plate_image | image_url: width: 2400 | image_tag: class: 'manz-more__plate-image', widths: '960, 1448, 1920, 2400', sizes: '100vw', loading: 'lazy', decoding: 'async', alt: '' }}
+      {% elsif section.settings.show_theme_fallback %}
+        <img class="manz-more__plate-image" src="{{ 'manz-more-plate-v1.png' | asset_url }}" width="1448" height="1086" alt="" loading="lazy" decoding="async">
+      {% else %}
+        <div class="manz-more__plate-placeholder" aria-hidden="true"></div>
+      {% endif %}
+    </div>
+    <div class="manz-more__content">
+      {% if section.settings.heading != blank %}
+        <h2 class="manz-more__heading" id="ManzMoreHeading-{{ section.id }}">{% if section.settings.heading == "It’s more than skincare" or section.settings.heading == "It's more than skincare" %}<span>It’s more</span><span>than skincare</span>{% else %}{{ section.settings.heading | escape }}{% endif %}</h2>
+      {% endif %}
+      {% if section.settings.body_text != blank %}
+        <p class="manz-more__text">{{ section.settings.body_text | escape | newline_to_br }}</p>
+      {% endif %}
+      {% if section.settings.cta_label != blank and cta_url != blank %}
+        <a class="manz-more__cta" href="{{ cta_url | escape }}">{{ section.settings.cta_label | escape }} <span aria-hidden="true">→</span></a>
+      {% endif %}
+    </div>
+  </div>
+  {% if section.blocks.size > 0 %}
+    <ul class="manz-more__features" aria-label="Compromissos Manz Skin">
+      {% for block in section.blocks %}
+        <li class="manz-more__feature" {{ block.shopify_attributes }}>
+          {% unless block.settings.icon == 'none' %}{% render 'manz-more-icon', icon: block.settings.icon %}{% endunless %}
+          <div class="manz-more__feature-copy">
+            <h3 class="manz-more__feature-title">{{ block.settings.title | escape }}</h3>
+            <p class="manz-more__feature-text">{{ block.settings.text | escape }}</p>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Mais que skincare",
+  "tag": "section",
+  "class": "section-manz-more",
+  "limit": 1,
+  "enabled_on": {
+    "templates": [
+      "index"
+    ]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "plate_image",
+      "label": "Plate principal sem textos",
+      "info": "Use uma plate 4:3 sem textos. A faixa inferior vazia da imagem fica fora do bloco principal; os benefícios são HTML."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_theme_fallback",
+      "label": "Usar a plate original do tema se a imagem estiver vazia",
+      "info": "Desative para deixar o fundo da composição sem fotografia até escolher outra imagem.",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "model_image",
+      "label": "Foto da modelo legada (não aparece no layout atual)",
+      "info": "Campo mantido para preservar configurações anteriores. A composição atual usa apenas a plate principal acima."
+    },
+    {
+      "type": "image_picker",
+      "id": "soaps_image",
+      "label": "Foto dos sabonetes legada (não aparece no layout atual)",
+      "info": "Campo mantido para preservar configurações anteriores. A composição atual usa apenas a plate principal acima."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "It’s more than skincare"
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "Texto institucional",
+      "default": "Nossa missão é conectar pessoas ao que há de mais puro e eficaz na natureza, proporcionando uma experiência de autocuidado consciente, transformador e alinhado aos princípios de sustentabilidade. Cada produto que desenvolvemos reflete nosso compromisso com a beleza natural, o bem-estar e a harmonia, através de fórmulas veganas, biodegradáveis e de alta qualidade. Valorizamos a saúde, a praticidade e a eficiência em cada detalhe, entregando soluções que respeitam a natureza e promovem um cuidado equilibrado e autêntico para todos."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto do CTA",
+      "default": "Conheça nossos sabonetes"
+    },
+    {
+      "type": "collection",
+      "id": "cta_collection",
+      "label": "Coleção do CTA"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link do CTA",
+      "info": "Use para um destino diferente de uma coleção. A coleção selecionada acima tem prioridade."
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Fundo principal",
+      "default": "#f5efdf"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Cor do título",
+      "default": "#3e401f"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Cor do texto",
+      "default": "#54523d"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Fundo do CTA",
+      "default": "#7b8050"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Texto do CTA",
+      "default": "#fff9e8"
+    },
+    {
+      "type": "color",
+      "id": "features_background",
+      "label": "Fundo dos benefícios",
+      "default": "#80854f"
+    },
+    {
+      "type": "color",
+      "id": "features_text_color",
+      "label": "Texto dos benefícios",
+      "default": "#fff9e8"
+    }
+  ],
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefício",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícone",
+          "options": [
+            {
+              "value": "vegan",
+              "label": "vegano"
+            },
+            {
+              "value": "natural",
+              "label": "natural"
+            },
+            {
+              "value": "recycle",
+              "label": "reciclável"
+            },
+            {
+              "value": "biodegradable",
+              "label": "biodegradável"
+            },
+            {
+              "value": "none",
+              "label": "Sem ícone"
+            }
+          ],
+          "default": "natural"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "natural"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texto",
+          "default": "utilizamos somente os melhores ingredientes naturais."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mais que skincare",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "vegan",
+            "title": "vegano",
+            "text": "todos nossos produtos são veganos e não testados em animais."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "natural",
+            "title": "natural",
+            "text": "utilizamos somente os melhores ingredientes naturais."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "recycle",
+            "title": "reciclável",
+            "text": "utilizamos embalagens recicláveis e ecologicamente corretas."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "biodegradable",
+            "title": "biodegradável",
+            "text": "produtos biodegradáveis e que não prejudicam o meio ambiente."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,373 @@
+@font-face { font-family:'Manz Bodoni'; src:url('manz-bodoni-moda-latin.woff2') format('woff2'); font-style:normal; font-weight:400; font-display:swap; }
+@font-face { font-family:'Manz Jost'; src:url('manz-jost-light-latin.woff2') format('woff2'); font-style:normal; font-weight:300; font-display:swap; }
+
+@font-face { font-family:'Manz Editorial'; src:url('manz-about-cormorant-regular.woff2') format('woff2'); font-style:normal; font-weight:400; font-display:swap; }
+@font-face { font-family:'Manz Editorial'; src:url('manz-about-cormorant-italic.woff2') format('woff2'); font-style:italic; font-weight:400; font-display:swap; }
+
+/* One approved plate, with accessible editable HTML text in the same grid cell.
+   Desktop fills the viewport without distorting the photograph; mobile crops one
+   editorial region and keeps the full editable copy in normal document flow. */
+body.manz-about-page { --manz-about-cream:#f3eee5; --manz-about-ink:#513c2c; --manz-about-olive:#646547; position:relative; margin:0; min-height:100svh; height:auto; background:var(--manz-about-cream); }
+.manz-about-page #MainContent { min-width:0; }
+.manz-about-stage { width:100%; max-width:1448px; margin-inline:auto; container-type:inline-size; }
+.manz-about { position:relative; display:grid; grid-template-columns:minmax(0,1fr); isolation:isolate; box-sizing:border-box; min-height:75cqw; color:var(--manz-about-ink,#513c2c); }
+.manz-about *, .manz-about *::before, .manz-about *::after { box-sizing:border-box; }
+.manz-about__plate { grid-area:1 / 1; min-width:0; align-self:start; pointer-events:none; }
+.manz-about__plate-picture { display:block; width:100%; }
+.manz-about__plate-image { display:block; width:100%; height:auto; }
+
+.manz-about__editorial { grid-area:1 / 1; min-width:0; position:relative; z-index:1; margin-left:30.4%; margin-right:23.5%; padding:6.8cqw 0 2cqw; }
+.manz-about__opening { width:73%; margin-bottom:4cqw; text-align:center; }
+.manz-about__page-title { margin:0; white-space:nowrap; color:var(--manz-about-ink); font:400 6cqw/1.04 'Manz Editorial','Times New Roman',serif; letter-spacing:-.065em; }
+.manz-about__subtitle { margin:.15cqw 0 1.2cqw; color:var(--manz-about-olive); font:italic 400 4.35cqw/1.02 'Manz Editorial',Georgia,serif; letter-spacing:-.06em; }
+.manz-about__intro { color:#6b5747; font:400 1.45cqw/1.24 'Times New Roman',Georgia,serif; }
+.manz-about__intro p { margin:0; color:inherit; }
+.manz-about__eyebrow { margin:0 0 10px; font:300 10px/1.5 'Manz Jost',sans-serif; text-transform:uppercase; letter-spacing:.2em; }
+.manz-about__note { margin:14px 0 0; font:italic 20px/1.4 Georgia,serif; }
+.manz-about__chapters { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:2.4cqw; row-gap:1.6cqw; align-items:start; }
+.manz-about__article { min-width:0; }
+.manz-about__article-title { margin:0 0 1.1cqw; color:var(--manz-about-ink); font:400 2.7cqw/.98 'Manz Editorial','Times New Roman',serif; letter-spacing:-.065em; overflow-wrap:normal; }
+.manz-about__article--connection .manz-about__article-title { width:132%; max-width:29cqw; }
+.manz-about__copy { font:400 max(16px,1.155cqw)/1.24 'Times New Roman',Georgia,serif; color:#6b594a; }
+.manz-about__article--mission .manz-about__copy { max-width:100%; }
+.manz-about__copy p { margin:0 0 .8em; color:inherit; }
+.manz-about__copy p:last-child { margin-bottom:0; }
+.manz-about__article--invitation { grid-column:1 / -1; width:88%; justify-self:start; text-align:center; }
+.manz-about__article--invitation .manz-about__article-title { font-family:'Manz Editorial',Georgia,serif; font-size:3.4cqw; font-style:italic; margin-bottom:.7cqw; }
+.manz-about__article--invitation .manz-about__article-title em { color:var(--manz-about-olive); font-weight:400; }
+.manz-about__article--invitation .manz-about__copy { max-width:34cqw; margin-inline:auto; font-family:'Times New Roman',Georgia,serif; font-size:max(15px,1.1cqw); line-height:1.24; }
+.manz-about__cta { display:inline-flex; align-items:center; justify-content:center; gap:15px; width:max-content; max-width:100%; min-height:36px; padding:8px 22px; margin-top:14px; border:1px solid rgb(255 255 255 / 48%); border-radius:999px; background:rgb(80 82 54 / 94%); color:#fffaf0; font:400 15px/1.25 Georgia,serif; text-decoration:none; box-shadow:0 1px 3px rgb(45 46 25 / 8%),inset 0 1px 0 rgb(255 255 255 / 22%); transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease; }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .manz-about__cta { background:rgb(80 82 54 / 76%); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); } }
+.manz-about__cta:hover { background:rgb(80 82 54 / 84%); border-color:rgb(255 255 255 / 68%); box-shadow:0 2px 5px rgb(45 46 25 / 10%),inset 0 1px 0 rgb(255 255 255 / 26%); }
+.manz-about__cta:focus-visible { outline:2px solid var(--manz-about-ink); outline-offset:4px; }
+/* Existing page navigation and global footer, adapted only on this template. */
+.manz-about-header.page-width, .manz-about-preview-header__inner { position:relative; z-index:3; display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); grid-template-areas:none; align-items:center; width:100%; max-width:1448px; min-height:96px; margin:0 auto; padding:5px 28px; box-sizing:border-box; color:var(--manz-about-ink); background:transparent; border:0; }
+.manz-about-page .section-header, .manz-about-preview-header { position:absolute; top:0; left:0; width:100%; z-index:5; margin:0; }
+.manz-about-page .header-wrapper { background:transparent; border:0; }
+.manz-about-header a, .manz-about-preview-header a { color:inherit; font:300 11px/1.4 'Manz Jost',sans-serif; text-decoration:none; }
+.manz-about-header__back, .manz-about-preview-header__back { grid-column:1; justify-self:start; align-self:start; margin-top:7px; padding:5px 8px; background:transparent; border-radius:0; }
+.manz-about-header__wordmark, .manz-about-preview-header__wordmark { position:absolute; left:50%; top:58px; transform:translate(-50%,-50%); color:var(--manz-about-ink) !important; font:400 21px/1 Georgia,serif !important; letter-spacing:.31em; }
+.manz-about-header__actions { grid-column:3; justify-self:end; align-self:start; display:flex; gap:8px; align-items:center; }
+.manz-about-header__all-products, .manz-about-preview-header__products { grid-column:3; justify-self:end; align-self:start; margin-top:7px; padding:5px 8px; text-align:right; background:transparent; border-radius:0; }
+.manz-about-header a.manz-about-header__back,
+.manz-about-preview-header a.manz-about-preview-header__back,
+.manz-about-header a.manz-about-header__all-products,
+.manz-about-preview-header a.manz-about-preview-header__products {
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  min-height:34px; max-width:none; margin-top:7px; padding:0 11px;
+  border:1px solid rgb(255 255 255 / 50%); border-radius:999px;
+  background:rgb(255 253 247 / 90%); color:#513c2c;
+  letter-spacing:.01em; text-align:center; text-decoration:none; white-space:nowrap;
+  font:400 11px/1.2 'Manz Jost',sans-serif;
+  box-shadow:0 1px 3px rgb(45 39 31 / 6%);
+  transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .manz-about-header a.manz-about-header__back,
+  .manz-about-preview-header a.manz-about-preview-header__back,
+  .manz-about-header a.manz-about-header__all-products,
+  .manz-about-preview-header a.manz-about-preview-header__products {
+    background:rgb(255 253 247 / 72%);
+    -webkit-backdrop-filter:blur(7px);
+    backdrop-filter:blur(7px);
+  }
+}
+.manz-about-header a.manz-about-header__back:hover,
+.manz-about-preview-header a.manz-about-preview-header__back:hover,
+.manz-about-header a.manz-about-header__all-products:hover,
+.manz-about-preview-header a.manz-about-preview-header__products:hover {
+  background:rgb(255 253 247 / 84%); border-color:rgb(255 255 255 / 65%);
+  box-shadow:0 2px 5px rgb(45 39 31 / 8%);
+}
+.manz-about-header a.manz-about-header__back:focus-visible,
+.manz-about-preview-header a.manz-about-preview-header__back:focus-visible,
+.manz-about-header a.manz-about-header__all-products:focus-visible,
+.manz-about-preview-header a.manz-about-preview-header__products:focus-visible {
+  outline:2px solid var(--manz-about-ink); outline-offset:3px;
+}
+.manz-about-header__actions .header__search { display:flex; }
+.manz-about-header__actions .header__icon { width:30px; height:36px; display:flex; align-items:center; justify-content:center; }
+.manz-about-header__actions .header__icon .icon { width:18px; height:18px; }
+.manz-about-header__actions .cart-count-bubble { background:var(--manz-about-olive); color:#fffaf0; }
+
+
+.manz-about-page .manz-footer { --manz-footer-background:#3e401f; --manz-footer-foreground:#f7f4e9; --manz-footer-muted:rgb(247 244 233 / 76%); border-top:0; }
+@media (min-width:1100px) {
+ .manz-about-page .manz-footer { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:6px 20px; min-height:82px; padding:12px max(28px,calc((100vw - 1392px) / 2)) !important; margin:0; }
+ .manz-about-page .manz-footer .footer__content-top.page-width { width:100%; max-width:none; padding:0; }
+ .manz-about-page .manz-footer .footer__blocks-wrapper.grid { grid-template-columns:110px minmax(0,1fr) 190px; gap:20px; align-items:center; }
+ .manz-about-page .manz-footer .footer-block__heading { font-size:9px; letter-spacing:.12em; margin:0 0 4px; }
+ .manz-about-page .manz-footer__wordmark { font-size:29px; }
+ .manz-about-page .manz-footer .footer-block__image-wrapper img { max-width:110px; max-height:32px; }
+ .manz-about-page .manz-footer .footer-block__details-content { font-size:13px; line-height:1.4; }
+ .manz-about-page .manz-footer .manz-footer__links .list-unstyled { display:flex; flex-wrap:wrap; gap:4px 16px; }
+ .manz-about-page .manz-footer .list-menu__item--link { min-height:0; padding:0; font-size:inherit; }
+ .manz-about-page .manz-footer .footer-block__details-content.rte p { margin:0 0 3px; }
+ .manz-about-page .manz-footer .footer__content-bottom { border:0; }
+ .manz-about-page .manz-footer .footer__content-bottom-wrapper.page-width { width:auto; max-width:190px; padding:0; }
+ .manz-about-page .manz-footer .footer__content-bottom-wrapper:has(.footer__localization:empty):has(.footer__column--info:empty) { display:none; }
+ .manz-about-page .manz-footer .footer__copyright { display:flex; align-items:flex-start; flex-direction:column; gap:3px; padding:0; font-size:10px; line-height:1.3; }
+ .manz-about-page .manz-footer .manz-footer__social { gap:4px; }
+ .manz-about-page .manz-footer .manz-footer__social .list-social__link { width:26px; height:26px; padding:4px; }
+ .manz-about-page .manz-footer .footer__content-bottom .policies { margin:0; gap:3px 8px; }
+}
+
+
+
+@media (max-width:1099px) {
+ .manz-about-stage { width:100%; max-width:none; margin:0; container-type:normal; }
+ .manz-about-page .section-header, .manz-about-preview-header { position:relative; }
+ .manz-about { display:grid; grid-template-columns:minmax(0,1fr); gap:0; min-height:0; padding:0 24px 36px; }
+ .manz-about__plate { grid-area:auto; width:calc(100% + 48px); height:clamp(360px,56vw,520px); margin-inline:-24px; }
+ .manz-about__plate-picture { height:100%; }
+ .manz-about__plate-image { width:100%; height:100%; object-fit:cover; object-position:100% 45%; }
+ .manz-about__editorial { grid-area:auto; display:block; padding:0; margin:0; }
+ .manz-about__chapters { display:grid; grid-template-columns:minmax(0,1fr); gap:30px; }
+ .manz-about__opening { width:100%; max-width:680px; margin:0 auto 30px; justify-self:center; }
+ .manz-about__page-title { white-space:normal; font-size:clamp(46px,7.4vw,66px); }
+ .manz-about__subtitle { font-size:clamp(25px,4.3vw,38px); margin:12px 0 18px; }
+ .manz-about__editorial { margin:0; }
+ .manz-about__intro { font-size:18px; line-height:1.45; }
+ .manz-about__article { margin-inline:auto; width:100%; max-width:680px; justify-self:center; grid-column:1; }
+ .manz-about__article-title, .manz-about__article--connection .manz-about__article-title { width:auto; max-width:none; font-size:32px; margin-bottom:18px; line-height:1.12; }
+ .manz-about__article--mission .manz-about__copy { max-width:none; }
+ .manz-about__copy { font-size:18px; line-height:1.5; }
+
+ .manz-about__article--invitation .manz-about__article-title { font-size:32px; }
+ .manz-about__article--invitation .manz-about__copy { max-width:none; font-size:18px; }
+ .manz-about__cta { min-height:44px; font-size:14px; }
+ .manz-about-header.page-width, .manz-about-preview-header__inner { min-height:62px; padding:8px 14px; }
+ .manz-about-header__wordmark, .manz-about-preview-header__wordmark { top:50%; font-size:18px !important; letter-spacing:.12em; }
+ .manz-about-header a, .manz-about-preview-header a { font-size:10px; }
+ .manz-about-header a.manz-about-header__back,
+ .manz-about-preview-header a.manz-about-preview-header__back,
+ .manz-about-header a.manz-about-header__all-products,
+ .manz-about-preview-header a.manz-about-preview-header__products {
+   min-height:44px; margin-top:0; padding-inline:9px; font-size:10px;
+ }
+}
+@media (max-width:599px) {
+ .manz-about { padding-inline:22px; }
+ .manz-about__plate { width:calc(100% + 44px); height:clamp(320px,90vw,430px); margin-inline:-22px; }
+ .manz-about__plate-image { object-position:100% 50%; }
+ .manz-about-header__actions { gap:2px; }
+ .manz-about-header__actions .header__icon { width:26px; }
+ .manz-about-header.page-width { padding-inline:10px; }
+ .manz-about-header__wordmark { font-size:16px !important; letter-spacing:.08em; }
+ .manz-about-header a.manz-about-header__back,
+ .manz-about-preview-header a.manz-about-preview-header__back,
+ .manz-about-header a.manz-about-header__all-products,
+ .manz-about-preview-header a.manz-about-preview-header__products { padding-inline:5px; font-size:11px; }
+}
+@media (prefers-reduced-motion:reduce) {
+ .manz-about-header a.manz-about-header__back,
+ .manz-about-preview-header a.manz-about-preview-header__back,
+ .manz-about-header a.manz-about-header__all-products,
+ .manz-about-preview-header a.manz-about-preview-header__products { transition:none; }
+}
+@media (min-width:600px) and (max-width:899px) {
+ .manz-about__plate { height:clamp(540px,90vw,810px); }
+}
+@media (prefers-reduced-motion:reduce) { .manz-about__cta { transition:none; } }
+
+/* Reference coordinate plane: 1448 x 1086. All desktop lengths below
+   use the full-width stage (1cqw = 14.48 reference pixels). The plate is
+   edge crop is performed by the plate itself; text stays anchored to this stage.
+   Measured anchors: opening x425/y110; columns x440,789/y405;
+   closing x495/y880; CTA center x754/y1036. Rows can grow for edited copy. */
+@media (min-width:1100px) {
+  body.manz-about-page { height:auto; min-height:100dvh; }
+  .manz-about-page #MainContent { display:block; margin:0; padding:0; }
+  .manz-about-stage { width:100%; max-width:none; margin:0; container-type:inline-size; }
+  .manz-about { min-height:75cqw; }
+  .manz-about__plate { position:relative; width:100%; margin:0; }
+  .manz-about__plate-image { position:static; width:100%; height:auto; }
+  .manz-about__editorial {
+    width:46.9613cqw; margin:0 0 0 30.3867cqw;
+    padding:7.5967cqw 0 1.9337cqw;
+  }
+  .manz-about__opening { width:36.6022cqw; margin:0 0 3.0387cqw -1.0359cqw; min-height:16.782cqw; }
+  .manz-about__page-title { font-size:6.6298cqw; line-height:1; letter-spacing:-.08em; text-transform:lowercase; }
+  .manz-about__subtitle { white-space:nowrap; font-size:4.4199cqw; line-height:1; margin:-.4144cqw 0 1.2431cqw; }
+  .manz-about__intro { width:34.5304cqw; margin-inline:auto; font-size:1.4503cqw; line-height:1.2571; letter-spacing:normal; }
+  .manz-about__chapters { grid-template-columns:20.7182cqw 22.4448cqw; column-gap:3.384cqw; row-gap:0; }
+  .manz-about__article-title { font-size:2.9006cqw; line-height:.93; letter-spacing:-.085em; margin:0 0 1.2431cqw; }
+  .manz-about__article--connection .manz-about__article-title { width:29.6961cqw; max-width:none; }
+  .manz-about__copy { font-size:1.174cqw; line-height:1.2471; letter-spacing:-.015em; }
+  .manz-about__article--connection .manz-about__copy { letter-spacing:normal; }
+  .manz-about__copy p { margin:0 0 1.2431cqw; }
+  .manz-about__copy p:last-child { margin-bottom:0; }
+  .manz-about__article--mission,
+  .manz-about__article--connection { min-height:32.6657cqw; }
+  .manz-about__article--invitation { width:35.9116cqw; margin:0 0 0 3.7983cqw; }
+  .manz-about__article--invitation .manz-about__article-title { white-space:nowrap; font-size:3.5912cqw; line-height:1; letter-spacing:-.055em; margin:0 0 .5525cqw; }
+  .manz-about__article--invitation .manz-about__article-title em { font-size:1em; color:inherit; }
+  .manz-about__article--invitation .manz-about__copy { max-width:32.4586cqw; font-size:1.105cqw; line-height:1.3125; letter-spacing:-.025em; }
+  .manz-about__cta { min-height:3.0387cqw; margin-top:.9669cqw; padding:.4144cqw 1.6575cqw; gap:1.0359cqw; font:400 1.3122cqw/1.25 "Times New Roman",serif; letter-spacing:normal; }
+  .manz-about-header.page-width, .manz-about-preview-header__inner { max-width:none; min-height:6.6298vw; }
+  .manz-about-header__wordmark, .manz-about-preview-header__wordmark { top:4.0055vw; font-size:1.6575vw !important; }
+  .manz-about-page .shopify-section-group-footer-group { flex:0 0 auto; width:100%; }
+  .manz-about-page .manz-footer {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-rows:1fr;
+    align-items:center;
+    gap:0 18px;
+    width:100%;
+    min-height:64px;
+    margin:0;
+    padding:6px clamp(18px,2vw,34px) !important;
+    border:0;
+  }
+  .manz-about-page .manz-footer .footer__content-top.page-width {
+    grid-row:1;
+    grid-column:1;
+    width:100%;
+    max-width:none;
+    padding:0;
+  }
+  .manz-about-page .manz-footer .footer__blocks-wrapper.grid {
+    grid-template-columns:100px minmax(0,1fr) 190px;
+    gap:14px;
+    align-items:center;
+  }
+  .manz-about-page .manz-footer .footer-block__heading { margin:0 0 3px; font-size:8px; }
+  .manz-about-page .manz-footer__wordmark { font-size:25px; }
+  .manz-about-page .manz-footer .footer-block__image-wrapper img { max-width:100px; max-height:28px; }
+  .manz-about-page .manz-footer .footer-block__details-content { font-size:11px; line-height:1.3; }
+  .manz-about-page .manz-footer .manz-footer__links .list-unstyled { gap:2px 10px; }
+  .manz-about-page .manz-footer .list-menu__item--link { min-height:0; padding:0; font-size:inherit; }
+  .manz-about-page .manz-footer .footer-block__details-content.rte p { margin:0; }
+  .manz-about-page .manz-footer .footer__content-bottom {
+    grid-row:1;
+    grid-column:2;
+    align-self:center;
+    border:0;
+  }
+  .manz-about-page .manz-footer .footer__content-bottom-wrapper.page-width { width:auto; max-width:280px; padding:0; }
+  .manz-about-page .manz-footer .footer__copyright { flex-direction:row; justify-content:flex-end; gap:2px 8px; padding:0; font-size:9px; line-height:1.25; }
+  .manz-about-page .manz-footer .manz-footer__social { gap:2px; }
+  .manz-about-page .manz-footer .manz-footer__social .list-social__link { width:22px; height:22px; padding:3px; }
+}
+/* The approved landscape plate is 1672 x 941. Keep it edge to edge and
+   map vertical editorial spacing and type to the usable plate height. At
+   shorter desktop heights, let the complete text flow and scroll naturally. */
+@media (min-width:1100px) and (min-height:880px) {
+  body.manz-about-page {
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    height:100dvh;
+    min-height:100dvh;
+  }
+  .manz-about-page .section-header,
+  .manz-about-preview-header { position:absolute; inset:0 0 auto; z-index:5; height:0; }
+  .manz-about-header.page-width,
+  .manz-about-preview-header__inner {
+    width:100%; max-width:none; height:64px; min-height:64px;
+    margin:0; padding:4px clamp(18px,2.5vw,42px);
+  }
+  .manz-about-header__wordmark,
+  .manz-about-preview-header__wordmark { top:50%; font-size:21px !important; }
+  .manz-about-page #MainContent {
+    display:flex; flex:1 1 auto; min-height:0; width:100%; margin:0; padding:0;
+  }
+  .manz-about-page #MainContent > .shopify-section,
+  .manz-about-page #MainContent > .manz-about-stage { display:flex; flex:1 1 auto; min-height:0; width:100%; }
+  .manz-about-stage {
+    position:relative; flex:1 1 auto; width:100%; max-width:none;
+    height:100%; min-height:0; margin:0; container-type:size;
+  }
+  .manz-about-page #MainContent > .shopify-section > .manz-about-stage { flex:1 1 auto; }
+  .manz-about { width:100%; height:100%; min-height:0; }
+  .manz-about__plate { position:absolute; inset:0; z-index:0; width:100%; height:100%; }
+  .manz-about__plate-image {
+    position:absolute; inset:0; display:block; width:100%; height:100%;
+    object-fit:cover; object-position:50% 30%;
+  }
+  .manz-about__editorial {
+    position:relative; align-self:start; top:6.7cqh;
+    width:46.9613cqw; height:auto; margin:0 0 0 30.3867cqw;
+    padding:0;
+  }
+  .manz-about__opening {
+    width:36.6022cqw; min-height:22.4cqh;
+    margin:0 0 1.5cqh -1.0359cqw;
+  }
+  .manz-about__page-title { font-size:clamp(56px,10cqh,108px); line-height:1; }
+  .manz-about__subtitle {
+    margin:-.38cqh 0 1.2cqh; font-size:clamp(40px,6.9cqh,76px); line-height:1;
+  }
+  .manz-about__intro { width:35.8cqw; margin-inline:auto; font-size:clamp(18px,2.2cqh,23px); line-height:1.22; }
+  .manz-about__chapters {
+    position:relative; left:-3.5387cqw; width:50.5cqw;
+    grid-template-columns:23.8cqw 25.2cqw;
+    column-gap:1.5cqw; row-gap:0;
+  }
+  .manz-about__article-title {
+    margin:0 0 .9cqh; font-size:clamp(31px,4.8cqh,52px); line-height:.93;
+  }
+  .manz-about__article--connection .manz-about__article-title { width:26cqw; max-width:none; }
+  .manz-about__copy { font-size:clamp(18px,1.97cqh,20px); line-height:1.2; }
+  .manz-about__copy p { margin:0 0 .8cqh; }
+  .manz-about__copy p:last-child { margin-bottom:0; }
+  .manz-about__article--mission,
+  .manz-about__article--connection { min-height:43.55cqh; }
+  .manz-about__article--invitation {
+    width:35.9116cqw; margin:0 0 0 3.7983cqw; transform:translateX(3.5387cqw);
+  }
+  .manz-about__article--invitation .manz-about__article-title {
+    margin:0 0 .5cqh; font-size:clamp(40px,5.9cqh,62px); line-height:1;
+  }
+  .manz-about__article--invitation .manz-about__article-title em { font-size:1em; }
+  .manz-about__article--invitation .manz-about__copy {
+    max-width:32.4586cqw; font-size:clamp(17px,1.8cqh,19px); line-height:1.28;
+  }
+  .manz-about__cta {
+    min-height:4.05cqh; margin-top:1.29cqh; padding:.65cqh 1.6575cqw;
+    font:400 clamp(14px,1.75cqh,19px)/1.25 "Times New Roman",serif;
+  }
+  .manz-about-page .shopify-section-group-footer-group { flex:0 0 auto; width:100%; }
+  .manz-about-page .manz-footer {
+    flex-shrink:0; display:grid; grid-template-columns:minmax(0,1fr) auto;
+    grid-template-rows:1fr; align-items:center; gap:0 18px; width:100%;
+    min-height:64px; margin:0; padding:6px clamp(18px,2vw,34px) !important; border:0;
+  }
+}
+
+/* At 1440 x 900, keep the larger type clear of the compact footer by
+   tightening only editorial spacing; no text size is reduced. */
+@media (min-width:1100px) and (max-width:1599px) and (min-height:880px) {
+  .manz-about__editorial { top:6.2cqh; }
+  .manz-about__opening { width:41cqw; margin-bottom:.8cqh; }
+  .manz-about__intro { width:40cqw; }
+  .manz-about__article-title { margin-bottom:.65cqh; }
+  .manz-about__article--connection { position:relative; left:-.5cqw; }
+  .manz-about__article--connection .manz-about__article-title { width:28.5cqw; font-size:clamp(30px,4.5cqh,48px); }
+  .manz-about__copy { line-height:1.16; }
+  .manz-about__copy p { margin-bottom:.5cqh; }
+  .manz-about__article--invitation .manz-about__article-title { margin-bottom:.25cqh; }
+  .manz-about__cta { margin-top:.9cqh; }
+}
+
+/* Short desktop windows retain the full-width plate and natural page scroll. */
+@media (min-width:1100px) and (max-height:879px) {
+  body.manz-about-page { display:block; width:100%; height:auto; min-height:100dvh; }
+  .manz-about-page .section-header, .manz-about-preview-header { position:absolute; }
+  .manz-about-page #MainContent { display:block; width:100%; margin:0; padding:0; }
+  .manz-about-stage { width:100%; max-width:none; height:auto; min-height:0; margin:0; container-type:inline-size; }
+  .manz-about { width:100%; height:auto; min-height:75cqw; }
+  .manz-about__plate { position:relative; inset:auto; width:100%; height:auto; }
+  .manz-about__plate-image { position:static; width:100%; height:auto; object-fit:initial; }
+  .manz-about__editorial { position:relative; top:auto; width:46.9613cqw; height:auto; margin-left:30.3867cqw; padding:7.5967cqw 0 1.9337cqw; }
+  .manz-about__opening { width:36.6022cqw; min-height:16.782cqw; margin:0 0 3.0387cqw -1.0359cqw; }
+  .manz-about__page-title { font-size:6.6298cqw; }
+  .manz-about__subtitle { margin:-.4144cqw 0 1.2431cqw; font-size:4.4199cqw; }
+  .manz-about__intro { font-size:1.4503cqw; line-height:1.2571; }
+  .manz-about__article-title { margin:0 0 1.2431cqw; font-size:2.9006cqw; }
+  .manz-about__copy { font-size:1.174cqw; line-height:1.2471; }
+  .manz-about__copy p { margin-bottom:1.2431cqw; }
+  .manz-about__article--mission, .manz-about__article--connection { min-height:32.6657cqw; }
+  .manz-about__article--invitation .manz-about__article-title { font-size:3.5912cqw; }
+  .manz-about__article--invitation .manz-about__copy { font-size:1.105cqw; }
+}

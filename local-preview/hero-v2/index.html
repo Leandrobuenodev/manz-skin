@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffffff">
-    <title>Manz Skin — Hero V2 · Prévia local</title>
+    <title>Manz Skin — Hero V3 + missão · Prévia local</title>
     <link rel="preload" href="../../assets/manz-bodoni-moda-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="../../assets/manz-jost-light-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="../../assets/base.css">
@@ -12,17 +12,20 @@
     <link rel="stylesheet" href="../hero-v1/local.css">
     <link rel="stylesheet" href="../../assets/manz-hero-v1.css">
     <link rel="stylesheet" href="../../assets/manz-hero-v2.css">
+    <link rel="stylesheet" href="../../assets/manz-more-than-skincare.css">
+    <link rel="stylesheet" href="../../assets/manz-footer.css">
     <link rel="stylesheet" href="local-v2.css">
+    <link rel="stylesheet" href="../preview-ui.css">
     <script src="../../assets/global.js" defer></script>
-    <script src="../../assets/manz-hero-gsap.min.js" defer></script>
     <script src="../../assets/manz-hero-v1.js" defer></script>
     <script src="../hero-v1/local.js" defer></script>
+    <script src="../navigation.js" defer></script>
   </head>
   <body class="manz-hero-page manz-hero-v2-active">
     <a class="local-skip-link" href="#MainContent">Pular para o conteúdo</a>
     <main id="MainContent" tabindex="-1">
       <section class="section-manz-hero-v2">
-        <manz-hero class="manz-hero-shell manz-hero-v2-shell" data-manz-hero data-manz-hero-v2 data-animate="true" style="--manz-hero-v2-frame-width: 90vw; --manz-hero-v2-frame-height: 60vw; --manz-hero-v2-panel-bottom-gap: calc((100svh - min(60vw, 93.333svh)) / 2); --manz-hero-v2-radius: 14px; --manz-hero-v2-background-x: 50%; --manz-hero-v2-background-y: 52%; --manz-hero-v2-portrait-x: 50%; --manz-hero-v2-portrait-y: 50%; --manz-hero-v2-portrait-mobile-x: 50%; --manz-hero-v2-portrait-mobile-y: 45%;">
+        <manz-hero class="manz-hero-shell manz-hero-v2-shell" data-manz-hero data-manz-hero-v2 data-manz-carousel data-manz-carousel-interval="5000" data-manz-carousel-duration="800" style="--manz-hero-v2-frame-width: 94vw; --manz-hero-v2-frame-height: 60vw; --manz-hero-v2-panel-bottom-gap: calc((100svh - min(60vw, 93.333svh)) / 2); --manz-hero-v2-radius: 14px; --manz-hero-v2-background-x: 50%; --manz-hero-v2-background-y: 52%; --manz-hero-v2-portrait-x: 50%; --manz-hero-v2-portrait-y: 50%; --manz-hero-v2-portrait-mobile-x: 50%; --manz-hero-v2-portrait-mobile-y: 45%;">
           <div class="manz-hero-v2" aria-labelledby="ManzHeroV2Title-local">
             <div class="manz-hero-v2__background" aria-hidden="true">
               <img class="manz-hero-v2__background-image" src="../../assets/manz-hero-v2-soaps-1920.jpg" srcset="../../assets/manz-hero-v2-soaps-960.jpg 960w, ../../assets/manz-hero-v2-soaps-1920.jpg 1920w, ../../assets/manz-hero-v2-soaps-2880.jpg 2880w" sizes="100vw" width="2880" height="1920" alt="" loading="eager" fetchpriority="high">
@@ -32,10 +35,10 @@
       <div class="header-wrapper">
         <header class="header header--top-center header--mobile-center page-width header--has-menu header--has-account">
           <nav class="manz-hero-nav" aria-label="Navegação principal">
-            <a class="manz-hero-nav__link" href="#MainContent" aria-current="page">INÍCIO</a>
-            <span class="manz-hero-nav__link" aria-disabled="true">SABONETES</span>
-            <span class="manz-hero-nav__link" aria-disabled="true">ACESSÓRIOS</span>
-            <span class="manz-hero-nav__link" aria-disabled="true">RASTREAMENTO DE PEDIDOS</span>
+            <a class="manz-hero-nav__link" href="#" data-local-route="home" aria-current="page">INÍCIO</a>
+            <a class="manz-hero-nav__link" href="#" data-local-route="soaps">SABONETES</a>
+            <a class="manz-hero-nav__link" href="#" data-local-route="accessories">ACESSÓRIOS</a>
+            <a class="manz-hero-nav__link" href="#" data-local-route="tracking">RASTREAMENTO DE PEDIDOS</a>
           </nav>
 
           <header-drawer data-breakpoint="tablet">
@@ -53,10 +56,10 @@
                       <ul class="menu-drawer__menu has-submenu list-menu" role="list">
                         <li class="manz-hero-drawer-links">
                           <nav class="manz-hero-nav manz-hero-nav--mobile" aria-label="Navegação mobile">
-                            <a class="manz-hero-nav__link" href="#MainContent">INÍCIO</a>
-                            <span class="manz-hero-nav__link" aria-disabled="true">SABONETES</span>
-                            <span class="manz-hero-nav__link" aria-disabled="true">ACESSÓRIOS</span>
-                            <span class="manz-hero-nav__link" aria-disabled="true">RASTREAMENTO DE PEDIDOS</span>
+                            <a class="manz-hero-nav__link" href="#" data-local-route="home">INÍCIO</a>
+                            <a class="manz-hero-nav__link" href="#" data-local-route="soaps">SABONETES</a>
+                            <a class="manz-hero-nav__link" href="#" data-local-route="accessories">ACESSÓRIOS</a>
+                            <a class="manz-hero-nav__link" href="#" data-local-route="tracking">RASTREAMENTO DE PEDIDOS</a>
                           </nav>
                         </li>
                       </ul>
@@ -68,7 +71,7 @@
           </header-drawer>
 
           <div class="header__heading">
-            <a class="header__heading-link link link--text focus-inset" href="#MainContent" aria-label="Manz Skin, início"><span class="manz-hero-wordmark">manzskin</span></a>
+            <a class="header__heading-link link link--text focus-inset" href="#" data-local-route="home" aria-label="Manz Skin, início"><span class="manz-hero-wordmark">manzskin</span></a>
           </div>
 
           <div class="header__icons">
@@ -88,9 +91,29 @@
       </div>
     </div>
 
-              <img class="manz-hero__image manz-hero-v2__portrait" src="../../assets/manz-hero-v1-1920.jpg" srcset="../../assets/manz-hero-v1-960.jpg 960w, ../../assets/manz-hero-v1-1920.jpg 1920w, ../../assets/manz-hero-v1-2880.jpg 2880w" sizes="(min-width: 750px) 90vw, 100vw" width="2880" height="1920" alt="Três modelos à beira-mar na campanha Manz Skin" loading="eager" fetchpriority="high">
-              <div class="manz-hero-v2__copy-shade" aria-hidden="true"></div>
-              <a class="manz-hero-v2__cta" href="https://manz.skin/collections/all" target="_blank" rel="noopener">
+              <div class="manz-hero-carousel__viewport" id="ManzHeroCarousel-local" data-manz-carousel-viewport role="region" aria-roledescription="carousel" aria-label="Fotografias da campanha Manz Skin">
+                <div class="manz-hero-carousel__track" data-manz-carousel-track>
+                  <div class="manz-hero-carousel__slide" data-manz-carousel-slide data-slide-index="0" role="group" aria-roledescription="slide" aria-label="1 de 4" style="--manz-hero-slide-focus-x: 50%; --manz-hero-slide-focus-y: 50%; --manz-hero-slide-mobile-x: 50%; --manz-hero-slide-mobile-y: 50%; --manz-hero-slide-fit: cover;">
+                    <img class="manz-hero__image manz-hero-v2__portrait manz-hero-carousel__image" src="../../assets/manz-hero-slide-01-retrato-tres-mulheres.png" srcset="../../assets/manz-hero-slide-01-retrato-tres-mulheres.png 1672w" sizes="(min-width: 750px) 94vw, 100vw" width="1672" height="941" alt="Retrato das três mulheres à beira-mar na campanha Manz Skin" loading="eager" fetchpriority="high" decoding="async">
+                  </div>
+                  <div class="manz-hero-carousel__slide" data-manz-carousel-slide data-slide-index="1" role="group" aria-roledescription="slide" aria-label="2 de 4" aria-hidden="true" style="--manz-hero-slide-focus-x: 50%; --manz-hero-slide-focus-y: 40%; --manz-hero-slide-mobile-x: 50%; --manz-hero-slide-mobile-y: 50%; --manz-hero-slide-fit: cover;">
+                    <img class="manz-hero__image manz-hero-v2__portrait manz-hero-carousel__image" src="../../assets/manz-hero-slide-02-2400.jpg" srcset="../../assets/manz-hero-slide-02-960.jpg 960w, ../../assets/manz-hero-slide-02-1600.jpg 1600w, ../../assets/manz-hero-slide-02-2400.jpg 2400w" sizes="(min-width: 750px) 94vw, 100vw" width="2400" height="1600" alt="Modelo ruiva segurando um sabonete artesanal Manz Skin" loading="lazy" fetchpriority="low" decoding="async">
+                  </div>
+                  <div class="manz-hero-carousel__slide" data-manz-carousel-slide data-slide-index="2" role="group" aria-roledescription="slide" aria-label="3 de 4" aria-hidden="true" style="--manz-hero-slide-focus-x: 50%; --manz-hero-slide-focus-y: 50%; --manz-hero-slide-mobile-x: 50%; --manz-hero-slide-mobile-y: 50%; --manz-hero-slide-fit: cover;">
+                    <img class="manz-hero__image manz-hero-v2__portrait manz-hero-carousel__image" src="../../assets/manz-hero-slide-03-2400.jpg" srcset="../../assets/manz-hero-slide-03-960.jpg 960w, ../../assets/manz-hero-slide-03-1600.jpg 1600w, ../../assets/manz-hero-slide-03-2400.jpg 2400w" sizes="(min-width: 750px) 94vw, 100vw" width="2400" height="1526" alt="Três modelos com roupas de praia na campanha Manz Skin" loading="lazy" fetchpriority="low" decoding="async">
+                  </div>
+                  <div class="manz-hero-carousel__slide" data-manz-carousel-slide data-slide-index="3" role="group" aria-roledescription="slide" aria-label="4 de 4" aria-hidden="true" style="--manz-hero-slide-focus-x: 50%; --manz-hero-slide-focus-y: 52%; --manz-hero-slide-mobile-x: 50%; --manz-hero-slide-mobile-y: 50%; --manz-hero-slide-fit: cover;">
+                    <img class="manz-hero__image manz-hero-v2__portrait manz-hero-carousel__image" src="../../assets/manz-hero-slide-04-2400.jpg" srcset="../../assets/manz-hero-slide-04-960.jpg 960w, ../../assets/manz-hero-slide-04-1600.jpg 1600w, ../../assets/manz-hero-slide-04-2400.jpg 2400w" sizes="(min-width: 750px) 94vw, 100vw" width="2400" height="1600" alt="Sabonetes artesanais acompanhados de ingredientes naturais e argilas" loading="lazy" fetchpriority="low" decoding="async">
+                  </div>
+                </div>
+              </div>
+              <button class="manz-hero-v2__carousel-control manz-hero-v2__carousel-control--previous" type="button" data-manz-carousel-previous aria-label="Fotografia anterior" aria-controls="ManzHeroCarousel-local">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m14.5 5-7 7 7 7" /></svg>
+              </button>
+              <button class="manz-hero-v2__carousel-control manz-hero-v2__carousel-control--next" type="button" data-manz-carousel-next aria-label="Próxima fotografia" aria-controls="ManzHeroCarousel-local">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9.5 5 7 7-7 7" /></svg>
+              </button>
+              <a class="manz-hero-v2__cta" href="#" data-local-route="all-products">
                 Ver todos os produtos <span aria-hidden="true">→</span>
               </a>
             </div>
@@ -103,8 +126,70 @@
                 <p class="manz-hero__caption">Natureza, beleza e autenticidade.</p>
               </div>
           </div>
+          <div class="manz-rock-transition" aria-hidden="true">
+            <img class="manz-rock-transition__image" src="../../assets/manz-hero-v2-soaps-1920.jpg" srcset="../../assets/manz-hero-v2-soaps-960.jpg 960w, ../../assets/manz-hero-v2-soaps-1920.jpg 1920w, ../../assets/manz-hero-v2-soaps-2880.jpg 2880w" sizes="100vw" width="2880" height="1920" alt="" loading="eager" fetchpriority="low" decoding="async">
+          </div>
         </manz-hero>
       </section>
+      <section class="manz-more" aria-labelledby="ManzMoreHeading-local">
+        <div class="manz-more__main">
+          <div class="manz-more__plate" aria-hidden="true"><img class="manz-more__plate-image" src="../../assets/manz-more-plate-v1.png" width="1448" height="1086" alt="" loading="lazy" decoding="async"></div>
+          <div class="manz-more__content">
+            <h2 class="manz-more__heading" id="ManzMoreHeading-local"><span>It’s more</span><span>than skincare</span></h2>
+            <p class="manz-more__text">Nossa missão é conectar pessoas ao que há de mais puro e eficaz na natureza, proporcionando uma experiência de autocuidado consciente, transformador e alinhado aos princípios de sustentabilidade. Cada produto que desenvolvemos reflete nosso compromisso com a beleza natural, o bem-estar e a harmonia, através de fórmulas veganas, biodegradáveis e de alta qualidade. Valorizamos a saúde, a praticidade e a eficiência em cada detalhe, entregando soluções que respeitam a natureza e promovem um cuidado equilibrado e autêntico para todos.</p>
+            <a class="manz-more__cta" href="#" data-local-route="soaps">Conheça nossos sabonetes <span aria-hidden="true">→</span></a>
+          </div>
+
+        </div>
+        <ul class="manz-more__features" aria-label="Compromissos Manz Skin"><li class="manz-more__feature"><svg class="manz-more__icon" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 27c-4-3-6-9-4-13 4 1 7 6 7 11m2 1c-1-7 2-14 6-15 3 5 1 11-3 15M19 29c-6-2-12 1-13 7-1 5 3 10 9 11l2 4h8l-1-5h8c4 0 7-3 7-7l5-2-3-5-5-1c-4-5-12-6-17-2Z"/><path d="M13 36c-4-3-9-2-9 2s4 5 7 3m23-7h.1M24 37c-1 3 0 6 3 8"/></svg><div class="manz-more__feature-copy"><h3 class="manz-more__feature-title">vegano</h3><p class="manz-more__feature-text">todos nossos produtos são veganos e não testados em animais.</p></div></li>
+<li class="manz-more__feature"><svg class="manz-more__icon" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M28 52V30m0 7C11 38 6 30 6 19c12-1 21 5 22 18Zm0-9C29 14 39 8 51 9c0 13-8 22-23 19Z"/><path d="m13 25 15 12m0-9 16-12"/></svg><div class="manz-more__feature-copy"><h3 class="manz-more__feature-title">natural</h3><p class="manz-more__feature-text">utilizamos somente os melhores ingredientes naturais.</p></div></li>
+<li class="manz-more__feature"><svg class="manz-more__icon" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m24 9 8-4 11 18 5-3-2 15-14-4 5-3-9-15m20 24 5 8-21 1v6L21 42l11-9v6h13M19 45l-9-1 10-18-5-3 14-5 3 15-5-3-8 13"/></svg><div class="manz-more__feature-copy"><h3 class="manz-more__feature-title">reciclável</h3><p class="manz-more__feature-text">utilizamos embalagens recicláveis e ecologicamente corretas.</p></div></li>
+<li class="manz-more__feature"><svg class="manz-more__icon" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M13 43c-7-20 9-33 35-34-1 26-12 40-30 38m-9 5 29-31"/><path d="M20 40v-9m8 1 10 1"/></svg><div class="manz-more__feature-copy"><h3 class="manz-more__feature-title">biodegradável</h3><p class="manz-more__feature-text">produtos biodegradáveis e que não prejudicam o meio ambiente.</p></div></li></ul>
+      </section>
     </main>
+    <footer class="footer manz-footer" aria-label="Rodapé Manz Skin">
+      <div class="footer__content-top page-width">
+        <div class="footer__blocks-wrapper grid">
+          <section class="footer-block grid__item manz-footer__brand">
+            <p class="manz-footer__wordmark">manzskin</p>
+          </section>
+          <nav class="footer-block grid__item manz-footer__links" aria-labelledby="FooterLinksHeading-local">
+            <h2 class="footer-block__heading" id="FooterLinksHeading-local">Links Úteis</h2>
+            <ul class="footer-block__details-content list-unstyled">
+              <li><a href="#" data-local-route="about">Quem somos nós?</a></li>
+              <li><a href="#" data-local-route="privacy-policy">Política de privacidade</a></li>
+              <li><a href="#" data-local-route="refund-policy">Política de devolução e trocas</a></li>
+              <li><a href="#" data-local-route="shipping-policy">Política de frete</a></li>
+              <li><a href="#" data-local-route="terms-of-service">Termos de serviço</a></li>
+              <li><a href="#" data-local-route="tracking">Rastreamento de pedidos</a></li>
+              <li><a href="#" data-local-route="personal-data">O que fazemos com seus dados pessoais?</a></li>
+            </ul>
+          </nav>
+          <section class="footer-block grid__item manz-footer__contact" aria-labelledby="FooterContactHeading-local">
+            <h2 class="footer-block__heading" id="FooterContactHeading-local">Contato</h2>
+            <div class="footer-block__details-content rte">
+              <p>e-Mail: manzskinn@gmail.com</p>
+              <p><a href="https://wa.me/5511942503000?text=Ol%C3%A1+Manz%2C+tudo+bem%3F+Poderiam+me+ajudar%3F" target="_blank" rel="noopener">Whatsapp: (11) 94250 3000</a></p>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="footer__content-bottom">
+        <div class="footer__content-bottom-wrapper page-width">
+          <div class="footer__copyright caption">
+            <ul class="list-unstyled list-social footer__list-social manz-footer__social" role="list" aria-label="Redes sociais">
+              <li class="list-social__item"><a href="https://www.facebook.com/people/Manz-Skin/100087001575916/" class="link list-social__link" aria-label="Facebook Manz Skin"><svg class="icon icon-facebook" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M18 10.049C18 5.603 14.419 2 10 2c-4.419 0-8 3.603-8 8.049C2 14.067 4.925 17.396 8.75 18v-5.624H6.719v-2.328h2.03V8.275c0-2.017 1.195-3.132 3.023-3.132.874 0 1.79.158 1.79.158v1.98h-1.009c-.994 0-1.303.621-1.303 1.258v1.51h2.219l-.355 2.326H11.25V18c3.825-.604 6.75-3.933 6.75-7.951Z"/></svg></a></li>
+              <li class="list-social__item"><a href="https://www.instagram.com/manzskin/" class="link list-social__link" aria-label="Instagram Manz Skin"><svg class="icon icon-instagram" viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="10" cy="10" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="14.5" cy="5.7" r="1" fill="currentColor"/></svg></a></li>
+              <li class="list-social__item"><a href="https://www.tiktok.com/@manzskin" class="link list-social__link" aria-label="TikTok Manz Skin"><svg class="icon icon-tiktok" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M10.511 1.705h2.74s-.157 3.51 3.795 3.768v2.711s-2.114.129-3.796-1.158l.028 5.606A5.073 5.073 0 1 1 8.213 7.56h.708v2.785a2.298 2.298 0 1 0 1.618 2.205L10.51 1.705Z"/></svg></a></li>
+            </ul>
+            <div class="manz-footer__copyright-copy">
+              <small class="copyright__content">&copy; <span id="ManzFooterYear">2026</span>, <a href="#" data-local-route="home">manzskin</a></small>
+              <small class="copyright__content">Com tecnologia da Shopify</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>document.getElementById('ManzFooterYear').textContent = new Date().getFullYear();</script>
   </body>
 </html>

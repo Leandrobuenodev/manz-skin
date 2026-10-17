@@ -1,62 +1,11 @@
-{% comment %}
-  The four editorial header links, resolved from merchant navigation or explicit URLs.
-  Render inside header.liquid / header-drawer.liquid, where section is the header section.
-  Accepts mobile: true for the existing native drawer.
-{% endcomment %}
-{%- liquid
-  assign soap_url = section.settings.hero_soaps_link
-  assign accessory_url = section.settings.hero_accessories_link
-  assign tracking_url = section.settings.hero_tracking_link
-  assign hero_links = section.settings.menu.links
-  for top_link in section.settings.menu.links
-    assign hero_links = hero_links | concat: top_link.links
-    for child_link in top_link.links
-      assign hero_links = hero_links | concat: child_link.links
-    endfor
-  endfor
-  for hero_link in hero_links
-    assign normalized_title = hero_link.title | handleize
-    if soap_url == blank
-      if normalized_title == 'sabonetes' or hero_link.url contains '/collections/body'
-        assign soap_url = hero_link.url
-      endif
-    endif
-    if accessory_url == blank
-      if normalized_title contains 'acessor' or hero_link.url contains '/collections/acessorios'
-        assign accessory_url = hero_link.url
-      endif
-    endif
-    if tracking_url == blank
-      if normalized_title contains 'rastre'
-        assign tracking_url = hero_link.url
-      endif
-    endif
-  endfor
-  if soap_url == blank and collections['body'] != blank
-    assign soap_url = collections['body'].url
-  endif
-  if accessory_url == blank and collections['acessorios'] != blank
-    assign accessory_url = collections['acessorios'].url
-  endif
-  if accessory_url == blank and all_products['faixa-de-skincare'] != blank
-    assign accessory_url = all_products['faixa-de-skincare'].url
-  endif
--%}
 <nav class="manz-hero-nav{% if mobile %} manz-hero-nav--mobile{% endif %}" aria-label="{% if mobile %}Navegação mobile{% else %}Navegação principal{% endif %}">
-  <a class="manz-hero-nav__link" href="{{ routes.root_url }}"{% if request.page_type == 'index' %} aria-current="page"{% endif %}>INÍCIO</a>
-  {%- if soap_url != blank -%}
-    <a class="manz-hero-nav__link" href="{{ soap_url | escape }}">SABONETES</a>
-  {%- else -%}
-    <span class="manz-hero-nav__link" aria-disabled="true">SABONETES</span>
-  {%- endif -%}
-  {%- if accessory_url != blank -%}
-    <a class="manz-hero-nav__link" href="{{ accessory_url | escape }}">ACESSÓRIOS</a>
-  {%- else -%}
-    <span class="manz-hero-nav__link" aria-disabled="true">ACESSÓRIOS</span>
-  {%- endif -%}
-  {%- if tracking_url != blank -%}
-    <a class="manz-hero-nav__link" href="{{ tracking_url | escape }}">RASTREAMENTO DE PEDIDOS</a>
-  {%- else -%}
-    <span class="manz-hero-nav__link" aria-disabled="true">RASTREAMENTO DE PEDIDOS</span>
-  {%- endif -%}
+  {%- for link in section.settings.menu.links -%}
+    <a class="manz-hero-nav__link" href="{{ link.url | escape }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+    {%- for child_link in link.links -%}
+      <a class="manz-hero-nav__link" href="{{ child_link.url | escape }}"{% if child_link.current %} aria-current="page"{% endif %}>{{ child_link.title | escape }}</a>
+      {%- for grandchild_link in child_link.links -%}
+        <a class="manz-hero-nav__link" href="{{ grandchild_link.url | escape }}"{% if grandchild_link.current %} aria-current="page"{% endif %}>{{ grandchild_link.title | escape }}</a>
+      {%- endfor -%}
+    {%- endfor -%}
+  {%- endfor -%}
 </nav>

@@ -17,6 +17,10 @@
 
 {%- liquid
   assign sort_by = results.sort_by | default: results.default_sort_by
+  assign manz_soaps_result = false
+  if template.name == 'collection' and template.suffix == 'sabonetes'
+    assign manz_soaps_result = true
+  endif
   assign total_active_values = 0
   if results.url
     assign results_url = results.url
@@ -557,6 +561,8 @@
               <span id="ProductCountDesktop">
                 {%- if results.results_count -%}
                   {{ 'templates.search.results_with_count' | t: terms: results.terms, count: results.results_count }}
+                {%- elsif manz_soaps_result -%}
+                  {{ results.products_count }} sabonete{% unless results.products_count == 1 %}s{% endunless %}
                 {%- elsif results.products_count == results.all_products_count -%}
                   {{ 'products.facets.product_count_simple' | t: count: results.products_count }}
                 {%- else -%}
@@ -1125,6 +1131,8 @@
       <span id="ProductCount">
         {%- if results.results_count -%}
           {{ 'templates.search.results_with_count' | t: terms: results.terms, count: results.results_count }}
+        {%- elsif manz_soaps_result -%}
+          {{ results.products_count }} sabonete{% unless results.products_count == 1 %}s{% endunless %}
         {%- elsif results.products_count == results.all_products_count -%}
           {{ 'products.facets.product_count_simple' | t: count: results.products_count }}
         {%- else -%}

@@ -1,0 +1,78 @@
+{%- liquid
+  case index
+    when 1
+      if version == 'v2'
+        assign asset_file = 'manz-hero-slide-01-retrato-tres-mulheres.png'
+        assign asset_width = 1672
+        assign asset_height = 941
+        capture asset_srcset
+          echo 'manz-hero-slide-01-retrato-tres-mulheres.png' | asset_url
+          echo ' 1672w'
+        endcapture
+      else
+        assign asset_file = 'manz-hero-slide-01-original.png'
+        assign asset_width = 1672
+        assign asset_height = 941
+        capture asset_srcset
+          echo 'manz-hero-slide-01-original.png' | asset_url
+          echo ' 1672w'
+        endcapture
+      endif
+    when 2
+      assign asset_file = 'manz-hero-slide-02-2400.jpg'
+      assign asset_width = 2400
+      assign asset_height = 1600
+      capture asset_srcset
+        echo 'manz-hero-slide-02-960.jpg' | asset_url
+        echo ' 960w, '
+        echo 'manz-hero-slide-02-1600.jpg' | asset_url
+        echo ' 1600w, '
+        echo 'manz-hero-slide-02-2400.jpg' | asset_url
+        echo ' 2400w'
+      endcapture
+    when 3
+      assign asset_file = 'manz-hero-slide-03-2400.jpg'
+      assign asset_width = 2400
+      assign asset_height = 1526
+      capture asset_srcset
+        echo 'manz-hero-slide-03-960.jpg' | asset_url
+        echo ' 960w, '
+        echo 'manz-hero-slide-03-1600.jpg' | asset_url
+        echo ' 1600w, '
+        echo 'manz-hero-slide-03-2400.jpg' | asset_url
+        echo ' 2400w'
+      endcapture
+    when 4
+      assign asset_file = 'manz-hero-slide-04-2400.jpg'
+      assign asset_width = 2400
+      assign asset_height = 1600
+      capture asset_srcset
+        echo 'manz-hero-slide-04-960.jpg' | asset_url
+        echo ' 960w, '
+        echo 'manz-hero-slide-04-1600.jpg' | asset_url
+        echo ' 1600w, '
+        echo 'manz-hero-slide-04-2400.jpg' | asset_url
+        echo ' 2400w'
+      endcapture
+    else
+      assign asset_file = 'manz-hero-slide-01-original.png'
+      assign asset_width = 1672
+      assign asset_height = 941
+      capture asset_srcset
+        echo 'manz-hero-slide-01-original.png' | asset_url
+        echo ' 1672w'
+      endcapture
+  endcase
+-%}
+<img
+  class="{{ image_class }}"
+  src="{{ asset_file | asset_url }}"
+  srcset="{{ asset_srcset | strip_newlines | escape }}"
+  sizes="{{ sizes }}"
+  width="{{ asset_width }}"
+  height="{{ asset_height }}"
+  alt="{{ alt | escape }}"
+  loading="{{ loading }}"
+  fetchpriority="{{ fetchpriority }}"
+  decoding="async"
+>

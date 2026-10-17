@@ -1,0 +1,98 @@
+{%- liquid
+  assign category_heading = section.settings.heading | default: collection.title
+  assign category_description = section.settings.description
+  if category_description == blank
+    assign category_description = collection.description
+  endif
+  assign category_image_alt = section.settings.image_alt | default: section.settings.editorial_image.alt | default: category_heading
+-%}
+
+<section class="manz-category-intro{% if section.settings.editorial_image != blank %} manz-category-intro--with-image{% endif %}{% if category_description == blank %} manz-category-intro--without-description{% endif %}">
+  <div class="manz-category-intro__inner page-width">
+    <div class="manz-category-intro__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="manz-category-intro__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      <h1 class="manz-category-intro__heading">{{ category_heading | escape }}</h1>
+
+      {%- if category_description != blank -%}
+        <div class="manz-category-intro__description rte">{{ category_description }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+        <a class="manz-category-intro__button" href="{{ section.settings.button_link }}">
+          {{ section.settings.button_label | escape }}
+          <span aria-hidden="true">→</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.editorial_image != blank -%}
+      <div class="manz-category-intro__media">
+        {{
+          section.settings.editorial_image
+          | image_url: width: 1400
+          | image_tag:
+            widths: '480, 720, 960, 1200, 1400',
+            sizes: '(min-width: 990px) 42vw, 100vw',
+            loading: 'eager',
+            alt: category_image_alt
+        }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Apresentação da coleção",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Texto pequeno acima do título"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "info": "Deixe vazio para usar o título da coleção Shopify."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Apresentação",
+      "info": "Deixe vazio para usar a descrição cadastrada na coleção Shopify."
+    },
+    {
+      "type": "image_picker",
+      "id": "editorial_image",
+      "label": "Fotografia editorial",
+      "info": "Opcional. Sem imagem, a apresentação permanece compacta."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Texto alternativo da fotografia"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto do botão"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Apresentação da coleção"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,30 @@
+{%- liquid
+  assign resolved_alt = image.alt | default: alt | default: 'Fotografia editorial Manz Skin'
+  assign resolved_loading = loading | default: 'lazy'
+  assign resolved_priority = fetchpriority | default: 'auto'
+-%}
+{%- if image != blank -%}
+  {{
+    image
+    | image_url: width: 2400
+    | image_tag:
+      class: image_class,
+      widths: '360, 540, 720, 960, 1200, 1500, 1800, 2100, 2400',
+      sizes: sizes,
+      loading: resolved_loading,
+      fetchpriority: resolved_priority,
+      decoding: 'async',
+      alt: resolved_alt
+  }}
+{%- elsif fallback_asset != blank -%}
+  <img
+    class="{{ image_class | escape }}"
+    src="{{ fallback_asset | asset_url }}"
+    width="{{ fallback_width | default: 1600 }}"
+    height="{{ fallback_height | default: 1200 }}"
+    alt="{{ resolved_alt | escape }}"
+    loading="{{ resolved_loading }}"
+    decoding="async"
+    {% if resolved_priority != blank %}fetchpriority="{{ resolved_priority }}"{% endif %}
+  >
+{%- endif -%}

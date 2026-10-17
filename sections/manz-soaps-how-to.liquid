@@ -1,0 +1,210 @@
+{%- liquid
+  assign soaps_url = section.settings.button_link
+  if soaps_url == blank and collection != blank
+    assign soaps_url = collection.url | append: '#manz-soaps-products'
+  endif
+-%}
+
+<section class="manz-soaps-howto" aria-labelledby="ManzSoapsHowtoTitle-{{ section.id }}">
+  <div class="manz-soaps-howto__inner page-width">
+    <div class="manz-soaps-howto__intro">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="manz-soaps__eyebrow manz-soaps__eyebrow--section">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="manz-soaps-howto__heading" id="ManzSoapsHowtoTitle-{{ section.id }}">
+          {{ section.settings.heading | escape | newline_to_br }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.copy != blank -%}
+        <p class="manz-soaps-howto__copy">{{ section.settings.copy | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank and soaps_url != blank -%}
+        <a class="manz-soaps-howto__button" href="{{ soaps_url | escape }}">
+          {{ section.settings.button_label | escape }} <span aria-hidden="true">→</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <ol class="manz-soaps-howto__steps">
+      {%- if section.settings.use_repeating_steps or section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign step_asset = blank
+            case block.settings.fallback_image
+              when 'step_1'
+                assign step_asset = 'manz-soaps-howto-present-dsc00791.jpg'
+              when 'step_2'
+                assign step_asset = 'manz-soaps-howto-lather-dsc01383.jpg'
+              when 'step_3'
+                assign step_asset = 'manz-soaps-howto-aroma-dsc01252.jpg'
+            endcase
+          -%}
+          <li class="manz-soaps-howto__step" {{ block.shopify_attributes }}>
+            <div class="manz-soaps-howto__media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 900 | image_tag:
+                  class: 'manz-soaps-howto__image',
+                  widths: '240, 360, 540, 720, 900',
+                  sizes: '(min-width: 750px) 230px, calc(100vw - 40px)',
+                  loading: 'lazy',
+                  decoding: 'async',
+                  alt: block.settings.image.alt | default: block.settings.alt
+                }}
+              {%- elsif step_asset != blank -%}
+                <img
+                  class="manz-soaps-howto__image"
+                  src="{{ step_asset | asset_url }}"
+                  width="1600"
+                  height="2400"
+                  alt="{{ block.settings.alt | escape }}"
+                  loading="lazy"
+                  decoding="async"
+                >
+              {%- else -%}
+                <div class="manz-soaps-howto__placeholder" aria-hidden="true"></div>
+              {%- endif -%}
+            </div>
+            {%- if block.settings.title != blank -%}
+              <h3 class="manz-soaps-howto__step-title">{{ forloop.index }}. {{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.caption != blank -%}
+              <p class="manz-soaps-howto__step-caption">{{ block.settings.caption | escape }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for step in (1..3) -%}
+          {%- liquid
+            assign image_key = 'step_' | append: step | append: '_image'
+            assign image_alt_key = 'step_' | append: step | append: '_alt'
+            assign title_key = 'step_' | append: step | append: '_title'
+            assign caption_key = 'step_' | append: step | append: '_caption'
+            assign step_image = section.settings[image_key]
+            assign step_alt = section.settings[image_alt_key]
+            assign step_title = section.settings[title_key]
+            assign step_caption = section.settings[caption_key]
+            assign step_asset = blank
+            case step
+              when 1
+                assign step_asset = 'manz-soaps-howto-present-dsc00791.jpg'
+              when 2
+                assign step_asset = 'manz-soaps-howto-lather-dsc01383.jpg'
+              when 3
+                assign step_asset = 'manz-soaps-howto-aroma-dsc01252.jpg'
+            endcase
+          -%}
+          <li class="manz-soaps-howto__step">
+            <div class="manz-soaps-howto__media">
+              {%- if step_image != blank -%}
+                {{ step_image | image_url: width: 900 | image_tag:
+                  class: 'manz-soaps-howto__image',
+                  widths: '240, 360, 540, 720, 900',
+                  sizes: '(min-width: 750px) 230px, calc(100vw - 40px)',
+                  loading: 'lazy',
+                  decoding: 'async',
+                  alt: step_image.alt | default: step_alt
+                }}
+              {%- elsif step_asset != blank and section.settings.show_legacy_fallbacks -%}
+                <img
+                  class="manz-soaps-howto__image"
+                  src="{{ step_asset | asset_url }}"
+                  width="1600"
+                  height="2400"
+                  alt="{{ step_alt | escape }}"
+                  loading="lazy"
+                  decoding="async"
+                >
+              {%- else -%}
+                <div class="manz-soaps-howto__placeholder" aria-hidden="true"></div>
+              {%- endif -%}
+            </div>
+            <h3 class="manz-soaps-howto__step-title">{{ step | append: '. ' | append: step_title | escape }}</h3>
+            <p class="manz-soaps-howto__step-caption">{{ step_caption | escape }}</p>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ol>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Como usar sabonetes",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Identificador", "default": "COMO USAR" },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Título",
+      "default": "Um ritual simples,\ncom grandes benefícios."
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Texto",
+      "default": "Com a pele úmida, massageie o sabonete suavemente até formar espuma e enxágue em seguida. A marca recomenda o uso uma vez ao dia."
+    },
+    { "type": "text", "id": "button_label", "label": "Texto do botão", "default": "Ver todos os sabonetes" },
+    { "type": "url", "id": "button_link", "label": "Link do botão", "info": "Se ficar vazio, o botão abre os produtos desta coleção." },
+    { "type": "checkbox", "id": "use_repeating_steps", "label": "Usar etapas editáveis como blocos", "info": "Ative para administrar, ordenar e adicionar ou remover etapas na lista de blocos. As etapas antigas ficam preservadas como compatibilidade.", "default": false },
+    { "type": "checkbox", "id": "show_legacy_fallbacks", "label": "Usar as fotos originais nas etapas antigas sem imagem", "info": "Só afeta a configuração antiga quando não há blocos ativos.", "default": true },
+    { "type": "header", "content": "Etapas antigas — preservadas" },
+    { "type": "paragraph", "content": "Esses campos só aparecem na página quando a seção não está usando blocos. No template atual, edite os blocos Etapa para alterar o ritual." },
+    { "type": "header", "content": "Etapa 1 — configuração antiga" },
+    { "type": "image_picker", "id": "step_1_image", "label": "Fotografia antiga da etapa 1" },
+    { "type": "text", "id": "step_1_alt", "label": "Texto alternativo", "default": "Modelo apresentando um sabonete artesanal claro" },
+    { "type": "text", "id": "step_1_title", "label": "Título", "default": "Conheça a barra" },
+    { "type": "text", "id": "step_1_caption", "label": "Legenda", "default": "A modelo apresenta um dos sabonetes." },
+    { "type": "header", "content": "Etapa 2 — configuração antiga" },
+    { "type": "image_picker", "id": "step_2_image", "label": "Fotografia antiga da etapa 2" },
+    { "type": "text", "id": "step_2_alt", "label": "Texto alternativo", "default": "Mãos massageando um sabonete na pele com espuma" },
+    { "type": "text", "id": "step_2_title", "label": "Título", "default": "Massageie suavemente" },
+    { "type": "text", "id": "step_2_caption", "label": "Legenda", "default": "Forme espuma sobre a pele." },
+    { "type": "header", "content": "Etapa 3 — configuração antiga" },
+    { "type": "image_picker", "id": "step_3_image", "label": "Fotografia antiga da etapa 3" },
+    { "type": "text", "id": "step_3_alt", "label": "Texto alternativo", "default": "Modelo sentindo o aroma de um sabonete amarelo diante da água" },
+    { "type": "text", "id": "step_3_title", "label": "Título", "default": "Aprecie o aroma" },
+    { "type": "text", "id": "step_3_caption", "label": "Legenda", "default": "Uma pausa sensorial no seu ritual." }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Etapa",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Fotografia" },
+        { "type": "text", "id": "alt", "label": "Texto alternativo", "default": "Fotografia do ritual de cuidado" },
+        { "type": "text", "id": "title", "label": "Título", "default": "Nova etapa" },
+        { "type": "textarea", "id": "caption", "label": "Texto da etapa" },
+        {
+          "type": "select",
+          "id": "fallback_image",
+          "label": "Foto original do tema se a fotografia estiver vazia",
+          "info": "Escolha nenhuma para não mostrar uma foto antiga quando o seletor estiver vazio.",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "Nenhuma" },
+            { "value": "step_1", "label": "Foto original 1 — Conheça a barra" },
+            { "value": "step_2", "label": "Foto original 2 — Massageie suavemente" },
+            { "value": "step_3", "label": "Foto original 3 — Aprecie o aroma" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Como usar sabonetes",
+      "settings": { "use_repeating_steps": true },
+      "blocks": [
+        { "type": "step", "settings": { "alt": "Modelo apresentando um sabonete artesanal claro", "title": "Conheça a barra", "caption": "A modelo apresenta um dos sabonetes.", "fallback_image": "step_1" } },
+        { "type": "step", "settings": { "alt": "Mãos massageando um sabonete na pele com espuma", "title": "Massageie suavemente", "caption": "Forme espuma sobre a pele.", "fallback_image": "step_2" } },
+        { "type": "step", "settings": { "alt": "Modelo sentindo o aroma de um sabonete amarelo diante da água", "title": "Aprecie o aroma", "caption": "Uma pausa sensorial no seu ritual.", "fallback_image": "step_3" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

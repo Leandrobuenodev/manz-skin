@@ -1,6 +1,7 @@
 .section-manz-hero-v2,
 .manz-hero-page .section-manz-hero-v2,
 .manz-hero-v2-shell {
+  position: relative;
   display: block;
   width: 100%;
   max-width: none;
@@ -8,8 +9,43 @@
   padding: 0;
 }
 
+/* Desktop seam only: continue the real rock without changing either layout. */
+.manz-rock-transition { display: none; }
+@media (min-width: 990px) {
+  /* Apply only when the institutional section immediately follows this Hero.
+     Shopify wraps each section; the local preview uses its section directly. */
+  .section-manz-hero-v2:has(+ .section-manz-more) .manz-rock-transition,
+  .section-manz-hero-v2:has(+ .manz-more) .manz-rock-transition {
+    display: block;
+    position: absolute;
+    z-index: 3;
+    top: calc(100% - 1px);
+    left: 0;
+    width: 100%;
+    height: 70px;
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask: url('manz-rock-edge.svg') 0 0 / 100% 100% no-repeat;
+    mask: url('manz-rock-edge.svg') 0 0 / 100% 100% no-repeat;
+  }
+  .manz-rock-transition__image {
+    display: block;
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100svh;
+    object-fit: cover;
+    object-position: var(--manz-hero-v2-background-x) var(--manz-hero-v2-background-y);
+    /* Reflect only the exposed bottom strip for continuous pixels at the join. */
+    transform: scaleY(-1);
+  }
+}
+
 .manz-hero-v2-shell {
-  --manz-hero-v2-frame-width: 90vw;
+  --manz-hero-v2-frame-width: 94vw;
   --manz-hero-v2-frame-height: 60vw;
   --manz-hero-v2-panel-bottom-gap: calc((100svh - min(var(--manz-hero-v2-frame-height), 93.333svh)) / 2);
   --manz-hero-v2-radius: 14px;
@@ -49,17 +85,51 @@
   object-position: var(--manz-hero-v2-background-x) var(--manz-hero-v2-background-y);
 }
 
+/* Keep the stone source untouched; add only a faint warm veil and top text protection. */
+.manz-hero-v2__background::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(0 0 0 / 20%) 0%, rgb(0 0 0 / 9%) 22%, transparent 46%),
+    rgb(248 245 238 / 3%);
+  content: '';
+  pointer-events: none;
+}
+
 .manz-hero-v2__panel {
   position: absolute;
   z-index: 1;
   top: 50%;
   left: 50%;
-  width: min(var(--manz-hero-v2-frame-width), 140svh);
+  width: min(var(--manz-hero-v2-frame-width), 94vw);
   height: min(var(--manz-hero-v2-frame-height), 93.333svh);
   overflow: hidden;
   border-radius: var(--manz-hero-v2-radius);
   background: #302b25;
   transform: translate(-50%, -50%);
+}
+
+/* Keep the slide photographs untouched; these fixed overlays protect the header,
+   lower-left copy and lower-right CTA without moving with the track. */
+.manz-hero-v2__panel::before,
+.manz-hero-v2__panel::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  content: '';
+  pointer-events: none;
+}
+
+.manz-hero-v2__panel::before {
+  background: rgb(248 245 238 / 2.5%);
+}
+
+.manz-hero-v2__panel::after {
+  background:
+    radial-gradient(ellipse 82% 54% at 0% 100%, rgb(0 0 0 / 46%) 0%, rgb(0 0 0 / 24%) 48%, rgb(0 0 0 / 8%) 74%, transparent 100%),
+    radial-gradient(ellipse 52% 44% at 100% 100%, rgb(0 0 0 / 36%) 0%, rgb(0 0 0 / 19%) 48%, rgb(0 0 0 / 6%) 74%, transparent 100%),
+    linear-gradient(180deg, rgb(0 0 0 / 20%) 0%, rgb(0 0 0 / 9%) 22%, transparent 46%);
 }
 
 .manz-hero-v2__portrait {
@@ -69,15 +139,11 @@
   max-width: none;
   object-fit: cover;
   object-position: var(--manz-hero-v2-portrait-x) var(--manz-hero-v2-portrait-y);
-  transform-origin: center;
 }
 
-.manz-hero-v2__copy-shade {
-  position: absolute;
-  z-index: 1;
-  inset: 42% 0 0;
-  pointer-events: none;
-  background: linear-gradient(0deg, rgb(0 0 0 / 36%) 0%, rgb(0 0 0 / 15%) 42%, transparent 100%);
+.manz-hero-v2-shell .manz-hero-carousel__image {
+  object-fit: var(--manz-hero-slide-fit, cover);
+  object-position: var(--manz-hero-slide-focus-x, 50%) var(--manz-hero-slide-focus-y, 50%);
 }
 
 .manz-hero-v2-shell .manz-hero__copy {
@@ -90,7 +156,7 @@
   bottom: clamp(32px, 5vh, 54px);
   bottom: calc(var(--manz-hero-v2-panel-bottom-gap, 0px) + clamp(24px, 4.1vh, 54px));
   left: 50%;
-  width: min(var(--manz-hero-v2-frame-width), 140svh);
+  width: min(var(--manz-hero-v2-frame-width), 94vw);
   max-width: none;
   padding-left: calc(clamp(22px, 3.1vw, 52px) + clamp(35px, 3vw, 45px));
   padding-right: clamp(22px, 3.1vw, 52px);
@@ -136,7 +202,7 @@
   width: fit-content;
   max-width: calc(100% - 64px);
   padding: 0 22px;
-  border: 1px solid rgb(247 245 240 / 92%);
+  border: 1px solid #f7f5f0;
   border-radius: 999px;
   background: #f7f5f0;
   color: #292721;
@@ -166,22 +232,88 @@
   outline-offset: 4px;
 }
 
-body.manz-hero-v2-active .section-header::before {
+.manz-hero-v2__carousel-control {
   position: absolute;
-  z-index: 0;
-  inset: 0 0 auto;
-  height: clamp(92px, 16svh, 156px);
-  background: linear-gradient(180deg, rgb(0 0 0 / 22%), rgb(0 0 0 / 9%) 50%, transparent);
-  content: '';
-  pointer-events: none;
+  z-index: 6;
+  top: 50%;
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 38%);
+  border-radius: 50%;
+  background: rgb(20 19 17 / 44%);
+  color: #fff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transform: translateY(-50%);
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
+
+.manz-hero-v2__carousel-control--previous { left: clamp(20px, 2vw, 28px); }
+.manz-hero-v2__carousel-control--next { right: clamp(20px, 2vw, 28px); }
+
+.manz-hero-v2__carousel-control svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.manz-hero-v2__carousel-control:hover {
+  border-color: rgb(255 255 255 / 62%);
+  background: rgb(20 19 17 / 62%);
+}
+
+.manz-hero-v2__carousel-control--previous:hover { transform: translate(-1px, -50%); }
+.manz-hero-v2__carousel-control--next:hover { transform: translate(1px, -50%); }
+.manz-hero-v2__carousel-control:active { transform: translateY(-50%) scale(0.96); }
+
+.manz-hero-v2__carousel-control:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.manz-hero-v2__carousel-control[hidden] { display: none !important; }
 
 body.manz-hero-v2-active .section-header .header {
   position: relative;
   z-index: 1;
 }
 
+body.manz-hero-v2-active .section-header .manz-hero-wordmark {
+  font-size: 48px;
+  text-shadow: 0 1px 10px rgb(0 0 0 / 35%);
+}
+
+body.manz-hero-v2-active .section-header .manz-hero-nav__link {
+  color: #fff;
+  font-size: clamp(11px, 0.88vw, 13px);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 68%), 0 2px 12px rgb(0 0 0 / 28%);
+}
+
+body.manz-hero-v2-active .section-header .header__icon {
+  color: #fff;
+  filter: drop-shadow(0 1px 4px rgb(0 0 0 / 38%));
+}
+
 @media (max-width: 989px) {
+  body.manz-hero-v2-active .section-header .manz-hero-wordmark {
+    font-size: 36px;
+  }
+
+  .manz-hero-v2-shell .manz-hero-carousel__image {
+    object-position: var(--manz-hero-slide-mobile-x, 50%) var(--manz-hero-slide-mobile-y, 50%);
+  }
+
   .manz-hero-v2-shell .manz-hero__copy {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 8px;
@@ -211,16 +343,6 @@ body.manz-hero-v2-active .section-header .header {
 }
 
 @media (max-width: 749px) {
-  body.manz-hero-v2-active .manz-hero-v2::after {
-    position: absolute;
-    z-index: 0;
-    inset: auto 0 0;
-    height: 46%;
-    background: linear-gradient(180deg, transparent, rgb(0 0 0 / 24%) 42%, rgb(0 0 0 / 42%));
-    content: '';
-    pointer-events: none;
-  }
-
   .manz-hero-v2__panel {
     width: calc(100% - 12px);
     height: auto;
@@ -231,10 +353,6 @@ body.manz-hero-v2-active .section-header .header {
 
   .manz-hero-v2__portrait {
     object-position: var(--manz-hero-v2-portrait-mobile-x) var(--manz-hero-v2-portrait-mobile-y);
-  }
-
-  .manz-hero-v2__copy-shade {
-    display: none;
   }
 
   .manz-hero-v2-shell .manz-hero__copy {
@@ -273,10 +391,18 @@ body.manz-hero-v2-active .section-header .header {
   }
 }
 
+@media (max-width: 360px) {
+  body.manz-hero-v2-active .section-header .manz-hero-wordmark {
+    font-size: 26px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .manz-hero-v2__panel > .manz-hero-v2__cta {
     transition: none;
   }
+
+  .manz-hero-v2__carousel-control { transition: none; }
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
@@ -287,11 +413,5 @@ body.manz-hero-v2-active .section-header .header {
 
   .manz-hero-v2-shell .manz-hero__copy {
     bottom: 15px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .manz-hero-v2__portrait {
-    transform: none !important;
   }
 }

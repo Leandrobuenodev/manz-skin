@@ -1,0 +1,255 @@
+/* Manz Skin editorial treatment for the existing global Sense footer. */
+.manz-footer {
+  --manz-footer-background: #3e401f;
+  --manz-footer-foreground: #f7f4e9;
+  --manz-footer-muted: rgb(247 244 233 / 72%);
+  margin-top: 0;
+  border: 0;
+  background: var(--manz-footer-background) !important;
+  background-image: none !important;
+  color: var(--manz-footer-foreground);
+}
+
+.manz-footer,
+.manz-footer * {
+  box-sizing: border-box;
+}
+
+.manz-footer .footer__content-top.page-width {
+  width: min(100% - 64px, 1240px);
+  max-width: 1240px;
+  padding: clamp(24px, 2.7vw, 38px) 0 clamp(18px, 2vw, 28px);
+}
+
+.manz-footer .footer__blocks-wrapper.grid {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.85fr) minmax(300px, 1.25fr) minmax(210px, 0.9fr);
+  gap: clamp(22px, 3vw, 48px);
+  margin: 0;
+}
+
+.manz-footer .footer-block.grid__item {
+  width: auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.manz-footer .manz-footer__brand { grid-column: 1; grid-row: 1; }
+.manz-footer .manz-footer__links { grid-column: 2; grid-row: 1; }
+.manz-footer .manz-footer__contact { grid-column: 3; grid-row: 1; }
+
+.manz-footer .footer-block__heading {
+  margin: 0 0 12px;
+  color: var(--manz-footer-foreground);
+  font-family: 'Manz Jost', 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.manz-footer .manz-footer__brand .footer-block-image,
+.manz-footer .manz-footer__brand .footer-block-image.center,
+.manz-footer .footer-block__brand-info {
+  margin-inline: 0;
+  text-align: left !important;
+}
+
+.manz-footer .footer-block-image {
+  margin: 0;
+}
+
+.manz-footer .footer-block__image-wrapper {
+  margin: 0;
+}
+
+.manz-footer .footer-block__image-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 88px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.manz-footer__wordmark {
+  display: inline-block;
+  color: var(--manz-footer-foreground);
+  font-family: 'Manz Bodoni', 'Bodoni Moda', Georgia, serif;
+  font-size: clamp(32px, 3vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+
+.manz-footer .footer-block__details-content,
+.manz-footer .footer-block__details-content.rte,
+.manz-footer .footer-block__details-content.list-unstyled {
+  margin: 0;
+  padding: 0;
+  color: var(--manz-footer-muted);
+  font-family: 'Manz Jost', 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.manz-footer .manz-footer__links .footer-block__details-content.list-unstyled {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(12px, 1.6vw, 24px);
+  row-gap: 2px;
+}
+
+.manz-footer .footer-block__details-content li + li {
+  margin-top: 0;
+}
+
+.manz-footer .footer-block__details-content a,
+.manz-footer .footer__content-bottom a {
+  color: inherit;
+  text-decoration: none;
+  text-underline-offset: 4px;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.manz-footer .footer-block__details-content a:hover,
+.manz-footer .footer__content-bottom a:hover {
+  color: var(--manz-footer-foreground);
+  text-decoration: underline;
+}
+
+.manz-footer .footer-block__details-content.rte p {
+  margin: 0 0 10px;
+}
+
+.manz-footer .footer-block__details-content.rte a {
+  text-decoration: underline;
+  text-decoration-color: rgb(247 244 233 / 48%);
+  text-underline-offset: 4px;
+}
+
+.manz-footer .footer-block--newsletter {
+  margin: 0;
+  padding: 0;
+}
+
+.manz-footer .footer__content-bottom {
+  border-top: 1px solid rgb(247 244 233 / 20%);
+  padding: 0;
+}
+
+.manz-footer .footer__content-bottom-wrapper.page-width {
+  width: min(100% - 64px, 1240px);
+  max-width: 1240px;
+}
+
+.manz-footer .footer__content-bottom-wrapper--center {
+  justify-content: flex-start;
+}
+
+.manz-footer .footer__copyright {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 12px 0 14px;
+  color: var(--manz-footer-muted);
+  font-family: 'Manz Jost', 'Jost', sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.manz-footer__copyright-copy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+.manz-footer .manz-footer__social {
+  display: flex;
+  gap: 18px;
+  margin: 0;
+}
+
+.manz-footer .manz-footer__social .list-social__link {
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  color: var(--manz-footer-foreground);
+}
+
+.manz-footer .manz-footer__social .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.manz-footer .footer__content-bottom .policies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 8px 0 0;
+}
+
+.manz-footer .footer__payment .list-payment {
+  justify-content: flex-start;
+}
+
+@media screen and (max-width: 989px) {
+  .manz-footer .footer__content-top.page-width,
+  .manz-footer .footer__content-bottom-wrapper.page-width {
+    width: min(100% - 40px, 680px);
+  }
+
+  .manz-footer .footer__blocks-wrapper.grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 26px 24px;
+  }
+
+  .manz-footer .manz-footer__brand { grid-column: 1; grid-row: 1; }
+  .manz-footer .manz-footer__links { grid-column: 1; grid-row: 2; }
+  .manz-footer .manz-footer__contact { grid-column: 2; grid-row: 1 / span 2; }
+}
+
+@media screen and (max-width: 600px) {
+  .manz-footer .footer__content-top.page-width,
+  .manz-footer .footer__content-bottom-wrapper.page-width {
+    width: calc(100% - 40px);
+  }
+
+  .manz-footer .footer__blocks-wrapper.grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .manz-footer .manz-footer__brand,
+  .manz-footer .manz-footer__links,
+  .manz-footer .manz-footer__contact {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .manz-footer .footer-block__heading {
+    margin-bottom: 10px;
+  }
+
+  .manz-footer .manz-footer__links .footer-block__details-content.list-unstyled {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .manz-footer .footer__copyright {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manz-footer .footer-block__details-content a,
+  .manz-footer .footer__content-bottom a {
+    transition: none;
+  }
+}

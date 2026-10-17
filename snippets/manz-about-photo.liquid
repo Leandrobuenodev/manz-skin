@@ -1,0 +1,17 @@
+{%- if image != blank or show_fallback -%}
+  <figure
+    class="manz-about__photo manz-about__photo--{{ position }}{% if image == blank %} manz-about__photo--fallback{% endif %}"
+    {% if image != blank %}style="--photo-focus: {{ image.presentation.focal_point | default: '50% 50%' }};"{% endif %}
+  >
+    {%- render 'manz-about-image',
+      image: image,
+      fallback_asset: fallback_asset,
+      fallback_width: fallback_width,
+      fallback_height: fallback_height,
+      alt: alt,
+      image_class: 'manz-about__photo-image',
+      sizes: sizes,
+      loading: loading
+    -%}
+  </figure>
+{%- endif -%}

@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "tracking": {
+      "type": "manz-order-tracking",
+      "blocks": {
+        "step01": {
+          "type": "step",
+          "settings": {
+            "title": "Aguarde a confirmação do envio",
+            "copy": "<p>As informações de acompanhamento são disponibilizadas após a postagem do pedido.</p>"
+          }
+        },
+        "step02": {
+          "type": "step",
+          "settings": {
+            "title": "Consulte o código ou link recebido",
+            "copy": "<p>Use as informações de envio compartilhadas pela loja nos canais de atendimento ou na notificação de envio.</p>"
+          }
+        },
+        "step03": {
+          "type": "step",
+          "settings": {
+            "title": "Acompanhe pelo canal indicado",
+            "copy": "<p>As atualizações dependem das informações disponibilizadas pela transportadora ou pelo serviço de rastreamento.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step01",
+        "step02",
+        "step03"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "tracking"
+  ]
+}

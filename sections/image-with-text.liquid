@@ -86,11 +86,12 @@
                   </div>
                 {%- when 'button' -%}
                   {%- if block.settings.button_label != blank -%}
+                    {%- assign button_url = block.settings.button_collection.url | default: block.settings.button_link -%}
                     <a
-                      {% if block.settings.button_link == blank %}
+                      {% if button_url == blank %}
                         role="link" aria-disabled="true"
                       {% else %}
-                        href="{{ block.settings.button_link }}"
+                        href="{{ button_url | escape }}"
                       {% endif %}
                       class="button{% if block.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %}"
                       {{ block.shopify_attributes }}
@@ -451,6 +452,12 @@
           "type": "url",
           "id": "button_link",
           "label": "t:sections.image-with-text.blocks.button.settings.button_link.label"
+        },
+        {
+          "type": "collection",
+          "id": "button_collection",
+          "label": "Coleção de destino",
+          "info": "Para um botão de categoria, selecione a coleção correspondente. Esta opção tem prioridade sobre o link genérico."
         },
         {
           "type": "checkbox",

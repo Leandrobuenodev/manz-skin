@@ -1,0 +1,68 @@
+.manz-policy {
+  width: min(100% - 64px, 880px);
+  max-width: 880px;
+  color: #3e401f;
+}
+
+.manz-policy__eyebrow {
+  margin: 0 0 16px;
+  color: #64614b;
+  font-family: 'Manz Jost', 'Jost', sans-serif;
+  font-size: 12px;
+  letter-spacing: .16em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.manz-policy__title {
+  margin: 0 0 clamp(28px, 5vw, 54px);
+  color: #3e401f;
+  font-family: 'Manz Bodoni', 'Bodoni Moda', Georgia, serif;
+  font-size: clamp(42px, 6vw, 72px);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: 1;
+}
+
+.manz-policy__body {
+  color: #54523d;
+  font-family: 'Manz Jost', 'Jost', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.manz-policy__body h2,
+.manz-policy__body h3,
+.manz-policy__body h4 {
+  margin: 2em 0 .75em;
+  color: #3e401f;
+  font-family: 'Manz Jost', 'Jost', sans-serif;
+  font-size: 1.05em;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.manz-policy__body p,
+.manz-policy__body ul,
+.manz-policy__body ol {
+  margin: 0 0 1.25em;
+}
+
+.manz-policy__body a {
+  color: inherit;
+  text-decoration-color: rgb(62 64 31 / 45%);
+  text-underline-offset: 3px;
+}
+
+@media screen and (max-width: 749px) {
+  .manz-policy {
+    width: calc(100% - 40px);
+  }
+
+  .manz-policy__body {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+}

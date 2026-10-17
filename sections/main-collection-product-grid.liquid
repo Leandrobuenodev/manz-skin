@@ -2,6 +2,27 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign manz_soaps_collection = false
+  assign manz_category_collection = false
+  if template.name == 'collection' and template.suffix == 'sabonetes'
+    assign manz_soaps_collection = true
+  endif
+  assign show_card_short_description = section.settings.show_short_description
+  if manz_soaps_collection
+    assign show_card_short_description = true
+  endif
+  if template.name == 'collection'
+    if template.suffix == 'tratamentos' or template.suffix == 'acessorios' or collection.handle == 'all'
+      assign manz_category_collection = true
+    endif
+  endif
+-%}
+
+{%- if manz_category_collection -%}
+  {{ 'manz-category-collection.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
 {% if section.settings.image_shape == 'blob' %}
   {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
@@ -26,7 +47,12 @@
   }
 {%- endstyle -%}
 
-<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
+<div
+  class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}{% if manz_soaps_collection %} manz-soaps-grid{% endif %}{% if manz_category_collection %} manz-category-grid{% endif %}"
+  {% if manz_category_collection %}
+    style="--manz-category-columns: {{ section.settings.columns_desktop }}; --manz-category-columns-mobile: {{ section.settings.columns_mobile }};"
+  {% endif %}
+>
   {%- paginate collection.products by section.settings.products_per_page -%}
     {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
     {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
@@ -123,12 +149,29 @@
             <div class="title-wrapper center">
               <h2 class="title title--primary">
                 {{ 'sections.collection_template.empty' | t -}}
-                <br>
-                {{
-                  'sections.collection_template.use_fewer_filters_html'
-                  | t: link: collection.url, class: 'underlined-link link'
-                }}
               </h2>
+              {%- if manz_category_collection -%}
+                {%- if collection.all_products_count == 0 -%}
+                  {%- unless collection.handle == 'all' -%}
+                    <a class="button button--secondary" href="{{ routes.all_products_collection_url }}">
+                      Ver todos os produtos
+                    </a>
+                  {%- endunless -%}
+                {%- else -%}
+                  <p>
+                    {{
+                      'sections.collection_template.use_fewer_filters_html'
+                      | t: link: collection.url, class: 'underlined-link link'
+                    }}
+                  </p>
+                {%- endif -%}
+              {%- else -%}
+                <br>
+                  {{
+                    'sections.collection_template.use_fewer_filters_html'
+                    | t: link: collection.url, class: 'underlined-link link'
+                  }}
+              {%- endif -%}
             </div>
           </div>
         {%- else -%}
@@ -143,12 +186,25 @@
               "
             >
               {%- for product in collection.products -%}
-                {% assign lazy_load = false %}
-                {%- if forloop.index > 2 -%}
+                {%- liquid
+                  assign lazy_load = false
+                  assign soaps_show_secondary_image = section.settings.show_secondary_image
+                  if manz_soaps_collection
+                    assign soaps_show_secondary_image = false
+                  endif
+                -%}
+                {%- if manz_soaps_collection -%}
+                  {%- if forloop.index > 6 -%}
+                    {%- assign lazy_load = true -%}
+                  {%- endif -%}
+                {%- elsif forloop.index > 2 -%}
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
                 <li
                   class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                  {% if manz_soaps_collection %}
+                    data-product-handle="{{ product.handle }}"
+                  {% endif %}
                   {% if settings.animations_reveal_on_scroll %}
                     data-cascade
                     style="--animation-order: {{ forloop.index }};"
@@ -158,9 +214,11 @@
                     card_product: product,
                     media_aspect_ratio: section.settings.image_ratio,
                     image_shape: section.settings.image_shape,
-                    show_secondary_image: section.settings.show_secondary_image,
+                    show_secondary_image: soaps_show_secondary_image,
                     show_vendor: section.settings.show_vendor,
                     show_rating: section.settings.show_rating,
+                    show_short_description: show_card_short_description,
+                    columns_desktop: section.settings.columns_desktop,
                     lazy_load: lazy_load,
                     show_quick_add: section.settings.enable_quick_add,
                     section_id: section.id
@@ -295,6 +353,13 @@
       "default": false,
       "label": "t:sections.main-collection-product-grid.settings.show_rating.label",
       "info": "t:sections.main-collection-product-grid.settings.show_rating.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_short_description",
+      "default": false,
+      "label": "Mostrar resumo do produto",
+      "info": "Exibe o metafield custom.resumo_card ou, se vazio, o início da descrição cadastrada no produto."
     },
     {
       "type": "checkbox",

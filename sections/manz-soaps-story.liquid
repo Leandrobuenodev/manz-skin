@@ -1,0 +1,112 @@
+{%- liquid
+  assign story_page = pages['quem-somos-nos']
+  assign story_image = section.settings.editorial_image
+  assign story_asset = 'manz-soaps-story-dsc01245.jpg'
+  assign story_url = section.settings.button_link
+  if story_url == blank and story_page != blank
+    assign story_url = story_page.url
+  endif
+-%}
+
+<section class="manz-soaps-story" aria-labelledby="ManzSoapsStoryTitle-{{ section.id }}">
+  <div class="manz-soaps-story__media">
+    {%- if story_image != blank -%}
+      {{ story_image | image_url: width: 2000 | image_tag:
+        class: 'manz-soaps-story__image',
+        widths: '600, 900, 1200, 1600, 2000',
+        sizes: '(min-width: 750px) 55vw, 100vw',
+        loading: 'lazy',
+        decoding: 'async',
+        alt: story_image.alt | default: 'Sabonete amarelo sendo segurado por uma mão diante de uma queda d’água'
+      }}
+    {%- elsif section.settings.show_theme_fallback -%}
+      <img
+        class="manz-soaps-story__image"
+        src="{{ story_asset | asset_url }}"
+        width="1600"
+        height="2400"
+        alt="Mão segurando um sabonete amarelo diante de uma queda d’água"
+        loading="eager"
+        decoding="async"
+      >
+    {%- else -%}
+      <div class="manz-soaps-story__image-placeholder" aria-hidden="true"></div>
+    {%- endif -%}
+  </div>
+  <div class="manz-soaps-story__content">
+    <div class="manz-soaps-story__content-inner">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="manz-soaps__eyebrow manz-soaps__eyebrow--section">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="manz-soaps-story__heading" id="ManzSoapsStoryTitle-{{ section.id }}">
+          {{ section.settings.heading | escape | newline_to_br }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.copy != blank -%}
+        <div class="manz-soaps-story__copy">{{ section.settings.copy }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank and story_url != blank -%}
+        <a class="manz-soaps-story__button" href="{{ story_url | escape }}">
+          {{ section.settings.button_label | escape }} <span aria-hidden="true">→</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "História sabonetes",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "editorial_image",
+      "label": "Foto editorial",
+      "info": "A imagem escolhida aparece no lugar da foto original incluída no tema."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_theme_fallback",
+      "label": "Usar a foto original se a imagem estiver vazia",
+      "info": "Desative para deixar a área sem fotografia quando o seletor estiver vazio.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Identificador",
+      "default": "MANZ SKIN"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Título",
+      "default": "Mais que um sabonete,\num ritual de cuidado."
+    },
+    {
+      "type": "richtext",
+      "id": "copy",
+      "label": "Texto",
+      "default": "<p>Feitos artesanalmente pela fundadora Carol com ingredientes naturais, nossos sabonetes unem autocuidado e respeito pela natureza.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto do botão",
+      "default": "Conheça nossa história"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão",
+      "info": "Se ficar vazio, o botão abre a página Nossa história quando ela estiver configurada na loja."
+    }
+  ],
+  "presets": [
+    { "name": "História sabonetes" }
+  ]
+}
+{% endschema %}

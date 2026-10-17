@@ -1,0 +1,183 @@
+{%- liquid
+  assign banner_image = section.settings.banner_image
+  assign banner_alt = section.settings.banner_alt
+  if banner_image != blank
+    assign banner_alt = banner_image.alt | default: banner_alt
+  endif
+-%}
+
+<div class="manz-soaps">
+  <section
+    class="manz-soaps__banner{% if section.settings.show_banner_text %} manz-soaps__banner--with-text{% endif %}"
+    style="--manz-soaps-image-x: {{ section.settings.banner_position_x }}%; --manz-soaps-image-y: {{ section.settings.banner_position_y }}%;"
+    aria-label="Sabonetes artesanais Manz Skin"
+  >
+    {%- if banner_image != blank -%}
+      {{
+        banner_image
+        | image_url: width: 5000
+        | image_tag:
+          class: 'manz-soaps__banner-image',
+          widths: '750, 1100, 1500, 2000, 2600, 3200, 4000, 5000',
+          sizes: '100vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: banner_alt,
+          preload: true
+      }}
+    {%- elsif section.settings.show_theme_fallback -%}
+      <img
+        class="manz-soaps__banner-image"
+        src="{{ 'manz-soaps-banner-dsc01903-1600.jpg' | asset_url }}"
+        srcset="
+          {{ 'manz-soaps-banner-dsc01903-1600.jpg' | asset_url }} 1600w,
+          {{ 'manz-soaps-banner-dsc01903-2600.jpg' | asset_url }} 2600w,
+          {{ 'manz-soaps-banner-dsc01903-3200.jpg' | asset_url }} 3200w,
+          {{ 'manz-soaps-banner-dsc01903-5000.jpg' | asset_url }} 5000w
+        "
+        sizes="100vw"
+        width="5000"
+        height="3333"
+        alt="{{ banner_alt | escape }}"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- endif -%}
+    <div class="manz-soaps__banner-shade" aria-hidden="true"></div>
+    {%- if section.settings.show_banner_text -%}
+      <div class="manz-soaps__banner-content page-width">
+        {%- if section.settings.banner_eyebrow != blank -%}
+          <p class="manz-soaps__banner-eyebrow">{{ section.settings.banner_eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.banner_heading != blank -%}
+          <h2 class="manz-soaps__banner-heading">{{ section.settings.banner_heading | escape | newline_to_br }}</h2>
+        {%- endif -%}
+        {%- if section.settings.banner_description != blank -%}
+          <p class="manz-soaps__banner-description">{{ section.settings.banner_description | escape | newline_to_br }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </section>
+
+  <section class="manz-soaps__intro" aria-labelledby="ManzSoapsIntroTitle-{{ section.id }}">
+    <div class="manz-soaps__intro-inner page-width">
+      <div class="manz-soaps__intro-heading-group">
+        {%- if section.settings.intro_eyebrow != blank -%}
+          <p class="manz-soaps__eyebrow manz-soaps__eyebrow--intro">
+            {{ section.settings.intro_eyebrow | escape }}
+          </p>
+        {%- endif -%}
+        {%- if section.settings.intro_heading != blank -%}
+          <h1 class="manz-soaps__intro-heading" id="ManzSoapsIntroTitle-{{ section.id }}">
+            {{ section.settings.intro_heading | escape | newline_to_br }}
+          </h1>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.intro_copy != blank -%}
+        <p class="manz-soaps__intro-copy">
+          {{ section.settings.intro_copy | escape | newline_to_br }}
+        </p>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Banner sabonetes",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Fotografia do banner",
+      "info": "A imagem escolhida substitui a fotografia original de campanha usada pelo tema como padrão."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_theme_fallback",
+      "label": "Usar a fotografia original se a imagem estiver vazia",
+      "info": "Desative para deixar o banner sem fotografia quando o seletor estiver vazio.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "banner_alt",
+      "label": "Texto alternativo da fotografia",
+      "default": "Cinco sabonetes artesanais sobre uma superfície de pedra escura"
+    },
+    {
+      "type": "range",
+      "id": "banner_position_x",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Enquadramento horizontal",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "banner_position_y",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Enquadramento vertical",
+      "default": 45
+    },
+    {
+      "type": "checkbox",
+      "id": "show_banner_text",
+      "label": "Exibir textos sobre a fotografia",
+      "info": "O design aprovado mantém o banner sem textos. Ative para exibir os campos abaixo.",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "banner_eyebrow",
+      "label": "Texto pequeno do banner",
+      "info": "Só aparece quando a opção de exibir textos sobre a fotografia está ativada.",
+      "default": "MANZ SKIN · SABONETES NATURAIS"
+    },
+    {
+      "type": "textarea",
+      "id": "banner_heading",
+      "label": "Título do banner",
+      "info": "Só aparece quando a opção de exibir textos sobre a fotografia está ativada.",
+      "default": "Limpeza natural\npara todos os dias."
+    },
+    {
+      "type": "textarea",
+      "id": "banner_description",
+      "label": "Descrição do banner",
+      "info": "Só aparece quando a opção de exibir textos sobre a fotografia está ativada.",
+      "default": "Sabonetes artesanais com ingredientes naturais, feitos para cuidar da sua pele e do seu bem-estar."
+    },
+    {
+      "type": "text",
+      "id": "intro_eyebrow",
+      "label": "Texto pequeno da introdução",
+      "default": "NOSSOS SABONETES"
+    },
+    {
+      "type": "textarea",
+      "id": "intro_heading",
+      "label": "Título da introdução",
+      "default": "Ingredientes reais.\nResultados visíveis."
+    },
+    {
+      "type": "textarea",
+      "id": "intro_copy",
+      "label": "Texto da introdução",
+      "default": "Cada sabonete é feito com ingredientes naturais selecionados, pensando para diferentes necessidades de pele. Escolha o seu e descubra qual combina com a sua rotina."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner sabonetes"
+    }
+  ]
+}
+{% endschema %}

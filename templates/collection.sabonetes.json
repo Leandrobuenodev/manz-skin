@@ -1,0 +1,154 @@
+{
+  "sections": {
+    "manz-soaps-intro": {
+      "type": "manz-soaps-collection-intro",
+      "settings": {
+        "banner_alt": "Cinco sabonetes artesanais sobre uma superfície de pedra escura",
+        "show_theme_fallback": true,
+        "banner_position_x": 50,
+        "banner_position_y": 45,
+        "show_banner_text": false,
+        "banner_eyebrow": "MANZ SKIN · SABONETES NATURAIS",
+        "banner_heading": "Limpeza natural\npara todos os dias.",
+        "banner_description": "Sabonetes artesanais com ingredientes naturais, feitos para cuidar da sua pele e do seu bem-estar.",
+        "intro_eyebrow": "NOSSOS SABONETES",
+        "intro_heading": "Ingredientes reais.\nResultados visíveis.",
+        "intro_copy": "Cada sabonete é feito com ingredientes naturais selecionados, pensando para diferentes necessidades de pele. Escolha o seu e sinta a diferença no seu dia a dia."
+      }
+    },
+    "manz-soaps-products": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 20,
+        "columns_desktop": 3,
+        "color_scheme": "background-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": true,
+        "enable_filtering": false,
+        "filter_type": "horizontal",
+        "enable_sorting": false,
+        "columns_mobile": "2",
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
+    },
+    "manz-soaps-benefits": {
+      "type": "manz-soaps-benefits",
+      "blocks": {
+        "natural_1": {
+          "type": "benefit",
+          "settings": { "icon": "natural", "label": "Ingredientes naturais" }
+        },
+        "paraben_free_2": {
+          "type": "benefit",
+          "settings": { "icon": "paraben_free", "label": "Sem parabenos" }
+        },
+        "cruelty_free_3": {
+          "type": "benefit",
+          "settings": { "icon": "cruelty_free", "label": "Cruelty free" }
+        },
+        "vegan_4": {
+          "type": "benefit",
+          "settings": { "icon": "vegan", "label": "Vegano" }
+        },
+        "biodegradable_5": {
+          "type": "benefit",
+          "settings": { "icon": "biodegradable", "label": "Biodegradáveis" }
+        }
+      },
+      "block_order": [
+        "natural_1",
+        "paraben_free_2",
+        "cruelty_free_3",
+        "vegan_4",
+        "biodegradable_5"
+      ],
+      "settings": {}
+    },
+    "manz-soaps-story": {
+      "type": "manz-soaps-story",
+      "settings": {
+        "eyebrow": "MANZ SKIN",
+        "heading": "Mais que um sabonete,\num ritual de cuidado.",
+        "copy": "<p>Feitos artesanalmente pela fundadora Carol com ingredientes naturais, nossos sabonetes unem autocuidado e respeito pela natureza.</p>",
+        "button_label": "Conheça nossa história",
+        "show_theme_fallback": true,
+        "button_link": ""
+      }
+    },
+    "manz-soaps-how-to": {
+      "type": "manz-soaps-how-to",
+      "settings": {
+        "eyebrow": "COMO USAR",
+        "heading": "Um ritual simples,\ncom grandes benefícios.",
+        "copy": "Com a pele úmida, massageie o sabonete suavemente até formar espuma e enxágue em seguida. A marca recomenda o uso uma vez ao dia.",
+        "button_label": "Ver todos os sabonetes",
+        "button_link": "",
+        "use_repeating_steps": true,
+        "show_legacy_fallbacks": true,
+        "step_1_alt": "Modelo apresentando um sabonete artesanal claro",
+        "step_1_title": "Conheça a barra",
+        "step_1_caption": "A modelo apresenta um dos sabonetes.",
+        "step_2_alt": "Mãos massageando um sabonete na pele com espuma",
+        "step_2_title": "Massageie suavemente",
+        "step_2_caption": "Forme espuma sobre a pele.",
+        "step_3_alt": "Modelo sentindo o aroma de um sabonete amarelo diante da água",
+        "step_3_title": "Aprecie o aroma",
+        "step_3_caption": "Uma pausa sensorial no seu ritual."
+      },
+      "blocks": {
+        "ritual_step_1": {
+          "type": "step",
+          "settings": {
+            "alt": "Modelo apresentando um sabonete artesanal claro",
+            "title": "Conheça a barra",
+            "caption": "A modelo apresenta um dos sabonetes.",
+            "fallback_image": "step_1"
+          }
+        },
+        "ritual_step_2": {
+          "type": "step",
+          "settings": {
+            "alt": "Mãos massageando um sabonete na pele com espuma",
+            "title": "Massageie suavemente",
+            "caption": "Forme espuma sobre a pele.",
+            "fallback_image": "step_2"
+          }
+        },
+        "ritual_step_3": {
+          "type": "step",
+          "settings": {
+            "alt": "Modelo sentindo o aroma de um sabonete amarelo diante da água",
+            "title": "Aprecie o aroma",
+            "caption": "Uma pausa sensorial no seu ritual.",
+            "fallback_image": "step_3"
+          }
+        }
+      },
+      "block_order": ["ritual_step_1", "ritual_step_2", "ritual_step_3"]
+    },
+    "manz-soaps-final-banner": {
+      "type": "manz-soaps-final-banner",
+      "settings": {
+        "eyebrow": "MANZ SKIN",
+        "heading": "Natureza, beleza\ne autenticidade.",
+        "copy": "Nossos sabonetes unem o poder dos ingredientes naturais ao cuidado artesanal, em uma rotina de autocuidado mais simples, consciente e real.",
+        "button_label": "Ver todos os produtos",
+        "show_theme_fallback": true,
+        "button_link": ""
+      }
+    }
+  },
+  "order": [
+    "manz-soaps-intro",
+    "manz-soaps-products",
+    "manz-soaps-benefits",
+    "manz-soaps-story",
+    "manz-soaps-how-to",
+    "manz-soaps-final-banner"
+  ]
+}

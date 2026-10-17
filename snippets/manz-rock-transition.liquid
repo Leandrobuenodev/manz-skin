@@ -1,0 +1,22 @@
+{% comment %}
+  Reuses the Hero background and its focus. The lower pixels are reflected across
+  the seam by CSS; no new photograph, extra section height, or interactive layer.
+{% endcomment %}
+<div class="manz-rock-transition" aria-hidden="true">
+  {% if background_image != blank %}
+    {{ background_image | image_url: width: 2880 | image_tag:
+      class: 'manz-rock-transition__image',
+      widths: '960, 1440, 1920, 2400, 2880',
+      sizes: '100vw',
+      loading: 'eager',
+      fetchpriority: 'low',
+      decoding: 'async',
+      alt: ''
+    }}
+  {% else %}
+    <img class="manz-rock-transition__image"
+      src="{{ 'manz-hero-v2-soaps-1920.jpg' | asset_url }}"
+      srcset="{{ 'manz-hero-v2-soaps-960.jpg' | asset_url }} 960w, {{ 'manz-hero-v2-soaps-1920.jpg' | asset_url }} 1920w, {{ 'manz-hero-v2-soaps-2880.jpg' | asset_url }} 2880w"
+      sizes="100vw" width="2880" height="1920" alt="" loading="eager" fetchpriority="low" decoding="async">
+  {% endif %}
+</div>

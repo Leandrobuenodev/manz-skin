@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "manz-category-intro": {
+      "type": "manz-collection-intro",
+      "settings": {}
+    },
+    "main-collection-product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 20,
+        "columns_desktop": 3,
+        "color_scheme": "background-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "show_short_description": true,
+        "enable_quick_add": true,
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 0,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "manz-category-intro",
+    "main-collection-product-grid"
+  ]
+}

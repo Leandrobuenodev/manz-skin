@@ -1,0 +1,111 @@
+.manz-home-section-2 {
+  width: 100%;
+  margin: 0;
+  padding-block: clamp(56px, 5vw, 88px);
+  color: #342e27;
+  background: #f5f1ea;
+}
+
+.manz-home-section-2__composition {
+  display: grid;
+  width: min(1500px, calc(100% - clamp(48px, 9vw, 176px)));
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  column-gap: clamp(56px, 7vw, 112px);
+  margin-inline: auto;
+}
+
+.manz-home-section-2__portrait {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.manz-home-section-2__portrait-image {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  max-height: min(78svh, 820px);
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.manz-home-section-2__portrait-placeholder {
+  width: 100%;
+  max-width: 540px;
+  aspect-ratio: 854 / 1280;
+  background: #d5cec2;
+}
+
+.manz-home-section-2__copy {
+  width: 100%;
+  min-width: 0;
+  max-width: 760px;
+}
+
+.manz-home-section-2__heading {
+  max-width: none;
+  margin: 0;
+  color: #382f29;
+  font-family: 'Manz Bodoni', 'Bodoni Moda', 'Bodoni 72', 'Times New Roman', serif;
+  font-size: clamp(64px, 7.1vw, 108px);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.manz-home-section-2__mission {
+  max-width: 68ch;
+  margin: clamp(26px, 2.8vw, 38px) 0 0;
+  color: #554d44;
+  font-family: 'Manz Jost', 'Jost', sans-serif;
+  font-size: clamp(18px, 1.25vw, 20px);
+  font-style: normal;
+  font-weight: 300;
+  letter-spacing: 0.006em;
+  line-height: 1.8;
+  text-wrap: pretty;
+}
+
+.manz-home-section-2__cta {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 12px;
+  margin-top: clamp(24px, 2.4vw, 34px);
+  padding-block: 8px;
+  border-bottom: 1px solid rgb(56 47 41 / 62%);
+  color: #382f29;
+  font-family: 'Manz Jost', 'Jost', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  line-height: 1.45;
+  text-decoration: none;
+}
+
+.manz-home-section-2__cta span {
+  font-size: 20px;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.manz-home-section-2__cta:hover span {
+  transform: translateX(4px);
+}
+
+.manz-home-section-2__cta:focus-visible {
+  outline: 2px solid #382f29;
+  outline-offset: 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manz-home-section-2__cta span {
+    transition: none;
+  }
+}
