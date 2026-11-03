@@ -64,6 +64,10 @@
       endcapture
   endcase
 -%}
+{%- if mobile_image != blank -%}
+  <picture class="manz-hero-carousel__picture">
+    {% render 'manz-hero-mobile-image-source', image: mobile_image %}
+{%- endif -%}
 <img
   class="{{ image_class }}"
   src="{{ asset_file | asset_url }}"
@@ -76,3 +80,6 @@
   fetchpriority="{{ fetchpriority }}"
   decoding="async"
 >
+{%- if mobile_image != blank -%}
+  </picture>
+{%- endif -%}

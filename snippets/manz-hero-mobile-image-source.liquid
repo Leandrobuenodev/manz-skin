@@ -1,0 +1,7 @@
+{%- if image != blank -%}
+  <source
+    media="(max-width: 749px)"
+    srcset="{{ image | image_url: width: 480 }} 480w, {{ image | image_url: width: 750 }} 750w, {{ image | image_url: width: 1200 }} 1200w"
+    sizes="100vw"
+  >
+{%- endif -%}

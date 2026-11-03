@@ -1,0 +1,48 @@
+/* Cart presentation only. Dawn owns cart data, quantity updates and errors. */
+body.manz-cart-page {
+  background: #f7f4ed;
+  color: #41432e;
+  --color-background: 247, 244, 237;
+  --color-foreground: 65, 67, 46;
+  --color-button: 105, 107, 71;
+  --color-button-text: 255, 253, 247;
+  --font-body-family: 'Manz Jost', sans-serif;
+  --font-heading-family: 'Manz Bodoni', Georgia, serif;
+}
+.manz-cart-page #MainContent { padding-top: 120px; padding-bottom: 64px; }
+.manz-cart-page #MainContent .page-width { max-width: 1120px; padding-inline: 32px; }
+.manz-cart-page cart-items,
+.manz-cart-page #main-cart-footer { background: transparent; color: #41432e; }
+.manz-cart-page .title--primary,
+.manz-cart-page .cart__empty-text { font: 400 clamp(34px, 4vw, 54px)/1.12 'Manz Bodoni', Georgia, serif; letter-spacing: -.035em; }
+.manz-cart-page .cart__warnings { padding: 64px 0 80px; }
+.manz-cart-page .manz-cart-empty-description { margin: 18px 0 28px; font-size: 16px; }
+.manz-cart-page .cart__login-title { margin-top: 36px; font-size: 20px; }
+.manz-cart-page .cart__login-paragraph { font-size: 14px; }
+.manz-cart-page .cart__login-paragraph a { color: #41432e; text-underline-offset: 3px; }
+.manz-cart-page #MainContent .button:not(.button--tertiary) { border-radius: 28px; background: #696b47; color: #fffdf7; min-height: 46px; padding: 12px 28px; }
+.manz-cart-page #MainContent .button::before,
+.manz-cart-page #MainContent .button::after { border-radius: inherit; box-shadow: none; }
+.manz-cart-page .cart-item__name { font-family: 'Manz Bodoni', Georgia, serif; color: #41432e; font-size: 20px; }
+.manz-cart-page .cart-item__image-container { border-radius: 10px; overflow: hidden; background: #eee8dc; }
+.manz-cart-page .cart-item__image { object-fit: contain; }
+.manz-cart-page .quantity { width: 132px; min-height: 44px; border: 1px solid #b7b19c; border-radius: 24px; background: transparent; }
+.manz-cart-page .quantity__button { width: 44px; flex-shrink: 0; }
+.manz-cart-page .quantity__input { width: 42px; }
+.manz-cart-page .cart-item__quantity-wrapper { align-items: center; }
+.manz-cart-page .quantity::after { border-radius: inherit; box-shadow: none; }
+.manz-cart-page .cart__blocks { padding: 28px; background: #efeadd; border: 1px solid #ded8c7; border-radius: 18px; }
+.manz-cart-page .cart__checkout-button { width: 100%; }
+.manz-cart-page .tax-note { line-height: 1.6; }
+.manz-cart-page .cart-item__error-text,
+.manz-cart-page #cart-errors { color: #903d30; }
+@media (max-width: 749px) {
+  .manz-cart-page #MainContent { padding-top: 92px; padding-bottom: 36px; }
+  .manz-cart-page #MainContent .page-width { padding-inline: 20px; }
+  .manz-cart-page .cart__warnings { padding: 46px 0 52px; }
+  .manz-cart-page .title-wrapper-with-link { align-items: flex-start; gap: 16px; }
+  .manz-cart-page .title-wrapper-with-link .underlined-link { font-size: 12px; }
+  .manz-cart-page .cart-item__name { font-size: 17px; overflow-wrap: anywhere; }
+  .manz-cart-page .cart__blocks { padding: 22px; }
+  .manz-cart-page .cart__footer { padding-top: 12px; }
+}

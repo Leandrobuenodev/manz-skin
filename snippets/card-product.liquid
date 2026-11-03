@@ -9,6 +9,10 @@
   - image_shape: {String} Image mask to apply to the product image card. Values are "arch", "blob", "chevronleft", "chevronright", "diamond", "parallelogram", and "round". (optional)
   - show_secondary_image: {Boolean} Show the secondary image on hover. Default: false (optional)
   - show_vendor: {Boolean} Show the product vendor. Default: false
+  - show_availability: {Boolean} Show the current Shopify availability. Default: false
+  - card_image: {Object} Optional catalog-only image override; does not change product media.
+  - catalog_asset: {String} Optional approved editorial asset selected in the collection section.
+  - show_catalog_link: {Boolean} Show a product link instead of Quick Add in the editorial catalog.
   - show_rating: {Boolean} Show the product rating. Default: false
   - extend_height: {Boolean} Card height extends to available container space. Default: true (optional)
   - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
@@ -27,7 +31,13 @@
 
 {%- if card_product and card_product != empty -%}
   {%- liquid
-    assign card_media = card_product.featured_media
+    assign card_media = card_image | default: card_product.featured_media
+    assign catalog_asset_width = 1086
+    assign catalog_asset_height = 1448
+    if catalog_asset contains '.png'
+      assign catalog_asset_width = 380
+      assign catalog_asset_height = 208
+    endif
     assign card_columns_desktop = columns_desktop | default: 4
     assign ratio = 1
     if media_aspect_ratio == 'portrait'
@@ -60,7 +70,11 @@
         <div class="card__media{% if image_shape and image_shape != 'default' %} shape--{{ image_shape }} color-{{ settings.card_color_scheme }} gradient{% endif %}">
           <div class="media media--transparent media--hover-effect">
             {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
-            {%- if card_media -%}
+            {%- if catalog_photo_pending -%}
+              <div class="manz-catalog-photo-pending" role="img" aria-label="Fotografia de {{ card_product.title | escape }} em atualização">Fotografia em atualização</div>
+            {%- elsif catalog_asset != blank -%}
+              <img src="{{ catalog_asset | asset_url }}" alt="{{ card_product.title | escape }}" width="{{ catalog_asset_width }}" height="{{ catalog_asset_height }}" loading="lazy" class="motion-reduce">
+            {%- elsif card_media -%}
               <img
                 srcset="
                   {%- if card_media.width >= 165 -%}{{ card_media | image_url: width: 165 }} 165w,{%- endif -%}
@@ -212,6 +226,11 @@
             {%- endif -%}
 
             {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+            {%- if show_availability -%}
+              <p class="card__availability caption">
+                {%- if card_product.available -%}Disponível{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+              </p>
+            {%- endif -%}
             {%- if card_product.quantity_price_breaks_configured? -%}
               <div class="card__information-volume-pricing-note">
                 <span class="caption">{{ 'products.product.volume_pricing.note' | t }}</span>
@@ -219,7 +238,9 @@
             {%- endif -%}
           </div>
         </div>
-        {%- if show_quick_add -%}
+        {%- if show_catalog_link -%}
+          <a class="manz-catalog-card__link" href="{{ card_product.url }}">Ver produto <span aria-hidden="true">→</span></a>
+        {%- elsif show_quick_add -%}
           <div class="quick-add no-js-hidden">
             {%- liquid
               assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id

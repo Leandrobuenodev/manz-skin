@@ -5,6 +5,15 @@
 {%- liquid
   assign manz_soaps_collection = false
   assign manz_category_collection = false
+  assign manz_editorial_catalog = false
+  if collection.handle == 'all' or template.suffix == 'catalogo'
+    assign manz_editorial_catalog = true
+    assign manz_category_collection = true
+  endif
+  assign show_card_availability = false
+  if manz_editorial_catalog
+    assign show_card_availability = true
+  endif
   if template.name == 'collection' and template.suffix == 'sabonetes'
     assign manz_soaps_collection = true
   endif
@@ -48,14 +57,16 @@
 {%- endstyle -%}
 
 <div
+  {% if manz_editorial_catalog %}data-manz-catalog-results{% endif %}
   class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}{% if manz_soaps_collection %} manz-soaps-grid{% endif %}{% if manz_category_collection %} manz-category-grid{% endif %}"
   {% if manz_category_collection %}
     style="--manz-category-columns: {{ section.settings.columns_desktop }}; --manz-category-columns-mobile: {{ section.settings.columns_mobile }};"
   {% endif %}
 >
   {%- paginate collection.products by section.settings.products_per_page -%}
+    {%- if manz_editorial_catalog -%}{% render 'manz-catalog-toolbar' %}{%- endif -%}
     {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
-    {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
+    {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' and manz_editorial_catalog == false -%}
       <facet-filters-form class="facets facets-vertical-sort page-width small-hide no-js-hidden">
         <form class="facets-vertical-form" id="FacetSortForm">
           <div class="facet-filters sorting caption">
@@ -119,6 +130,7 @@
     <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
       {{ 'component-facets.css' | asset_url | stylesheet_tag }}
       <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+      {%- if manz_editorial_catalog == false -%}
       {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
         <aside
           aria-labelledby="verticalTitle"
@@ -134,6 +146,7 @@
             paginate: paginate
           %}
         </aside>
+      {%- endif -%}
       {%- endif -%}
 
       <div
@@ -187,9 +200,29 @@
             >
               {%- for product in collection.products -%}
                 {%- liquid
+                  assign catalog_image = product.metafields.custom.catalog_image.value
+                  assign catalog_asset = blank
+                  assign catalog_photo_pending = false
+                  if manz_editorial_catalog and catalog_image == blank and product.featured_media == blank
+                    for image_block in section.blocks
+                      if image_block.type == 'catalog_image' and image_block.settings.product.handle == product.handle
+                        assign catalog_image = image_block.settings.image
+                        if catalog_image == blank and image_block.settings.waiting_photo
+                          assign catalog_photo_pending = true
+                        endif
+                        if catalog_image == blank and image_block.settings.use_theme_editorial and catalog_photo_pending == false
+                          capture catalog_asset
+                            render 'manz-catalog-editorial-asset', product_handle: product.handle
+                          endcapture
+                          assign catalog_asset = catalog_asset | strip
+                        endif
+                        break
+                      endif
+                    endfor
+                  endif
                   assign lazy_load = false
                   assign soaps_show_secondary_image = section.settings.show_secondary_image
-                  if manz_soaps_collection
+                  if manz_soaps_collection or manz_editorial_catalog
                     assign soaps_show_secondary_image = false
                   endif
                 -%}
@@ -212,12 +245,17 @@
                 >
                   {% render 'card-product',
                     card_product: product,
+                    card_image: catalog_image,
+                    catalog_asset: catalog_asset,
+                    catalog_photo_pending: catalog_photo_pending,
+                    show_catalog_link: manz_editorial_catalog,
                     media_aspect_ratio: section.settings.image_ratio,
                     image_shape: section.settings.image_shape,
                     show_secondary_image: soaps_show_secondary_image,
                     show_vendor: section.settings.show_vendor,
                     show_rating: section.settings.show_rating,
                     show_short_description: show_card_short_description,
+                    show_availability: show_card_availability,
                     columns_desktop: section.settings.columns_desktop,
                     lazy_load: lazy_load,
                     show_quick_add: section.settings.enable_quick_add,
@@ -448,6 +486,67 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Categorias do catálogo"
+    },
+    {
+      "type": "collection",
+      "id": "catalog_soaps",
+      "label": "Sabonetes",
+      "info": "Opcional. Só aparece quando a coleção existe e tem produtos."
+    },
+    {
+      "type": "collection",
+      "id": "catalog_skincare",
+      "label": "Skincare",
+      "info": "Opcional. Só aparece quando a coleção existe e tem produtos."
+    },
+    {
+      "type": "collection",
+      "id": "catalog_kits",
+      "label": "Kits",
+      "info": "Opcional. Só aparece quando a coleção existe e tem produtos."
+    },
+    {
+      "type": "collection",
+      "id": "catalog_accessories",
+      "label": "Acessórios",
+      "info": "Opcional. Só aparece quando a coleção existe e tem produtos."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "catalog_image",
+      "name": "Foto editorial",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produto"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Fotografia para este catálogo",
+          "info": "Fallback apenas para produtos sem fotografia nativa e sem custom.catalog_image. Não muda as imagens globais."
+        },
+        {
+          "type": "checkbox",
+          "id": "use_theme_editorial",
+          "label": "Usar foto editorial já aprovada",
+          "info": "Fallback legado apenas quando o produto não tem fotografia nativa nem custom.catalog_image.",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "waiting_photo",
+          "label": "Foto em revisão",
+          "info": "Sem imagem escolhida, mantém a área neutra até vincular a fotografia correta.",
+          "default": false
+        }
+      ]
     }
   ]
 }

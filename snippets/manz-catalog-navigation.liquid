@@ -1,0 +1,5 @@
+<nav class="manz-hero-nav{% if mobile %} manz-hero-nav--mobile{% endif %}" aria-label="{% if mobile %}Navegação mobile{% else %}Navegação principal{% endif %}">
+  <a class="manz-hero-nav__link" href="{{ routes.root_url }}">Início</a>
+  {%- if collections['body'] != blank -%}<a class="manz-hero-nav__link" href="{{ collections['body'].url }}">Sabonetes</a>{%- endif -%}
+  {%- if pages['rastreamento-de-pedidos'] != blank -%}<a class="manz-hero-nav__link" href="{{ pages['rastreamento-de-pedidos'].url }}">Rastreamento de pedidos</a>{%- endif -%}
+</nav>

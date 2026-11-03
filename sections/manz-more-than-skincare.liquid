@@ -1,21 +1,44 @@
 {{ 'manz-more-than-skincare.css' | asset_url | stylesheet_tag }}
 {% liquid
-  assign cta_url = section.settings.cta_collection.url | default: section.settings.cta_link
+  assign cta_url = section.settings.cta_collection.url | default: section.settings.cta_link | default: collections['body'].url
+  assign mobile_plate_image = section.settings.mobile_plate_image
+  if mobile_plate_image != blank
+    assign mobile_benefits_photo_url = mobile_plate_image | image_url: width: 1200
+  elsif section.settings.plate_image != blank
+    assign mobile_benefits_photo_url = section.settings.plate_image | image_url: width: 1200
+  elsif section.settings.show_theme_fallback
+    assign mobile_benefits_photo_url = 'manz-more-home2-mobile-final.png' | asset_url
+  endif
 %}
-<section class="manz-more" aria-labelledby="ManzMoreHeading-{{ section.id }}" style="--manz-more-section-background: {{ section.settings.section_background }}; --manz-more-heading-color: {{ section.settings.heading_color }}; --manz-more-body-color: {{ section.settings.body_color }}; --manz-more-button-background: {{ section.settings.button_background }}; --manz-more-button-text-color: {{ section.settings.button_text_color }}; --manz-more-features-background: {{ section.settings.features_background }}; --manz-more-features-text-color: {{ section.settings.features_text_color }}">
+<section class="manz-more" aria-labelledby="ManzMoreHeading-{{ section.id }}" style="--manz-more-section-background: {{ section.settings.section_background }}; --manz-more-heading-color: {{ section.settings.heading_color }}; --manz-more-body-color: {{ section.settings.body_color }}; --manz-more-button-background: {{ section.settings.button_background }}; --manz-more-button-text-color: {{ section.settings.button_text_color }}; --manz-more-features-background: {{ section.settings.features_background }}; --manz-more-features-text-color: {{ section.settings.features_text_color }}{% if mobile_benefits_photo_url != blank %}; --manz-more-benefits-photo: url('{{ mobile_benefits_photo_url }}'){% endif %}">
   <div class="manz-more__main">
     <div class="manz-more__plate" aria-hidden="true">
-      {% if section.settings.plate_image != blank %}
-        {{ section.settings.plate_image | image_url: width: 2400 | image_tag: class: 'manz-more__plate-image', widths: '960, 1448, 1920, 2400', sizes: '100vw', loading: 'lazy', decoding: 'async', alt: '' }}
-      {% elsif section.settings.show_theme_fallback %}
-        <img class="manz-more__plate-image" src="{{ 'manz-more-plate-v1.png' | asset_url }}" width="1448" height="1086" alt="" loading="lazy" decoding="async">
+      {% if section.settings.plate_image != blank or section.settings.show_theme_fallback %}
+        <picture class="manz-more__plate-picture">
+          {% if mobile_plate_image != blank %}
+            <source media="(max-width: 749px)" srcset="{{ mobile_plate_image | image_url: width: 1200 }}">
+          {% elsif section.settings.show_theme_fallback %}
+            <source media="(max-width: 749px)" type="image/png" srcset="{{ 'manz-more-home2-mobile-final.png' | asset_url }}">
+            <source media="(max-width: 749px)" type="image/jpeg" srcset="{{ 'manz-more-home2-carol-plate.jpg' | asset_url }}">
+          {% endif %}
+          {% if section.settings.plate_image != blank %}
+            {{ section.settings.plate_image | image_url: width: 2400 | image_tag: class: 'manz-more__plate-image', widths: '960, 1448, 1920, 2400', sizes: '100vw', loading: 'lazy', decoding: 'async', alt: '' }}
+          {% else %}
+            <source media="(min-width: 990px)" type="image/png" srcset="{{ 'manz-more-home-web-plate.png' | asset_url }}">
+            <img class="manz-more__plate-image" src="{{ 'manz-more-plate-v1.png' | asset_url }}" width="1448" height="1086" alt="" loading="lazy" decoding="async">
+          {% endif %}
+        </picture>
       {% else %}
         <div class="manz-more__plate-placeholder" aria-hidden="true"></div>
+        {% if mobile_plate_image != blank %}
+          {{ mobile_plate_image | image_url: width: 1200 | image_tag: class: 'manz-more__plate-image manz-more__plate-image--mobile-only', widths: '640, 854, 1200', sizes: '100vw', loading: 'lazy', decoding: 'async', alt: '' }}
+        {% endif %}
       {% endif %}
     </div>
     <div class="manz-more__content">
+      <p class="manz-more__eyebrow" aria-hidden="true">MANZ SKIN</p>
       {% if section.settings.heading != blank %}
-        <h2 class="manz-more__heading" id="ManzMoreHeading-{{ section.id }}">{% if section.settings.heading == "It’s more than skincare" or section.settings.heading == "It's more than skincare" %}<span>It’s more</span><span>than skincare</span>{% else %}{{ section.settings.heading | escape }}{% endif %}</h2>
+        <h2 class="manz-more__heading" id="ManzMoreHeading-{{ section.id }}">{% if section.settings.heading == "It’s more than skincare" or section.settings.heading == "It's more than skincare" %}<span>It’s more</span><span>than <span>skincare</span></span>{% else %}{{ section.settings.heading | escape }}{% endif %}</h2>
       {% endif %}
       {% if section.settings.body_text != blank %}
         <p class="manz-more__text">{{ section.settings.body_text | escape | newline_to_br }}</p>
@@ -26,17 +49,19 @@
     </div>
   </div>
   {% if section.blocks.size > 0 %}
-    <ul class="manz-more__features" aria-label="Compromissos Manz Skin">
-      {% for block in section.blocks %}
-        <li class="manz-more__feature" {{ block.shopify_attributes }}>
-          {% unless block.settings.icon == 'none' %}{% render 'manz-more-icon', icon: block.settings.icon %}{% endunless %}
-          <div class="manz-more__feature-copy">
-            <h3 class="manz-more__feature-title">{{ block.settings.title | escape }}</h3>
-            <p class="manz-more__feature-text">{{ block.settings.text | escape }}</p>
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
+    <div class="manz-more__benefits" style="--manz-more-features-background: {{ section.settings.features_background }}; --manz-more-features-text-color: {{ section.settings.features_text_color }}">
+      <ul class="manz-more__features" aria-label="Compromissos Manz Skin">
+        {% for block in section.blocks %}
+          <li class="manz-more__feature" {{ block.shopify_attributes }}>
+            {% unless block.settings.icon == 'none' %}{% render 'manz-more-icon', icon: block.settings.icon %}{% endunless %}
+            <div class="manz-more__feature-copy">
+              <h3 class="manz-more__feature-title">{{ block.settings.title | escape }}</h3>
+              <p class="manz-more__feature-text">{{ block.settings.text | escape }}</p>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
   {% endif %}
 </section>
 
@@ -57,6 +82,12 @@
       "id": "plate_image",
       "label": "Plate principal sem textos",
       "info": "Use uma plate 4:3 sem textos. A faixa inferior vazia da imagem fica fora do bloco principal; os benefícios são HTML."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_plate_image",
+      "label": "Plate da composição mobile (opcional)",
+      "info": "Se ficar vazia, o fallback do tema usa a plate vertical aprovada em telas de até 749 px."
     },
     {
       "type": "checkbox",
@@ -110,7 +141,7 @@
       "type": "color",
       "id": "section_background",
       "label": "Fundo principal",
-      "default": "#f5efdf"
+      "default": "#edddc7"
     },
     {
       "type": "color",

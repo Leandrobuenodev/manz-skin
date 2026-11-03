@@ -1,4 +1,4 @@
-/* Native carousel only; the Hero content stays in its final position on load. */
+/* Native carousel controller shared by the desktop and mobile Hero views. */
 (() => {
   if (customElements.get('manz-hero')) return;
 
@@ -9,13 +9,15 @@
   class ManzHeroCarousel {
     constructor(root) {
       this.root = root;
-      this.track = root.querySelector('[data-manz-carousel-track]');
-      this.slides = this.track
-        ? Array.from(this.track.querySelectorAll('[data-manz-carousel-slide]'))
-        : [];
+      this.views = this.collectViews();
       this.controls = Array.from(root.querySelectorAll('[data-manz-carousel-previous], [data-manz-carousel-next]'));
+      this.indicators = Array.from(root.querySelectorAll('[data-manz-carousel-indicator]'));
+      this.activeView = null;
+      this.track = null;
+      this.slides = [];
       this.index = 0;
       this.timer = null;
+      this.transitionWatchdog = null;
       this.hoverPaused = false;
       this.focusPaused = false;
       this.pointerInteraction = false;
@@ -23,24 +25,16 @@
       this.ready = false;
       this.transitioning = false;
       this.pendingLoopReset = null;
+      this.firstSlideClone = null;
       this.lastSlideClone = null;
       this.imagePromises = new WeakMap();
       this.interval = this.readDuration(root.dataset.manzCarouselInterval, 5000);
       this.duration = this.readDuration(root.dataset.manzCarouselDuration, 800);
       this.motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+      this.mobileBreakpoint = window.matchMedia('(max-width: 749px)');
       this.interactionTargets = [root];
       const header = document.querySelector('.manz-hero-page .section-header .header');
       if (header && !root.contains(header)) this.interactionTargets.push(header);
-
-      if (!this.track || this.slides.length < 2) {
-        this.controls.forEach((control) => { control.hidden = true; });
-        return;
-      }
-      this.controls.forEach((control) => { control.hidden = false; });
-
-      this.firstSlideClone = this.createSlideClone(this.slides[0]);
-      this.track.append(this.firstSlideClone);
-      this.setActiveSlide(0);
 
       this.onPointerEnter = () => {
         this.hoverPaused = true;
@@ -74,6 +68,10 @@
       };
       this.onPrevious = () => this.navigate(-1, true);
       this.onNext = () => this.navigate(1, true);
+      this.onIndicatorClick = (event) => {
+        const targetIndex = Number.parseInt(event.currentTarget.dataset.manzCarouselIndicator, 10);
+        if (Number.isInteger(targetIndex)) this.navigateTo(targetIndex, true);
+      };
       this.onKeyDown = (event) => {
         const control = event.target.closest?.('[data-manz-carousel-previous], [data-manz-carousel-next]');
         if (!control || !this.root.contains(control)) return;
@@ -86,8 +84,10 @@
         }
       };
       this.onVisibilityChange = () => {
-        if (document.hidden) this.stop();
-        else {
+        if (document.hidden) {
+          this.stop();
+          if (this.transitioning) this.settleTransition();
+        } else {
           this.prepareNextSlide();
           this.schedule();
         }
@@ -97,6 +97,7 @@
         this.prepareNextSlide();
         this.schedule();
       };
+      this.onBreakpointChange = () => this.activateView();
       this.onTransitionEnd = (event) => {
         if (!this.transitioning || event.target !== this.track || event.propertyName !== 'transform') return;
         this.finishTransition();
@@ -112,28 +113,111 @@
         control.addEventListener('click', control.hasAttribute('data-manz-carousel-previous') ? this.onPrevious : this.onNext);
         control.addEventListener('pointerdown', this.onControlPointerDown);
       });
+      this.indicators.forEach((indicator) => {
+        indicator.addEventListener('click', this.onIndicatorClick);
+        indicator.addEventListener('pointerdown', this.onControlPointerDown);
+      });
       this.root.addEventListener('keydown', this.onKeyDown);
       window.addEventListener('pointerup', this.onControlPointerEnd);
       window.addEventListener('pointercancel', this.onControlPointerEnd);
       document.addEventListener('visibilitychange', this.onVisibilityChange);
-      this.track.addEventListener('transitionend', this.onTransitionEnd);
-      if (this.motionPreference.addEventListener) {
-        this.motionPreference.addEventListener('change', this.onMotionPreferenceChange);
-      } else {
-        this.motionPreference.addListener(this.onMotionPreferenceChange);
+      this.addMediaListener(this.motionPreference, this.onMotionPreferenceChange);
+      this.addMediaListener(this.mobileBreakpoint, this.onBreakpointChange);
+
+      this.activateView();
+    }
+
+    collectViews() {
+      const elements = Array.from(this.root.querySelectorAll('[data-manz-carousel-view]'));
+      if (elements.length > 0) {
+        return elements.map((element) => {
+          const track = element.querySelector('[data-manz-carousel-track]');
+          return {
+            name: element.dataset.manzCarouselView,
+            track,
+            slides: track ? Array.from(track.querySelectorAll('[data-manz-carousel-slide]')) : []
+          };
+        }).filter((view) => view.track);
       }
 
+      const track = this.root.querySelector('[data-manz-carousel-track]');
+      return track ? [{ name: 'default', track, slides: Array.from(track.querySelectorAll('[data-manz-carousel-slide]')) }] : [];
+    }
+
+    addMediaListener(mediaQuery, listener) {
+      if (mediaQuery.addEventListener) mediaQuery.addEventListener('change', listener);
+      else mediaQuery.addListener(listener);
+    }
+
+    removeMediaListener(mediaQuery, listener) {
+      if (mediaQuery.removeEventListener) mediaQuery.removeEventListener('change', listener);
+      else mediaQuery.removeListener(listener);
+    }
+
+    readDuration(value, fallback) {
+      const duration = Number.parseInt(value, 10);
+      return Number.isFinite(duration) && duration > 0 ? duration : fallback;
+    }
+
+    chooseView() {
+      const mobileView = this.views.find((view) => view.name === 'mobile');
+      const desktopView = this.views.find((view) => view.name === 'desktop');
+      if (this.mobileBreakpoint.matches && mobileView) return mobileView;
+      return desktopView || this.views[0] || null;
+    }
+
+    activateView() {
+      const nextView = this.chooseView();
+      if (!nextView || nextView === this.activeView) return;
+
+      this.cleanupActiveView();
+      this.activeView = nextView;
+      this.track = nextView.track;
+      this.slides = nextView.slides;
+      this.index = 0;
+      this.pendingLoopReset = null;
+      this.transitioning = false;
+      this.ready = false;
+      this.controls.forEach((control) => { control.hidden = this.slides.length < 2; });
+      this.setActiveSlide(0);
+
+      if (this.slides.length < 2) {
+        this.ready = true;
+        return;
+      }
+
+      this.firstSlideClone = this.createSlideClone(this.slides[0]);
+      this.track.append(this.firstSlideClone);
+      this.track.addEventListener('transitionend', this.onTransitionEnd);
       this.ensureImageReady(this.slides[0]).then(() => {
-        if (this.destroyed) return;
+        if (this.destroyed || this.activeView !== nextView) return;
         this.ready = true;
         this.prepareNextSlide();
         this.schedule();
       });
     }
 
-    readDuration(value, fallback) {
-      const duration = Number.parseInt(value, 10);
-      return Number.isFinite(duration) && duration > 0 ? duration : fallback;
+    cleanupActiveView() {
+      this.stop();
+      this.clearTransitionWatchdog();
+      if (!this.track) return;
+
+      this.track.removeEventListener('transitionend', this.onTransitionEnd);
+      if (this.firstSlideClone) this.firstSlideClone.remove();
+      if (this.lastSlideClone) this.lastSlideClone.remove();
+      this.firstSlideClone = null;
+      this.lastSlideClone = null;
+      this.pendingLoopReset = null;
+      this.transitioning = false;
+      this.ready = false;
+      this.track.style.transitionDuration = '0ms';
+      this.track.style.transform = 'translate3d(0, 0, 0)';
+      void this.track.offsetWidth;
+      this.track.style.removeProperty('transition-duration');
+      this.track.style.removeProperty('transform');
+      this.track = null;
+      this.slides = [];
+      this.activeView = null;
     }
 
     isPaused() {
@@ -143,7 +227,8 @@
         || this.transitioning
         || this.hoverPaused
         || this.focusPaused
-        || document.hidden;
+        || document.hidden
+        || this.motionPreference.matches;
     }
 
     schedule() {
@@ -161,19 +246,33 @@
     }
 
     async navigate(direction, manual) {
-      if (this.destroyed || !this.ready || this.transitioning || document.hidden) return;
+      const slideCount = this.slides.length;
+      if (slideCount < 2) return;
+      const targetIndex = (this.index + direction + slideCount) % slideCount;
+      return this.navigateTo(targetIndex, manual);
+    }
+
+    async navigateTo(targetIndex, manual) {
+      if (this.destroyed || !this.track || this.slides.length < 2 || this.transitioning || document.hidden) return;
+      if (!Number.isInteger(targetIndex) || targetIndex < 0 || targetIndex >= this.slides.length) return;
+      if (manual) this.focusPaused = false;
+      if (targetIndex === this.index) {
+        this.prepareNextSlide();
+        this.schedule();
+        return;
+      }
       if (!manual && this.isPaused()) return;
 
       this.stop();
+      const activeView = this.activeView;
       const slideCount = this.slides.length;
-      const targetIndex = (this.index + direction + slideCount) % slideCount;
-      const wrapsBackward = direction < 0 && this.index === 0;
-      const wrapsForward = direction > 0 && this.index === slideCount - 1;
+      const wrapsBackward = this.index === 0 && targetIndex === slideCount - 1;
+      const wrapsForward = this.index === slideCount - 1 && targetIndex === 0;
       this.transitioning = true;
 
       await this.ensureImageReady(this.slides[targetIndex]);
-      if (this.destroyed) return;
-      if (!manual && (this.hoverPaused || this.focusPaused || document.hidden)) {
+      if (this.destroyed || this.activeView !== activeView || !this.transitioning) return;
+      if (!manual && (this.hoverPaused || this.focusPaused || document.hidden || this.motionPreference.matches)) {
         this.transitioning = false;
         this.schedule();
         return;
@@ -182,11 +281,8 @@
       this.index = targetIndex;
       this.setActiveSlide(targetIndex);
       if (this.motionPreference.matches) {
-        this.pendingLoopReset = null;
-        this.track.style.transitionDuration = '0ms';
-        this.track.style.transform = this.transformForIndex(targetIndex);
+        this.resetTrackToIndex(targetIndex);
         this.transitioning = false;
-        this.restoreTransitionDuration();
         this.prepareNextSlide();
         this.schedule();
         return;
@@ -199,8 +295,8 @@
         this.track.style.transitionDuration = '0ms';
         this.track.style.transform = 'translate3d(-100%, 0, 0)';
         void this.track.offsetWidth;
-        this.pendingLoopReset = 'last';
         this.track.style.transitionDuration = `${this.duration}ms`;
+        this.pendingLoopReset = 'last';
         this.track.style.transform = 'translate3d(0, 0, 0)';
       } else if (wrapsForward) {
         this.pendingLoopReset = 'first';
@@ -209,9 +305,21 @@
         this.pendingLoopReset = null;
         this.track.style.transform = this.transformForIndex(targetIndex);
       }
+      this.startTransitionWatchdog();
+    }
+
+    startTransitionWatchdog() {
+      this.clearTransitionWatchdog();
+      this.transitionWatchdog = window.setTimeout(() => this.finishTransition(), this.duration + 120);
+    }
+
+    clearTransitionWatchdog() {
+      if (this.transitionWatchdog !== null) window.clearTimeout(this.transitionWatchdog);
+      this.transitionWatchdog = null;
     }
 
     finishTransition() {
+      if (!this.transitioning || !this.track) return;
       const didLoopReset = this.pendingLoopReset !== null;
       if (this.pendingLoopReset === 'first') this.resetTrackToIndex(0);
       if (this.pendingLoopReset === 'last') {
@@ -220,6 +328,7 @@
         this.resetTrackToIndex(this.slides.length - 1);
       }
       this.pendingLoopReset = null;
+      this.clearTransitionWatchdog();
       this.transitioning = false;
       if (!didLoopReset) this.track.style.removeProperty('transition-duration');
       this.setActiveSlide(this.index);
@@ -228,33 +337,32 @@
     }
 
     settleTransition() {
+      if (!this.transitioning || !this.track) return;
       if (this.pendingLoopReset === 'first') this.resetTrackToIndex(0);
-      if (this.pendingLoopReset === 'last') {
+      else if (this.pendingLoopReset === 'last') {
         if (this.lastSlideClone) this.lastSlideClone.remove();
         this.lastSlideClone = null;
         this.resetTrackToIndex(this.slides.length - 1);
+      } else {
+        this.resetTrackToIndex(this.index);
       }
-      if (!this.pendingLoopReset) this.resetTrackToIndex(this.index);
       this.pendingLoopReset = null;
+      this.clearTransitionWatchdog();
       this.transitioning = false;
       this.setActiveSlide(this.index);
     }
 
     resetTrackToIndex(index) {
+      if (!this.track) return;
       this.track.style.transitionDuration = '0ms';
       this.track.style.transform = this.transformForIndex(index);
-      this.restoreTransitionDuration();
+      // Commit the no-transition reset before restoring the normal slide motion.
+      void this.track.offsetWidth;
+      this.track.style.removeProperty('transition-duration');
     }
 
     transformForIndex(index) {
-      const offset = index === 0 ? '0' : `-${index * 100}%`;
-      return `translate3d(${offset}, 0, 0)`;
-    }
-
-    restoreTransitionDuration() {
-      window.requestAnimationFrame(() => {
-        if (!this.destroyed && this.track) this.track.style.removeProperty('transition-duration');
-      });
+      return index === 0 ? 'translate3d(0, 0, 0)' : `translate3d(-${index * 100}%, 0, 0)`;
     }
 
     createSlideClone(slide) {
@@ -275,6 +383,10 @@
         if (index === activeIndex) slide.removeAttribute('aria-hidden');
         else slide.setAttribute('aria-hidden', 'true');
       });
+      this.indicators.forEach((indicator, index) => {
+        if (this.activeView?.name === 'mobile' && index === activeIndex) indicator.setAttribute('aria-current', 'true');
+        else indicator.removeAttribute('aria-current');
+      });
       if (this.firstSlideClone) this.firstSlideClone.setAttribute('aria-hidden', 'true');
       if (this.lastSlideClone) this.lastSlideClone.setAttribute('aria-hidden', 'true');
     }
@@ -294,9 +406,7 @@
             image.addEventListener('error', resolve, { once: true });
           });
         }
-        if (image.naturalWidth > 0 && typeof image.decode === 'function') {
-          await image.decode().catch(() => {});
-        }
+        if (image.naturalWidth > 0 && typeof image.decode === 'function') await image.decode().catch(() => {});
       })();
 
       this.imagePromises.set(image, readyPromise);
@@ -311,39 +421,27 @@
 
     destroy() {
       this.destroyed = true;
-      this.stop();
-      if (this.onPointerEnter) {
-        this.interactionTargets.forEach((target) => {
-          target.removeEventListener('mouseenter', this.onPointerEnter);
-          target.removeEventListener('mouseleave', this.onPointerLeave);
-          target.removeEventListener('focusin', this.onFocusIn);
-          target.removeEventListener('focusout', this.onFocusOut);
-        });
-      }
+      this.cleanupActiveView();
+      this.interactionTargets.forEach((target) => {
+        target.removeEventListener('mouseenter', this.onPointerEnter);
+        target.removeEventListener('mouseleave', this.onPointerLeave);
+        target.removeEventListener('focusin', this.onFocusIn);
+        target.removeEventListener('focusout', this.onFocusOut);
+      });
       this.controls.forEach((control) => {
         control.removeEventListener('click', control.hasAttribute('data-manz-carousel-previous') ? this.onPrevious : this.onNext);
         control.removeEventListener('pointerdown', this.onControlPointerDown);
       });
-      if (this.root && this.onKeyDown) this.root.removeEventListener('keydown', this.onKeyDown);
-      if (this.onControlPointerEnd) {
-        window.removeEventListener('pointerup', this.onControlPointerEnd);
-        window.removeEventListener('pointercancel', this.onControlPointerEnd);
-      }
-      if (this.onVisibilityChange) document.removeEventListener('visibilitychange', this.onVisibilityChange);
-      if (this.track && this.onTransitionEnd) this.track.removeEventListener('transitionend', this.onTransitionEnd);
-      if (this.onMotionPreferenceChange) {
-        if (this.motionPreference.removeEventListener) {
-          this.motionPreference.removeEventListener('change', this.onMotionPreferenceChange);
-        } else {
-          this.motionPreference.removeListener(this.onMotionPreferenceChange);
-        }
-      }
-      if (this.firstSlideClone) this.firstSlideClone.remove();
-      if (this.lastSlideClone) this.lastSlideClone.remove();
-      if (this.track) {
-        this.track.style.removeProperty('transform');
-        this.track.style.removeProperty('transition-duration');
-      }
+      this.indicators.forEach((indicator) => {
+        indicator.removeEventListener('click', this.onIndicatorClick);
+        indicator.removeEventListener('pointerdown', this.onControlPointerDown);
+      });
+      this.root.removeEventListener('keydown', this.onKeyDown);
+      window.removeEventListener('pointerup', this.onControlPointerEnd);
+      window.removeEventListener('pointercancel', this.onControlPointerEnd);
+      document.removeEventListener('visibilitychange', this.onVisibilityChange);
+      this.removeMediaListener(this.motionPreference, this.onMotionPreferenceChange);
+      this.removeMediaListener(this.mobileBreakpoint, this.onBreakpointChange);
     }
   }
 
@@ -360,10 +458,8 @@
       };
       this.onEditorSectionUnload = (event) => {
         if (event.target !== this && !event.target.contains?.(this)) return;
-        if (this.carousel) {
-          this.carousel.destroy();
-          this.carousel = null;
-        }
+        if (this.carousel) this.carousel.destroy();
+        this.carousel = null;
       };
       document.addEventListener('shopify:section:load', this.onEditorSectionLoad);
       document.addEventListener('shopify:section:unload', this.onEditorSectionUnload);
@@ -376,7 +472,6 @@
         this.carousel.destroy();
         this.carousel = null;
       }
-      // Shopify replaces section elements during Theme Editor updates.
       queueMicrotask(syncHomepage);
     }
   }

@@ -1,0 +1,17 @@
+{%- liquid
+  assign use_official_cover = false
+  if collection.handle == 'all' and section.settings.catalog_use_default_cover != false
+    assign use_official_cover = true
+  endif
+-%}
+<section class="manz-catalog-cover{% if section.settings.catalog_cover_image != blank or use_official_cover %} manz-catalog-cover--with-image{% endif %}" style="--catalog-focus-x: {{ section.settings.catalog_focus_x | default: 50 }}%; --catalog-focus-y: {{ section.settings.catalog_focus_y | default: 50 }}%; --catalog-mobile-focus-y: {{ section.settings.catalog_mobile_focus_y | default: 50 }}%; --catalog-cover-color: {{ section.settings.catalog_text_color | default: '#3d3d2c' }}">
+  {%- if section.settings.catalog_cover_image != blank -%}
+    {{ section.settings.catalog_cover_image | image_url: width: 2400 | image_tag: class: 'manz-catalog-cover__image', widths: '640, 960, 1440, 1920, 2400', sizes: '100vw', loading: 'eager', fetchpriority: 'high', alt: section.settings.catalog_cover_image.alt }}
+  {%- elsif use_official_cover -%}
+    <img class="manz-catalog-cover__image" src="{{ 'manz-catalog-cover-mediterranean.png' | asset_url }}" width="2172" height="724" alt="" loading="eager" fetchpriority="high">
+  {%- endif -%}
+  <div class="manz-catalog-cover__copy">
+    <h1>{{ section.settings.catalog_heading | escape }}</h1>
+    <div>{{ section.settings.catalog_subtitle | escape }}</div>
+  </div>
+</section>

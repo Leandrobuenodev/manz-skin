@@ -1,5 +1,13 @@
 {%- liquid
-  assign slide_blocks = hero_section.blocks
+  if slides == nil
+    assign slide_blocks = hero_section.blocks | where: 'type', 'slide'
+  else
+    assign slide_blocks = slides
+  endif
+  assign view_mode = view_mode | default: 'desktop'
+  if viewport_id == blank
+    assign viewport_id = 'ManzHeroCarousel-' | append: hero_section.id
+  endif
   assign slide_count = slide_blocks.size
   assign image_class = 'manz-hero__image manz-hero-carousel__image'
   if version == 'v2'
@@ -11,7 +19,7 @@
 -%}
 <div
   class="manz-hero-carousel__viewport"
-  id="ManzHeroCarousel-{{ hero_section.id }}"
+  id="{{ viewport_id }}"
   data-manz-carousel-viewport
   role="region"
   aria-roledescription="carousel"
@@ -24,9 +32,20 @@
           assign slide_alt = block.settings.alt
           assign focus_x = block.settings.focus_x | default: 50
           assign focus_y = block.settings.focus_y | default: 50
-          assign mobile_focus_x = block.settings.mobile_focus_x | default: focus_x
-          assign mobile_focus_y = block.settings.mobile_focus_y | default: focus_y
-          assign image_fit = block.settings.image_fit | default: 'cover'
+          if view_mode == 'mobile'
+            assign mobile_focus_x = block.settings.focus_x | default: 50
+            assign mobile_focus_y = block.settings.focus_y | default: 50
+            assign mobile_overlay = block.settings.overlay_strength | default: 45 | divided_by: 100.0
+            assign mobile_overlay_soft = mobile_overlay | times: 0.58
+            assign image_fit = 'cover'
+          else
+            assign mobile_focus_x = block.settings.mobile_focus_x | default: focus_x
+            assign mobile_focus_y = block.settings.mobile_focus_y | default: focus_y
+            assign mobile_overlay = 0
+            assign mobile_overlay_soft = 0
+            assign image_fit = block.settings.image_fit | default: 'cover'
+          endif
+          assign mobile_image = block.settings.mobile_image
           assign image_loading = 'lazy'
           assign image_priority = 'low'
           if forloop.first
@@ -45,20 +64,57 @@
             else
               assign default_alt = 'Fotografia da campanha Manz Skin'
           endcase
+          if view_mode == 'mobile'
+            case block.settings.fallback_asset
+              when 'dsc00712'
+                assign mobile_asset_file = 'manz-home-mobile-01-dsc00712.jpg'
+                assign default_alt = 'Sabonetes e argilas naturais com colheres'
+              when 'dsc00441'
+                assign mobile_asset_file = 'manz-home-mobile-02-dsc00441.jpg'
+                assign default_alt = 'Modelo aplicando produto natural nos labios'
+              when 'dsc00932'
+                assign mobile_asset_file = 'manz-home-mobile-03-dsc00932.jpg'
+                assign default_alt = 'Produtos Manz Skin sobre folhas verdes'
+              when 'dsc01903'
+                assign mobile_asset_file = 'manz-home-mobile-04-dsc01903.jpg'
+                assign default_alt = 'Sabonetes artesanais sobre pedra escura'
+              when 'dsc01954'
+                assign mobile_asset_file = 'manz-home-mobile-05-dsc01954.jpg'
+                assign default_alt = 'Fotografia editorial de corpos e sabonetes'
+              when 'dsc00785'
+                assign mobile_asset_file = 'manz-home-mobile-06-dsc00785.jpg'
+                assign default_alt = 'Modelo ruiva segurando um sabonete artesanal'
+              else
+                assign mobile_asset_file = blank
+            endcase
+            if mobile_asset_file != blank
+              assign mobile_asset_url_800 = mobile_asset_file | replace: '.jpg', '-800.jpg' | asset_url
+              assign mobile_asset_url_1400 = mobile_asset_file | replace: '.jpg', '-1400.jpg' | asset_url
+              assign mobile_asset_url_2000 = mobile_asset_file | asset_url
+            endif
+          endif
           assign slide_alt = slide_alt | default: default_alt
+          assign slide_class = 'manz-hero-carousel__slide'
+          if view_mode == 'mobile'
+            assign slide_class = slide_class | append: ' manz-hero-carousel__slide--mobile'
+          endif
         -%}
         <div
-          class="manz-hero-carousel__slide"
+          class="{{ slide_class }}"
           data-manz-carousel-slide
           data-slide-index="{{ forloop.index0 }}"
           role="group"
           aria-roledescription="slide"
           aria-label="{{ forloop.index }} de {{ slide_count }}"
           {% unless forloop.first %}aria-hidden="true"{% endunless %}
-          style="--manz-hero-slide-focus-x: {{ focus_x }}%; --manz-hero-slide-focus-y: {{ focus_y }}%; --manz-hero-slide-mobile-x: {{ mobile_focus_x }}%; --manz-hero-slide-mobile-y: {{ mobile_focus_y }}%; --manz-hero-slide-fit: {{ image_fit }};"
+          style="--manz-hero-slide-focus-x: {{ focus_x }}%; --manz-hero-slide-focus-y: {{ focus_y }}%; --manz-hero-slide-mobile-x: {{ mobile_focus_x }}%; --manz-hero-slide-mobile-y: {{ mobile_focus_y }}%; --manz-hero-slide-fit: {{ image_fit }}; --manz-hero-mobile-overlay-opacity: {{ mobile_overlay }}; --manz-hero-mobile-overlay-soft: {{ mobile_overlay_soft }};"
           {{ block.shopify_attributes }}
         >
           {%- if block.settings.image != blank -%}
+            {%- if mobile_image != blank -%}
+              <picture class="manz-hero-carousel__picture">
+                {% render 'manz-hero-mobile-image-source', image: mobile_image %}
+            {%- endif -%}
             {{ block.settings.image | image_url: width: 2880 | image_tag:
               class: image_class,
               widths: '960, 1440, 1920, 2400, 2880',
@@ -67,8 +123,24 @@
               fetchpriority: image_priority,
               alt: slide_alt
             }}
+            {%- if mobile_image != blank -%}
+              </picture>
+            {%- endif -%}
+          {%- elsif view_mode == 'mobile' and mobile_asset_file != blank -%}
+            <img
+              class="{{ image_class }}"
+              src="{{ mobile_asset_url_1400 }}"
+              srcset="{{ mobile_asset_url_800 }} 800w, {{ mobile_asset_url_1400 }} 1400w, {{ mobile_asset_url_2000 }} 2000w"
+              sizes="{{ sizes }}"
+              width="2000"
+              height="3000"
+              alt="{{ slide_alt | escape }}"
+              loading="{{ image_loading }}"
+              fetchpriority="{{ image_priority }}"
+              decoding="async"
+            >
           {%- elsif block.settings.use_theme_fallback -%}
-            {% render 'manz-hero-carousel-fallback-image', index: forloop.index, version: version, image_class: image_class, sizes: sizes, alt: slide_alt, loading: image_loading, fetchpriority: image_priority %}
+            {% render 'manz-hero-carousel-fallback-image', index: forloop.index, version: version, image_class: image_class, sizes: sizes, alt: slide_alt, loading: image_loading, fetchpriority: image_priority, mobile_image: mobile_image %}
           {%- else -%}
             <div class="manz-hero-carousel__empty" aria-hidden="true"></div>
           {%- endif -%}
@@ -83,6 +155,10 @@
         aria-roledescription="slide"
         aria-label="1 de 1"
       >
+        {%- if legacy_mobile_image != blank -%}
+          <picture class="manz-hero-carousel__picture">
+            {% render 'manz-hero-mobile-image-source', image: legacy_mobile_image %}
+        {%- endif -%}
         {{ legacy_image | image_url: width: 2880 | image_tag:
           class: image_class,
           widths: '960, 1440, 1920, 2400, 2880',
@@ -91,6 +167,9 @@
           fetchpriority: 'high',
           alt: legacy_alt | default: legacy_image.alt
         }}
+        {%- if legacy_mobile_image != blank -%}
+          </picture>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>

@@ -483,6 +483,20 @@ customElements.define('menu-drawer', MenuDrawer);
 class HeaderDrawer extends MenuDrawer {
   constructor() {
     super();
+    this.menuDrawer = this.querySelector('.menu-drawer');
+    this.onManzBackdropClick = this.onManzBackdropClick.bind(this);
+  }
+
+  connectedCallback() {
+    this.menuDrawer = this.menuDrawer || this.querySelector('.menu-drawer');
+    this.addEventListener('click', this.onManzMenuLinkClick);
+    if (this.isManzHeroMobile()) {
+      this.menuDrawer?.setAttribute('aria-hidden', String(!this.mainDetailsToggle?.open));
+    }
+  }
+
+  isManzHeroMobile() {
+    return document.body.classList.contains('manz-hero-v2-active') && window.matchMedia('(max-width: 749px)').matches;
   }
 
   openMenuDrawer(summaryElement) {
@@ -500,17 +514,38 @@ class HeaderDrawer extends MenuDrawer {
     });
 
     summaryElement.setAttribute('aria-expanded', true);
+    if (this.isManzHeroMobile()) this.menuDrawer?.setAttribute('aria-hidden', 'false');
     window.addEventListener('resize', this.onResize);
     trapFocus(this.mainDetailsToggle, summaryElement);
     document.body.classList.add(`overflow-hidden-${this.dataset.breakpoint}`);
+    if (this.isManzHeroMobile()) {
+      document.addEventListener('click', this.onManzBackdropClick);
+    }
   }
 
   closeMenuDrawer(event, elementToFocus) {
     if (!elementToFocus) return;
+    if (this.isManzHeroMobile()) {
+      this.menuDrawer?.setAttribute('aria-hidden', 'true');
+      elementToFocus.setAttribute('aria-expanded', 'false');
+    }
+    document.removeEventListener('click', this.onManzBackdropClick);
     super.closeMenuDrawer(event, elementToFocus);
     this.header.classList.remove('menu-open');
     window.removeEventListener('resize', this.onResize);
   }
+
+  onManzBackdropClick(event) {
+    if (!this.mainDetailsToggle?.open || !this.isManzHeroMobile()) return;
+    if (this.contains(event.target)) return;
+    this.closeMenuDrawer(event, this.mainDetailsToggle.querySelector('summary'));
+  }
+
+  onManzMenuLinkClick = (event) => {
+    if (!this.isManzHeroMobile() || !this.mainDetailsToggle?.open) return;
+    if (!event.target.closest?.('.manz-hero-nav--mobile a')) return;
+    this.closeMenuDrawer(event, this.mainDetailsToggle.querySelector('summary'));
+  };
 
   onResize = () => {
     this.header &&

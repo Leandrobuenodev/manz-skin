@@ -10,6 +10,8 @@
     <summary
       class="header__icon header__icon--menu header__icon--summary link focus-inset"
       aria-label="{{ 'sections.header.menu' | t }}"
+      aria-controls="menu-drawer"
+      aria-expanded="false"
     >
       <span>
         {% render 'icon-hamburger' %}
@@ -21,9 +23,12 @@
         <div class="menu-drawer__navigation-container">
           <nav class="menu-drawer__navigation">
             <ul class="menu-drawer__menu has-submenu list-menu" role="list">
-              {%- if request.page_type == 'index' -%}
+              {%- if catalog_navigation -%}
+                <li class="manz-hero-drawer-links">{% render 'manz-catalog-navigation', mobile: true %}</li>
+              {%- elsif request.page_type == 'index' -%}
                 <li class="manz-hero-drawer-links">{% render 'manz-hero-navigation', mobile: true %}</li>
               {%- endif -%}
+              {%- unless request.page_type == 'index' -%}
               {%- for link in section.settings.menu.links -%}
                 <li>
                   {%- if link.links != blank -%}
@@ -124,6 +129,7 @@
                   {%- endif -%}
                 </li>
               {%- endfor -%}
+              {%- endunless -%}
             </ul>
           </nav>
           <div class="menu-drawer__utility-links">

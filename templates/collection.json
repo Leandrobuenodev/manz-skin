@@ -35,7 +35,75 @@
         "columns_mobile": "2",
         "padding_top": 0,
         "padding_bottom": 68
-      }
+      },
+      "blocks": {
+        "catalog_photo_1": {
+          "type": "catalog_image",
+          "settings": {
+            "product": "argila-amarela-argila-roxa-manteiga-de-manga-geranio",
+            "use_theme_editorial": true
+          }
+        },
+        "catalog_photo_2": {
+          "type": "catalog_image",
+          "settings": {
+            "product": "argila-branca-rosa-mosqueta-palmarosa",
+            "use_theme_editorial": true
+          }
+        },
+        "catalog_photo_3": {
+          "type": "catalog_image",
+          "settings": {
+            "product": "argila-rosa-manteiga-de-cacau-lavanda",
+            "use_theme_editorial": true
+          }
+        },
+        "catalog_photo_4": {
+          "type": "catalog_image",
+          "settings": {
+            "product": "argila-vermelha-manteiga-de-karite-laranja-doce",
+            "use_theme_editorial": true
+          }
+        },
+        "catalog_photo_5": {
+          "type": "catalog_image",
+          "settings": {
+            "product": "sabonete-preto",
+            "use_theme_editorial": true
+          }
+        },
+        "catalog_photo_6": {
+          "type": "catalog_image",
+          "settings": {
+            "product": "sabonete-verde",
+            "use_theme_editorial": true
+          }
+        },
+        "catalog_photo_7": {
+          "type": "catalog_image",
+          "settings": {
+            "product": "sabonete-de-calendula",
+            "waiting_photo": true
+          }
+        },
+        "catalog_photo_8": {
+          "type": "catalog_image",
+          "settings": {
+            "product": "sabonete-de-germe-de-trigo",
+            "waiting_photo": true
+          }
+        }
+      },
+      "block_order": [
+        "catalog_photo_1",
+        "catalog_photo_2",
+        "catalog_photo_3",
+        "catalog_photo_4",
+        "catalog_photo_5",
+        "catalog_photo_6",
+        "catalog_photo_7",
+        "catalog_photo_8"
+      ]
     }
   },
   "order": [

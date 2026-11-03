@@ -1,5 +1,8 @@
 {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
 {{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
+{%- if collection.handle == 'all' -%}
+  {{ 'manz-category-collection.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 
 {%- style -%}
   @media screen and (max-width: 749px) {
@@ -9,16 +12,29 @@
   }
 {%- endstyle -%}
 
+{%- if collection.handle == 'all' or template.suffix == 'catalogo' -%}
+  {% render 'manz-catalog-cover' %}
+{%- else -%}
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %}{% if collection.handle == 'all' %} manz-all-products-banner{% endif %} color-{{ section.settings.color_scheme }} gradient">
   <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
     <div class="collection-hero__text-wrapper">
       <h1 class="collection-hero__title">
         <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
+        {%- if collection.handle == 'all' -%}
+          Todos os produtos
+        {%- else -%}
+          {{- collection.title | escape -}}
+        {%- endif -%}
       </h1>
 
       {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">{{ collection.description }}</div>
+        <div class="collection-hero__description rte">
+          {%- if collection.handle == 'all' -%}
+            <p>Produtos naturais para transformar seu cuidado diário.</p>
+          {%- else -%}
+            {{ collection.description }}
+          {%- endif -%}
+        </div>
       {%- endif -%}
     </div>
 
@@ -44,6 +60,7 @@
     {%- endif -%}
   </div>
 </div>
+{%- endif -%}
 
 {% schema %}
 {
@@ -72,6 +89,71 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "background-1"
+    },
+    {
+      "type": "header",
+      "content": "Capa do catálogo"
+    },
+    {
+      "type": "image_picker",
+      "id": "catalog_cover_image",
+      "label": "Fotografia da capa",
+      "info": "A imagem escolhida tem prioridade sobre a capa oficial. Para remover toda fotografia, limpe este campo e desative a opção da capa oficial abaixo."
+    },
+    {
+      "type": "checkbox",
+      "id": "catalog_use_default_cover",
+      "label": "Usar capa oficial quando o campo estiver vazio",
+      "info": "Somente em Todos os produtos. Desative para exibir apenas o fundo neutro quando não houver uma fotografia escolhida.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "catalog_focus_x",
+      "label": "Enquadramento horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "catalog_focus_y",
+      "label": "Enquadramento vertical desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "catalog_mobile_focus_y",
+      "label": "Enquadramento vertical mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "color",
+      "id": "catalog_text_color",
+      "label": "Cor do texto da capa",
+      "default": "#3d3d2c"
+    },
+    {
+      "type": "text",
+      "id": "catalog_heading",
+      "label": "Título do catálogo",
+      "default": "Todos os produtos"
+    },
+    {
+      "type": "text",
+      "id": "catalog_subtitle",
+      "label": "Subtítulo do catálogo",
+      "default": "Cuidado natural para uma beleza real, todos os dias."
     }
   ]
 }

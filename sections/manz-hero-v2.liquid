@@ -2,6 +2,12 @@
   Editor-configurable homepage Hero. It retains the existing homepage section
   instance and slide block settings while rendering the V2 composition.
 {% endcomment %}
+{%- liquid
+  assign desktop_slides = section.blocks | where: 'type', 'slide'
+  assign mobile_slides = section.blocks | where: 'type', 'mobile_slide'
+  assign desktop_viewport_id = 'ManzHeroCarouselDesktop-' | append: section.id
+  assign mobile_viewport_id = 'ManzHeroCarouselMobile-' | append: section.id
+-%}
 <manz-hero
   class="manz-hero-shell manz-hero-v2-shell"
   data-manz-hero
@@ -23,52 +29,77 @@
           alt: ''
         }}
       {%- elsif section.settings.show_fallback_background -%}
-        <img
-          class="manz-hero-v2__background-image"
-          src="{{ 'manz-hero-v2-soaps-1920.jpg' | asset_url }}"
-          srcset="{{ 'manz-hero-v2-soaps-960.jpg' | asset_url }} 960w, {{ 'manz-hero-v2-soaps-1920.jpg' | asset_url }} 1920w, {{ 'manz-hero-v2-soaps-2880.jpg' | asset_url }} 2880w"
-          sizes="100vw"
-          width="2880"
-          height="1920"
-          alt=""
-          loading="eager"
-          fetchpriority="high"
-        >
+        <picture class="manz-hero-v2__background-picture">
+          <source srcset="{{ 'manz-home-hero-background.webp' | asset_url }}" type="image/webp">
+          <img
+            class="manz-hero-v2__background-image"
+            src="{{ 'manz-home-hero-background.png' | asset_url }}"
+            width="1672"
+            height="941"
+            alt=""
+            loading="eager"
+            fetchpriority="high"
+          >
+        </picture>
       {%- endif -%}
     </div>
 
-    <div class="manz-hero-v2__panel">
-      {% render 'manz-hero-carousel', hero_section: section, version: 'v2', sizes: '(min-width: 750px) 94vw, 100vw', legacy_image: section.settings.portrait_image, legacy_alt: section.settings.portrait_alt %}
+    <div class="manz-hero-v2__panel" id="ManzHeroCarouselRoot-{{ section.id }}" {% if mobile_slides.size > 0 %}data-manz-has-mobile-view{% endif %}>
+      <div class="manz-hero-v2__view manz-hero-v2__view--desktop" data-manz-carousel-view="desktop">
+        {% render 'manz-hero-carousel', hero_section: section, slides: desktop_slides, view_mode: 'desktop', viewport_id: desktop_viewport_id, version: 'v2', sizes: '(min-width: 750px) 94vw, 100vw', legacy_image: section.settings.portrait_image, legacy_mobile_image: section.settings.mobile_portrait_image, legacy_alt: section.settings.portrait_alt %}
+      </div>
+      {%- if mobile_slides.size > 0 -%}
+        <div class="manz-hero-v2__view manz-hero-v2__view--mobile" data-manz-carousel-view="mobile">
+          {% render 'manz-hero-carousel', hero_section: section, slides: mobile_slides, view_mode: 'mobile', viewport_id: mobile_viewport_id, version: 'v2', sizes: '100vw' %}
+        </div>
+      {%- endif -%}
       {%- if section.blocks.size > 1 -%}
-        <button class="manz-hero-v2__carousel-control manz-hero-v2__carousel-control--previous" type="button" data-manz-carousel-previous aria-label="Fotografia anterior" aria-controls="ManzHeroCarousel-{{ section.id }}">
+        <button class="manz-hero-v2__carousel-control manz-hero-v2__carousel-control--previous" type="button" data-manz-carousel-previous aria-label="Fotografia anterior" aria-controls="ManzHeroCarouselRoot-{{ section.id }}">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m14.5 5-7 7 7 7" /></svg>
         </button>
-        <button class="manz-hero-v2__carousel-control manz-hero-v2__carousel-control--next" type="button" data-manz-carousel-next aria-label="Próxima fotografia" aria-controls="ManzHeroCarousel-{{ section.id }}">
+        <button class="manz-hero-v2__carousel-control manz-hero-v2__carousel-control--next" type="button" data-manz-carousel-next aria-label="Próxima fotografia" aria-controls="ManzHeroCarouselRoot-{{ section.id }}">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9.5 5 7 7-7 7" /></svg>
         </button>
       {%- endif -%}
+    </div>
+
+    <div class="manz-hero-v2__mobile-content">
+      <div class="manz-hero__copy manz-hero-v2__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="manz-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h1 id="ManzHeroV2Title-{{ section.id }}" class="manz-hero__title">
+          <span class="manz-hero__line"><span class="manz-hero__line-inner">{{ section.settings.heading_line_one | escape }}</span></span>
+          {%- if section.settings.heading_line_two != blank -%}
+            <span class="manz-hero__line"><span class="manz-hero__line-inner">{{ section.settings.heading_line_two | escape }}</span></span>
+          {%- endif -%}
+        </h1>
+        {%- if section.settings.caption != blank -%}
+          <p class="manz-hero__caption">{{ section.settings.caption | escape }}</p>
+        {%- endif -%}
+      </div>
       {%- assign hero_cta_url = section.settings.cta_link | default: routes.all_products_collection_url -%}
       {%- if section.settings.cta_label != blank and hero_cta_url != blank -%}
         <a class="manz-hero-v2__cta" href="{{ hero_cta_url | escape }}">
           {{ section.settings.cta_label | escape }} <span aria-hidden="true">→</span>
         </a>
       {%- endif -%}
+      {%- if mobile_slides.size > 0 -%}
+        <div class="manz-hero-v2__carousel-indicators" data-manz-carousel-indicators role="group" aria-label="Selecionar fotografia da hero">
+          {%- for slide in mobile_slides -%}
+            <button
+              class="manz-hero-v2__carousel-indicator"
+              type="button"
+              data-manz-carousel-indicator="{{ forloop.index0 }}"
+              aria-label="Mostrar fotografia {{ forloop.index }} de {{ mobile_slides.size }}"
+              aria-controls="{{ mobile_viewport_id }}"
+              {% if forloop.first %}aria-current="true"{% endif %}
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
 
-    <div class="manz-hero__copy manz-hero-v2__copy">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="manz-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
-      {%- endif -%}
-      <h1 id="ManzHeroV2Title-{{ section.id }}" class="manz-hero__title">
-        <span class="manz-hero__line"><span class="manz-hero__line-inner">{{ section.settings.heading_line_one | escape }}</span></span>
-        {%- if section.settings.heading_line_two != blank -%}
-          <span class="manz-hero__line"><span class="manz-hero__line-inner">{{ section.settings.heading_line_two | escape }}</span></span>
-        {%- endif -%}
-      </h1>
-      {%- if section.settings.caption != blank -%}
-        <p class="manz-hero__caption">{{ section.settings.caption | escape }}</p>
-      {%- endif -%}
-    </div>
   </div>
   {% render 'manz-rock-transition', background_image: section.settings.background_image %}
 </manz-hero>
@@ -83,6 +114,7 @@
   "settings": [
     { "type": "image_picker", "id": "background_image", "label": "Fotografia de fundo" },
     { "type": "checkbox", "id": "show_fallback_background", "label": "Usar o fundo original do tema se a fotografia estiver vazia", "info": "Desative para deixar o fundo neutro quando nenhuma fotografia estiver escolhida.", "default": true },
+    { "type": "image_picker", "id": "mobile_portrait_image", "label": "Fotografia mobile (legado)", "info": "Compatibilidade; nos blocos de slides, selecione a fotografia mobile correspondente." },
     { "type": "image_picker", "id": "portrait_image", "label": "Fotografia principal legada", "info": "Compatibilidade com configurações anteriores; use os blocos de slides para editar o carrossel." },
     { "type": "text", "id": "portrait_alt", "label": "Descrição da fotografia principal", "default": "Retrato das três mulheres à beira-mar na campanha Manz Skin" },
     { "type": "text", "id": "eyebrow", "label": "Texto pequeno", "default": "MANZ SKIN · NATURAL SKINCARE" },
@@ -109,6 +141,7 @@
       "limit": 8,
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Fotografia" },
+        { "type": "image_picker", "id": "mobile_image", "label": "Fotografia mobile (opcional)", "info": "Se ficar vazia, a fotografia principal sera adaptada ao recorte mobile." },
         { "type": "checkbox", "id": "use_theme_fallback", "label": "Usar a foto original deste slide se a fotografia estiver vazia", "info": "Desative para mostrar um espaço neutro quando não houver uma imagem escolhida.", "default": false },
         { "type": "text", "id": "alt", "label": "Descrição da fotografia", "default": "Fotografia da campanha Manz Skin" },
         { "type": "range", "id": "focus_x", "label": "Enquadramento horizontal", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
@@ -117,9 +150,29 @@
         { "type": "range", "id": "mobile_focus_y", "label": "Enquadramento vertical — mobile", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
         { "type": "select", "id": "image_fit", "label": "Ajuste da fotografia", "default": "cover", "options": [{ "value": "cover", "label": "Preencher painel" }, { "value": "contain", "label": "Mostrar fotografia inteira" }] }
       ]
+    },
+    {
+      "type": "mobile_slide",
+      "name": "Foto mobile",
+      "limit": 12,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Fotografia mobile" },
+        { "type": "select", "id": "fallback_asset", "label": "Foto padrão deste slide", "info": "Usada se nenhuma fotografia do Theme Editor estiver selecionada.", "default": "dsc00712", "options": [
+          { "value": "dsc00712", "label": "DSC00712 — Sabonetes e argilas" },
+          { "value": "dsc00441", "label": "DSC00441 — Produto nos lábios" },
+          { "value": "dsc00932", "label": "DSC00932 — Produtos em folhas verdes" },
+          { "value": "dsc01903", "label": "DSC01903 — Sabonetes em pedra escura" },
+          { "value": "dsc01954", "label": "DSC01954 — Corpos e sabonetes" },
+          { "value": "dsc00785", "label": "DSC00785 — Modelo ruiva" }
+        ] },
+        { "type": "text", "id": "alt", "label": "Descrição da fotografia", "default": "Fotografia da campanha Manz Skin" },
+        { "type": "range", "id": "focus_x", "label": "Enquadramento horizontal mobile", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+        { "type": "range", "id": "focus_y", "label": "Enquadramento vertical mobile", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+        { "type": "range", "id": "overlay_strength", "label": "Gradiente para leitura", "min": 0, "max": 70, "step": 5, "unit": "%", "default": 45 }
+      ]
     }
   ],
-  "max_blocks": 8,
+  "max_blocks": 20,
   "presets": [{
     "name": "Manz — Hero V2",
     "blocks": [

@@ -1,7 +1,0 @@
-html { font-size: 62.5%; }
-.manz-soaps-preview { min-width: 320px; margin: 0; font-family: "Manz Jost", Arial, sans-serif; }
-.manz-soaps-preview__skip { position: absolute; z-index: 30; top: 8px; left: 8px; padding: 12px 16px; transform: translateY(-140%); background: #302c26; color: #fff; }
-.manz-soaps-preview__skip:focus { transform: translateY(0); }
-.manz-soaps-preview .manz-soaps-grid .quick-add { display: block; }
-.manz-soaps-preview .manz-soaps-grid .quick-add__submit:disabled { opacity: 1; cursor: default; }
-.manz-soaps-preview__notice { margin: 0; padding: 6px 12px; background: #302c26; color: #f5f1ea; font-family: "Manz Jost", sans-serif; font-size: 11px; line-height: 1.4; letter-spacing: .03em; text-align: center; }

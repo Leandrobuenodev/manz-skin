@@ -1,3 +1,11 @@
+{%- liquid
+  assign manz_catalog_page = false
+  if request.page_type == 'collection'
+    if collection.handle == 'all' or template.suffix == 'catalogo'
+      assign manz_catalog_page = true
+    endif
+  endif
+-%}
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
   <head>
@@ -291,9 +299,20 @@
       <link rel="preload" href="{{ 'manz-jost-light-latin.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
       <script src="{{ 'manz-hero-v1.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+    {%- if manz_catalog_page or request.page_type == 'cart' -%}
+      {{ 'manz-hero-v1.css' | asset_url | stylesheet_tag }}
+      {{ 'manz-hero-v2.css' | asset_url | stylesheet_tag }}
+      {{ 'manz-category-collection.css' | asset_url | stylesheet_tag }}
+      {{ 'manz-catalog.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'manz-catalog.js' | asset_url }}" defer></script>
+    {%- endif -%}
+  {{ 'manz-mobile-header.css' | asset_url | stylesheet_tag }}
+    {%- if request.page_type == 'cart' -%}
+      {{ 'manz-cart.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
   </head>
 
-  <body class="gradient{% if request.page_type == 'page' and template.suffix == 'quem-somos' %} manz-about-page{% endif %}{% if request.page_type == 'index' and content_for_layout contains 'data-manz-hero' %} manz-hero-page{% endif %}{% if request.page_type == 'index' and content_for_layout contains 'data-manz-hero-v2' %} manz-hero-v2-active{% endif %}{% if request.page_type == 'collection' and template.suffix == 'sabonetes' %} manz-soaps-page{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient{% if request.page_type == 'cart' %} manz-cart-page manz-catalog-page manz-hero-page manz-hero-v2-active{% endif %}{% if manz_catalog_page %} manz-catalog-page manz-hero-page manz-hero-v2-active{% endif %}{% if request.page_type == 'page' and template.suffix == 'quem-somos' %} manz-about-page{% endif %}{% if request.page_type == 'index' and content_for_layout contains 'data-manz-hero' %} manz-hero-page{% endif %}{% if request.page_type == 'index' and content_for_layout contains 'data-manz-hero-v2' %} manz-hero-v2-active{% endif %}{% if request.page_type == 'collection' and template.suffix == 'sabonetes' %} manz-soaps-page{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

@@ -1,0 +1,19 @@
+{% render 'manz-catalog-navigation' %}
+{% render 'header-drawer', catalog_navigation: true %}
+<div class="header__heading">
+  <a class="header__heading-link link focus-inset" href="{{ routes.root_url }}" aria-label="Manz Skin — início">
+    {%- if settings.logo != blank -%}
+      {{ settings.logo | image_url: width: 400 | image_tag: class: 'manz-catalog-logo', widths: '160, 240, 400', sizes: '160px', alt: shop.name }}
+    {%- else -%}<span class="manz-hero-wordmark">manzskin</span>{%- endif -%}
+  </a>
+</div>
+<div class="header__icons">
+  {% render 'header-search', input_id: 'Search-Manz-Catalog' %}
+  {%- if shop.customer_accounts_enabled -%}
+    <a class="header__icon header__icon--account link focus-inset" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" aria-label="{{ 'customer.account.title' | t }}">{% render 'icon-account' %}</a>
+  {%- endif -%}
+  <a class="header__icon header__icon--cart link focus-inset" href="{{ routes.cart_url }}" id="cart-icon-bubble" aria-label="{{ 'templates.cart.cart' | t }}">
+    {% render 'icon-cart-empty' %}
+    {%- if cart.item_count > 0 -%}<span class="cart-count-bubble">{{ cart.item_count }}</span>{%- endif -%}
+  </a>
+</div>

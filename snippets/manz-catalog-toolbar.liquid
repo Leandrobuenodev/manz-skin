@@ -1,0 +1,23 @@
+{%- liquid
+  assign soaps = section.settings.catalog_soaps | default: collections['body']
+  assign skincare = section.settings.catalog_skincare | default: collections['sabonetes-de-tratamento']
+  assign kits = section.settings.catalog_kits | default: collections['kits']
+  assign current_sort = collection.sort_by | default: collection.default_sort_by
+-%}
+<div class="manz-catalog-toolbar">
+  <p class="manz-catalog-count">{{ collection.products_count }} produtos</p>
+  <nav class="manz-catalog-categories" aria-label="Categorias de produtos">
+    <a href="{{ routes.all_products_collection_url }}?sort_by={{ current_sort | url_encode }}" data-catalog-category{% if collection.handle == 'all' %} aria-current="page"{% endif %}>Todos</a>
+    {%- if soaps != blank and soaps.all_products_count > 0 -%}<a href="{{ soaps.url }}?view=catalogo&amp;sort_by={{ current_sort | url_encode }}" data-catalog-category{% if collection.id == soaps.id %} aria-current="page"{% endif %}>Sabonetes</a>{%- endif -%}
+    {%- if skincare != blank and skincare.all_products_count > 0 -%}<a href="{{ skincare.url }}?view=catalogo&amp;sort_by={{ current_sort | url_encode }}" data-catalog-category{% if collection.id == skincare.id %} aria-current="page"{% endif %}>Skincare</a>{%- endif -%}
+    {%- if kits != blank and kits.all_products_count > 0 -%}<a href="{{ kits.url }}?view=catalogo&amp;sort_by={{ current_sort | url_encode }}" data-catalog-category{% if collection.id == kits.id %} aria-current="page"{% endif %}>Kits</a>{%- endif -%}
+  </nav>
+  <form class="manz-catalog-sort" action="{{ collection.url }}" method="get">
+    {%- if template.suffix == 'catalogo' -%}<input type="hidden" name="view" value="catalogo">{%- endif -%}
+    <label for="CatalogSort-{{ section.id }}">Ordenar por:</label>
+    <select name="sort_by" id="CatalogSort-{{ section.id }}" data-catalog-sort>
+      {%- for option in collection.sort_options -%}<option value="{{ option.value | escape }}"{% if current_sort == option.value %} selected{% endif %}>{{ option.name | escape }}</option>{%- endfor -%}
+    </select>
+    <noscript><button type="submit">Ordenar</button></noscript>
+  </form>
+</div>

@@ -65,9 +65,33 @@
             "image_fit": "cover",
             "use_theme_fallback": true
           }
+        },
+        "mobile_01": {
+          "type": "mobile_slide",
+          "settings": { "fallback_asset": "dsc00712", "alt": "Sabonetes e argilas naturais com colheres", "focus_x": 50, "focus_y": 50, "overlay_strength": 45 }
+        },
+        "mobile_02": {
+          "type": "mobile_slide",
+          "settings": { "fallback_asset": "dsc00441", "alt": "Modelo aplicando produto natural nos lábios", "focus_x": 50, "focus_y": 50, "overlay_strength": 50 }
+        },
+        "mobile_03": {
+          "type": "mobile_slide",
+          "settings": { "fallback_asset": "dsc00932", "alt": "Produtos Manz Skin sobre folhas verdes", "focus_x": 50, "focus_y": 50, "overlay_strength": 45 }
+        },
+        "mobile_04": {
+          "type": "mobile_slide",
+          "settings": { "fallback_asset": "dsc01903", "alt": "Sabonetes artesanais sobre pedra escura", "focus_x": 50, "focus_y": 50, "overlay_strength": 40 }
+        },
+        "mobile_05": {
+          "type": "mobile_slide",
+          "settings": { "fallback_asset": "dsc01954", "alt": "Fotografia editorial de corpos e sabonetes", "focus_x": 50, "focus_y": 50, "overlay_strength": 35 }
+        },
+        "mobile_06": {
+          "type": "mobile_slide",
+          "settings": { "fallback_asset": "dsc00785", "alt": "Modelo ruiva segurando um sabonete artesanal", "focus_x": 50, "focus_y": 50, "overlay_strength": 50 }
         }
       },
-      "block_order": ["slide_01", "slide_02", "slide_03", "slide_04"]
+      "block_order": ["slide_01", "slide_02", "slide_03", "slide_04", "mobile_01", "mobile_02", "mobile_03", "mobile_04", "mobile_05", "mobile_06"]
     },
     "manz-more-than-skincare": {
       "type": "manz-more-than-skincare",
@@ -119,6 +143,7 @@
       "settings": { "show_theme_fallback": true, "soap_collection": "body" }
     },
     "image-with-text": {
+      "disabled": true,
       "type": "image-with-text",
       "blocks": {
         "heading": {
@@ -159,6 +184,7 @@
       }
     },
     "51d7bb85-0bb1-4580-bb1c-49e9b0f7a466": {
+      "disabled": true,
       "type": "collection-list",
       "settings": {
         "title": "",
@@ -174,6 +200,7 @@
       }
     },
     "bb9a6b7b-1cbe-4012-9f3a-5048371e13be": {
+      "disabled": true,
       "type": "rich-text",
       "blocks": {
         "template--20364170101040__bb9a6b7b-1cbe-4012-9f3a-5048371e13be-heading-1": {
@@ -204,6 +231,7 @@
       }
     },
     "2e1b09c8-3275-4189-9674-24c3e63d2f86": {
+      "disabled": true,
       "type": "featured-collection",
       "settings": {
         "title": "best sellers",
@@ -232,6 +260,7 @@
       }
     },
     "6c2b191d-2676-4c8e-8f8e-24d86aafca9e": {
+      "disabled": true,
       "type": "multicolumn",
       "blocks": {
         "template--20364170101040__6c2b191d-2676-4c8e-8f8e-24d86aafca9e-column-1": {
@@ -299,6 +328,7 @@
       }
     },
     "08743a13-50ac-40ca-955a-e9b3dbda3c62": {
+      "disabled": true,
       "type": "collage",
       "blocks": {
         "653179b6-b2df-4ad8-b260-f852376a4fc6": {

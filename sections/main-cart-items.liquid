@@ -35,9 +35,10 @@
     </div>
 
     <div class="cart__warnings">
-      <h1 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h1>
+      <h1 class="cart__empty-text">Seu carrinho está vazio</h1>
+      <p class="manz-cart-empty-description">Encontre seu próximo cuidado natural.</p>
       <a href="{{ routes.all_products_collection_url }}" class="button">
-        {{ 'general.continue_shopping' | t }}
+        Explorar produtos
       </a>
 
       {%- if shop.customer_accounts_enabled and customer == null -%}

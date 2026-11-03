@@ -1,11 +1,13 @@
 <nav class="manz-hero-nav{% if mobile %} manz-hero-nav--mobile{% endif %}" aria-label="{% if mobile %}Navegação mobile{% else %}Navegação principal{% endif %}">
+  {%- assign hero_home_link_handles = 'inicio,sabonetes,rastreamento-de-pedidos' | split: ',' -%}
   {%- for link in section.settings.menu.links -%}
-    <a class="manz-hero-nav__link" href="{{ link.url | escape }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
-    {%- for child_link in link.links -%}
-      <a class="manz-hero-nav__link" href="{{ child_link.url | escape }}"{% if child_link.current %} aria-current="page"{% endif %}>{{ child_link.title | escape }}</a>
-      {%- for grandchild_link in child_link.links -%}
-        <a class="manz-hero-nav__link" href="{{ grandchild_link.url | escape }}"{% if grandchild_link.current %} aria-current="page"{% endif %}>{{ grandchild_link.title | escape }}</a>
-      {%- endfor -%}
-    {%- endfor -%}
+    {%- assign hero_link_handle = link.title | handleize -%}
+    {%- if request.page_type == 'index' -%}
+      {%- if hero_home_link_handles contains hero_link_handle -%}
+        <a class="manz-hero-nav__link" href="{{ link.url | escape }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+      {%- endif -%}
+    {%- else -%}
+      <a class="manz-hero-nav__link" href="{{ link.url | escape }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+    {%- endif -%}
   {%- endfor -%}
 </nav>

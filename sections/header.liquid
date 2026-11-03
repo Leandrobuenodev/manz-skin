@@ -144,6 +144,15 @@
 <{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
   {%- liquid
     assign manz_soaps_internal_header = false
+    assign manz_catalog_header = false
+    if request.page_type == 'cart'
+      assign manz_catalog_header = true
+    endif
+    if request.page_type == 'collection'
+      if collection.handle == 'all' or template.suffix == 'catalogo'
+        assign manz_catalog_header = true
+      endif
+    endif
     if request.page_type == 'collection' and template.suffix == 'sabonetes'
       assign manz_soaps_internal_header = true
     endif
@@ -160,7 +169,9 @@
     assign manz_internal_header_cta_url = ''
     assign manz_internal_header_search_id = ''
 
-    if manz_soaps_internal_header
+    if manz_catalog_header
+      assign manz_custom_internal_header = true
+    elsif manz_soaps_internal_header
       assign manz_custom_internal_header = true
       assign manz_internal_header_variant = 'manz-soaps-header'
       assign manz_internal_header_back_label = '← Voltar'
@@ -188,7 +199,9 @@
     endif
   -%}
   <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}{% if manz_custom_internal_header %} {{ manz_internal_header_variant }}{% endif %}">
-    {%- if manz_custom_internal_header -%}
+    {%- if manz_catalog_header -%}
+      {% render 'manz-catalog-header' %}
+    {%- elsif manz_custom_internal_header -%}
       <a class="{{ manz_internal_header_variant }}__back link focus-inset" href="{{ routes.root_url }}">{{ manz_internal_header_back_label }}</a>
       <a class="{{ manz_internal_header_variant }}__wordmark link focus-inset" href="{{ routes.root_url }}" aria-label="Manz Skin — início">manzskin</a>
       <div class="{{ manz_internal_header_variant }}__actions">
@@ -269,7 +282,7 @@
     {%- endif -%}
 
     {%- liquid
-      if section.settings.menu != blank and manz_custom_internal_header == false
+      if section.settings.menu != blank and manz_custom_internal_header == false and request.page_type != 'index'
         if section.settings.menu_type_desktop == 'dropdown'
           render 'header-dropdown-menu'
         elsif section.settings.menu_type_desktop != 'drawer'
@@ -371,7 +384,7 @@
       {% render 'header-search', input_id: 'Search-In-Modal' %}
 
       {%- if shop.customer_accounts_enabled -%}
-        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank and request.page_type != 'index' %} small-hide{% endif %}">
           {% render 'icon-account' %}
           <span class="visually-hidden">
             {%- liquid
