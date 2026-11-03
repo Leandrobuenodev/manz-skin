@@ -1243,12 +1243,33 @@ body.manz-hero-v2-active .section-header .header__icon {
   }
 
   body.manz-hero-v2-active:has(.manz-hero-v2-shell) .section-header .header {
-    box-sizing: content-box;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-areas: 'navigation heading icons';
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
     width: 100%;
     max-width: none;
     min-height: clamp(76px, 8vw, 94px);
     padding: 6px clamp(20px, 3.4vw, 46px);
     column-gap: 0;
+  }
+
+  body.manz-hero-v2-active:has(.manz-hero-v2-shell) .section-header .header > .manz-hero-nav {
+    grid-area: navigation;
+    justify-self: start;
+  }
+
+  body.manz-hero-v2-active:has(.manz-hero-v2-shell) .section-header .header__heading {
+    grid-area: heading;
+    justify-self: center;
+  }
+
+  body.manz-hero-v2-active:has(.manz-hero-v2-shell) .section-header .header__icons {
+    grid-area: icons;
+    justify-self: end;
+    gap: 8px;
+    padding: 0;
   }
 
   body.manz-hero-v2-active:has(.manz-hero-v2-shell) .section-header .header > .manz-hero-nav {
@@ -1259,9 +1280,9 @@ body.manz-hero-v2-active .section-header .header__icon {
   body.manz-hero-v2-active:has(.manz-hero-v2-shell) .section-header .manz-hero-nav__link {
     min-height: 44px;
     color: #fff;
-    font-size: clamp(11px, 0.88vw, 13px);
+    font-size: clamp(13px, 0.9vw, 14px);
     font-weight: 400;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.06em;
     text-shadow: 0 1px 3px rgb(0 0 0 / 68%), 0 2px 12px rgb(0 0 0 / 28%);
   }
 
@@ -1277,5 +1298,29 @@ body.manz-hero-v2-active .section-header .header__icon {
   body.manz-hero-v2-active:has(.manz-hero-v2-shell) .section-header .header__icon {
     color: #fff;
     filter: drop-shadow(0 1px 4px rgb(0 0 0 / 38%));
+    box-sizing: border-box;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    margin: 0;
+    padding: 0;
+  }
+
+  body.manz-hero-v2-active:has(.manz-hero-v2-shell) .section-header .header__icon .icon,
+  body.manz-hero-v2-active:has(.manz-hero-v2-shell) .section-header .header__icon--cart .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Dawn's cart SVG uses a 40px viewBox with paths inset by about 12px. */
+  body.manz-hero-v2-active:has(.manz-hero-v2-shell) .section-header .header__icon--cart .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  body.manz-hero-v2-active:has(.manz-hero-v2-shell) .section-header .header__icons .header__icon::after {
+    width: 38px;
+    height: 38px;
   }
 }

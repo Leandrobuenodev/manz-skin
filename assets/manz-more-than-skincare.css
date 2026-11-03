@@ -395,24 +395,24 @@
   .manz-more__eyebrow { display: none; }
   .manz-more__heading {
     color: #fffdf6;
-    font-size: clamp(42px, 4.3vw, 76px);
+    font-size: clamp(76px, 5.8vw, 100px);
     letter-spacing: -.055em;
-    line-height: .87;
+    line-height: .95;
     text-shadow: 0 2px 18px rgb(0 0 0 / 28%);
   }
   .manz-more__heading > span > span { font-style: italic; }
   .manz-more__heading::after { display: none; }
   .manz-more__text {
-    max-width: 60ch;
+    max-width: min(100%, 540px);
     margin-top: clamp(16px, 1.4vw, 22px);
     color: #fffdf6;
-    font-size: clamp(14px, .98vw, 17px);
-    line-height: 1.46;
+    font-size: clamp(16px, 1.1vw, 17px);
+    line-height: 1.5;
     letter-spacing: .003em;
     text-shadow: 0 1px 12px rgb(0 0 0 / 32%);
   }
   .manz-more__cta {
-    min-height: 42px;
+    min-height: 44px;
     margin-top: clamp(16px, 1.35vw, 22px);
     padding: 0 17px;
     gap: 8px;
@@ -423,7 +423,7 @@
     backdrop-filter: blur(5px) saturate(110%);
     box-shadow: 0 4px 14px rgb(0 0 0 / 6%), inset 0 1px 0 rgb(255 255 255 / 10%);
     color: #fffdf6;
-    font-size: clamp(13px, .9vw, 15px);
+    font-size: clamp(14px, .95vw, 15px);
     font-weight: 400;
     text-shadow: 0 1px 10px rgb(0 0 0 / 26%);
     transition: background-color 180ms ease, border-color 180ms ease;
@@ -465,7 +465,7 @@
   .manz-more__icon { width: clamp(24px, 1.8vw, 30px); height: clamp(24px, 1.8vw, 30px); flex-basis: clamp(24px, 1.8vw, 30px); }
   .manz-more__feature-title {
     margin: 0 0 4px;
-    font-size: clamp(14px, .98vw, 17px);
+    font-size: clamp(15px, 1.05vw, 17px);
     line-height: 1.15;
     letter-spacing: 0;
     white-space: nowrap;

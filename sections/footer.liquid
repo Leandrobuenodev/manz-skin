@@ -68,7 +68,7 @@
           >
             {%- for block in section.blocks -%}
               <div
-                class="footer-block grid__item{% if block.type == 'link_list' %} footer-block--menu manz-footer__links{% elsif block.type == 'text' %} manz-footer__contact{% elsif block.type == 'image' or block.type == 'brand_information' %} manz-footer__brand{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                class="footer-block grid__item{% if block.type == 'link_list' %} footer-block--menu manz-footer__links{% elsif block.type == 'text' %} manz-footer__contact{% elsif block.type == 'image' or block.type == 'brand_information' %} manz-footer__brand{% endif %}{% if block.type == 'image' %} manz-footer__brand-content--{{ block.settings.desktop_brand_display | default: 'wordmark' }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                 {{ block.shopify_attributes }}
                 {% if settings.animations_reveal_on_scroll %}
                   data-cascade
@@ -155,6 +155,9 @@
                             height="{{ block.settings.image.height }}"
                           >
                         </div>
+                        {%- if block.settings.desktop_brand_display != 'image' -%}
+                          <span class="manz-footer__wordmark manz-footer__wordmark--desktop">manzskin</span>
+                        {%- endif -%}
                       {%- else -%}
                         <span class="manz-footer__wordmark">{{ shop.name | escape }}</span>
                       {%- endif -%}
@@ -486,6 +489,22 @@
             }
           ],
           "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "desktop_brand_display",
+          "label": "Desktop brand display",
+          "options": [
+            {
+              "value": "wordmark",
+              "label": "Dark wordmark"
+            },
+            {
+              "value": "image",
+              "label": "Selected image"
+            }
+          ],
+          "default": "wordmark"
         }
       ]
     }

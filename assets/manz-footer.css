@@ -87,6 +87,8 @@
   line-height: 1;
 }
 
+.manz-footer__wordmark--desktop { display: none; }
+
 .manz-footer .footer-block__details-content,
 .manz-footer .footer-block__details-content.rte,
 .manz-footer .footer-block__details-content.list-unstyled {
@@ -492,14 +494,14 @@
   .manz-footer .footer__content-top.page-width {
     display: block;
     flex: 0 0 auto;
-    padding: 30px 0 20px;
+    padding: 28px 0 16px;
   }
 
   .manz-footer .footer__blocks-wrapper.grid {
     display: grid;
     grid-template-columns: minmax(150px, .8fr) minmax(390px, 1.8fr) minmax(230px, .95fr);
     align-items: center;
-    gap: clamp(28px, 4vw, 60px);
+    gap: clamp(24px, 3vw, 44px);
     margin: 0;
   }
 
@@ -548,6 +550,14 @@
     object-position: left center;
   }
 
+  .manz-footer__brand-content--wordmark .footer-block__image-wrapper {
+    display: none;
+  }
+
+  .manz-footer__brand-content--wordmark .manz-footer__wordmark--desktop {
+    display: inline-block;
+  }
+
   .manz-footer__wordmark {
     display: inline-block;
     color: var(--manz-footer-ink);
@@ -589,7 +599,7 @@
   .manz-footer .footer-block__details-content a:hover,
   .manz-footer .footer__content-bottom a:hover { text-decoration: underline; }
   .manz-footer .footer-block__details-content.rte p { margin: 0 0 4px; }
-  .manz-footer .manz-footer__social-group { display: block; margin: 0 0 15px; }
+  .manz-footer .manz-footer__social-group { display: block; margin: 0 0 12px; }
   .manz-footer .manz-footer__social-title { margin-bottom: 4px; }
   .manz-footer .manz-footer__social--desktop { display: flex; align-items: center; gap: 8px; margin: 0; }
   .manz-footer .manz-footer__social--desktop .list-social__link { display: flex; width: 26px; height: 26px; align-items: center; justify-content: center; padding: 4px; color: var(--manz-footer-ink); }
@@ -606,7 +616,7 @@
     align-items: center;
     justify-content: flex-start;
     gap: 8px 18px;
-    padding: 12px 0 14px;
+    padding: 10px 0 12px;
     color: var(--manz-footer-copy);
     font-family: 'Manz Jost', 'Jost', sans-serif;
     font-size: 11px;
