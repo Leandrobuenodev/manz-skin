@@ -12,7 +12,15 @@
   }
 {%- endstyle -%}
 
-{%- unless collection.handle == 'body' or template.suffix == 'sabonetes' -%}
+{%- liquid
+  assign manz_hide_collection_banner = false
+  if template.suffix != 'catalogo'
+    if collection.handle == 'body' or template.suffix == 'sabonetes'
+      assign manz_hide_collection_banner = true
+    endif
+  endif
+-%}
+{%- unless manz_hide_collection_banner -%}
 {%- if collection.handle == 'all' or template.suffix == 'catalogo' -%}
   {% render 'manz-catalog-cover' %}
 {%- else -%}

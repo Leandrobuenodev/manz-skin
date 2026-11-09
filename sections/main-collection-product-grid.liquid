@@ -11,7 +11,7 @@
   if manz_editorial_catalog
     assign show_card_availability = true
   endif
-  if template.name == 'collection'
+  if template.name == 'collection' and template.suffix != 'catalogo'
     if collection.handle == 'body' or template.suffix == 'sabonetes'
       assign manz_soaps_collection = true
     endif

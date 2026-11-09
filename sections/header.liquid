@@ -153,7 +153,7 @@
         assign manz_catalog_header = true
       endif
     endif
-    if request.page_type == 'collection'
+    if request.page_type == 'collection' and template.suffix != 'catalogo'
       if collection.handle == 'body' or template.suffix == 'sabonetes'
         assign manz_soaps_internal_header = true
       endif

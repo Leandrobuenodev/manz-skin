@@ -5,8 +5,10 @@
     if collection.handle == 'all' or template.suffix == 'catalogo'
       assign manz_catalog_page = true
     endif
-    if collection.handle == 'body' or template.suffix == 'sabonetes'
-      assign manz_soaps_page = true
+    if template.suffix != 'catalogo'
+      if collection.handle == 'body' or template.suffix == 'sabonetes'
+        assign manz_soaps_page = true
+      endif
     endif
   endif
 -%}
