@@ -8,6 +8,7 @@
   endif
 -%}
 
+{%- if collection.handle == 'body' or template.suffix == 'sabonetes' -%}
 <section class="manz-soaps-story" aria-labelledby="ManzSoapsStoryTitle-{{ section.id }}">
   <div class="manz-soaps-story__media">
     {%- if story_image != blank -%}
@@ -54,6 +55,7 @@
     </div>
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {

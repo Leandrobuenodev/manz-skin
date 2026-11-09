@@ -12,6 +12,7 @@
   }
 {%- endstyle -%}
 
+{%- unless collection.handle == 'body' or template.suffix == 'sabonetes' -%}
 {%- if collection.handle == 'all' or template.suffix == 'catalogo' -%}
   {% render 'manz-catalog-cover' %}
 {%- else -%}
@@ -61,6 +62,7 @@
   </div>
 </div>
 {%- endif -%}
+{%- endunless -%}
 
 {% schema %}
 {

@@ -1,11 +1,8 @@
-{{ 'template-collection.css' | asset_url | stylesheet_tag }}
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-price.css' | asset_url | stylesheet_tag }}
-
 {%- liquid
   assign manz_soaps_collection = false
   assign manz_category_collection = false
   assign manz_editorial_catalog = false
+  assign manz_render_product_grid = true
   if collection.handle == 'all' or template.suffix == 'catalogo'
     assign manz_editorial_catalog = true
     assign manz_category_collection = true
@@ -14,8 +11,17 @@
   if manz_editorial_catalog
     assign show_card_availability = true
   endif
-  if template.name == 'collection' and template.suffix == 'sabonetes'
-    assign manz_soaps_collection = true
+  if template.name == 'collection'
+    if collection.handle == 'body' or template.suffix == 'sabonetes'
+      assign manz_soaps_collection = true
+    endif
+  endif
+  if manz_soaps_collection
+    unless section.settings.manz_soaps_editorial_grid or template.suffix == 'sabonetes'
+      assign manz_render_product_grid = false
+    endunless
+  elsif section.settings.manz_soaps_editorial_grid
+    assign manz_render_product_grid = false
   endif
   assign show_card_short_description = section.settings.show_short_description
   if manz_soaps_collection
@@ -27,6 +33,11 @@
     endif
   endif
 -%}
+
+{%- if manz_render_product_grid -%}
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
 
 {%- if manz_category_collection -%}
   {{ 'manz-category-collection.css' | asset_url | stylesheet_tag }}
@@ -277,6 +288,7 @@
     {% render 'mask-arch' %}
   {%- endif -%}
 </div>
+{%- endif -%}
 
 {% schema %}
 {
@@ -486,6 +498,13 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "checkbox",
+      "id": "manz_soaps_editorial_grid",
+      "label": "Usar este grid na página de Sabonetes",
+      "info": "Ative na instância editorial. Ela aparece somente na coleção body.",
+      "default": false
     },
     {
       "type": "header",

@@ -1,8 +1,12 @@
 {%- liquid
   assign manz_catalog_page = false
+  assign manz_soaps_page = false
   if request.page_type == 'collection'
     if collection.handle == 'all' or template.suffix == 'catalogo'
       assign manz_catalog_page = true
+    endif
+    if collection.handle == 'body' or template.suffix == 'sabonetes'
+      assign manz_soaps_page = true
     endif
   endif
 -%}
@@ -261,7 +265,7 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
-    {%- if request.page_type == 'collection' and template.suffix == 'sabonetes' -%}
+    {%- if manz_soaps_page -%}
       {{ 'manz-soaps-collection.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
@@ -312,7 +316,7 @@
     {%- endif -%}
   </head>
 
-  <body class="gradient{% if request.page_type == 'cart' %} manz-cart-page manz-catalog-page manz-hero-page manz-hero-v2-active{% endif %}{% if manz_catalog_page %} manz-catalog-page manz-hero-page manz-hero-v2-active{% endif %}{% if request.page_type == 'page' and template.suffix == 'quem-somos' %} manz-about-page{% endif %}{% if request.page_type == 'index' and content_for_layout contains 'data-manz-hero' %} manz-hero-page{% endif %}{% if request.page_type == 'index' and content_for_layout contains 'data-manz-hero-v2' %} manz-hero-v2-active{% endif %}{% if request.page_type == 'collection' and template.suffix == 'sabonetes' %} manz-soaps-page{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient{% if request.page_type == 'cart' %} manz-cart-page manz-catalog-page manz-hero-page manz-hero-v2-active{% endif %}{% if manz_catalog_page %} manz-catalog-page manz-hero-page manz-hero-v2-active{% endif %}{% if request.page_type == 'page' and template.suffix == 'quem-somos' %} manz-about-page{% endif %}{% if request.page_type == 'index' and content_for_layout contains 'data-manz-hero' %} manz-hero-page{% endif %}{% if request.page_type == 'index' and content_for_layout contains 'data-manz-hero-v2' %} manz-hero-v2-active{% endif %}{% if manz_soaps_page %} manz-soaps-page{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

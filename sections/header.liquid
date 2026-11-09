@@ -153,8 +153,10 @@
         assign manz_catalog_header = true
       endif
     endif
-    if request.page_type == 'collection' and template.suffix == 'sabonetes'
-      assign manz_soaps_internal_header = true
+    if request.page_type == 'collection'
+      if collection.handle == 'body' or template.suffix == 'sabonetes'
+        assign manz_soaps_internal_header = true
+      endif
     endif
 
     assign manz_about_internal_header = false

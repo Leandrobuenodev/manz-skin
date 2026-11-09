@@ -1,3 +1,4 @@
+{%- if collection.handle == 'body' or template.suffix == 'sabonetes' -%}
 <section class="manz-soaps-benefits" aria-label="Compromissos Manz Skin">
   <div class="manz-soaps-benefits__inner page-width">
     <ul class="manz-soaps-benefits__list" role="list">
@@ -10,6 +11,7 @@
     </ul>
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {

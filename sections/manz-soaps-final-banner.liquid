@@ -3,6 +3,7 @@
   assign final_url = section.settings.button_link | default: routes.all_products_collection_url
 -%}
 
+{%- if collection.handle == 'body' or template.suffix == 'sabonetes' -%}
 <section class="manz-soaps-final" aria-labelledby="ManzSoapsFinalTitle-{{ section.id }}">
   <div class="manz-soaps-final__media">
     {%- if final_image != blank -%}
@@ -49,6 +50,7 @@
     {%- endif -%}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {

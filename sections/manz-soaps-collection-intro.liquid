@@ -6,6 +6,7 @@
   endif
 -%}
 
+{%- if collection.handle == 'body' or template.suffix == 'sabonetes' -%}
 <div class="manz-soaps">
   <section
     class="manz-soaps__banner{% if section.settings.show_banner_text %} manz-soaps__banner--with-text{% endif %}"
@@ -80,6 +81,7 @@
     </div>
   </section>
 </div>
+{%- endif -%}
 
 {% schema %}
 {

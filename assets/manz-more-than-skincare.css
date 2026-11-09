@@ -380,9 +380,9 @@
   .manz-more__content {
     z-index: 2;
     top: 50%;
-    right: clamp(40px, 6.5vw, 124px);
+    right: clamp(36px, 5.6vw, 116px);
     left: auto;
-    width: clamp(410px, 36vw, 650px);
+    width: clamp(420px, 41vw, 720px);
     padding: 0;
     transform: translateY(-50%);
     border: 0;
@@ -395,7 +395,7 @@
   .manz-more__eyebrow { display: none; }
   .manz-more__heading {
     color: #fffdf6;
-    font-size: clamp(76px, 5.8vw, 100px);
+    font-size: clamp(76px, 7.5vw, 112px);
     letter-spacing: -.055em;
     line-height: .95;
     text-shadow: 0 2px 18px rgb(0 0 0 / 28%);
