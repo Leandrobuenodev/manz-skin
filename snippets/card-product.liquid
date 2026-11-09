@@ -37,6 +37,9 @@
     if catalog_asset contains '.png'
       assign catalog_asset_width = 380
       assign catalog_asset_height = 208
+    elsif catalog_asset contains '.jpg'
+      assign catalog_asset_width = 1448
+      assign catalog_asset_height = 1086
     endif
     assign card_columns_desktop = columns_desktop | default: 4
     assign ratio = 1
@@ -73,7 +76,7 @@
             {%- if catalog_photo_pending -%}
               <div class="manz-catalog-photo-pending" role="img" aria-label="Fotografia de {{ card_product.title | escape }} em atualização">Fotografia em atualização</div>
             {%- elsif catalog_asset != blank -%}
-              <img src="{{ catalog_asset | asset_url }}" alt="{{ card_product.title | escape }}" width="{{ catalog_asset_width }}" height="{{ catalog_asset_height }}" loading="lazy" class="motion-reduce">
+              <img src="{{ catalog_asset | asset_url }}" alt="{{ card_product.title | escape }}" width="{{ catalog_asset_width }}" height="{{ catalog_asset_height }}" loading="lazy" class="motion-reduce manz-catalog-editorial-image">
             {%- elsif card_media -%}
               <img
                 srcset="

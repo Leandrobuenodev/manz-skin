@@ -49,7 +49,9 @@
 
   function sortResults(form) {
     const url = new URL(form.action, location.href);
-    url.search = new URLSearchParams(new FormData(form)).toString();
+    const params = new URLSearchParams(new FormData(form));
+    if (params.get('sort_by') === '') params.delete('sort_by');
+    url.search = params.toString();
     loadResults(url, { focus: 'sort' });
   }
   document.addEventListener('change', event => {

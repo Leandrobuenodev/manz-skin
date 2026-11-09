@@ -42,6 +42,7 @@ body.manz-catalog-page .manz-category-grid .collection.page-width { width: min(1
 body.manz-catalog-page .manz-category-grid .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 16px; }
 body.manz-catalog-page .manz-category-grid .card__inner.ratio::before { padding-bottom: 55%; }
 body.manz-catalog-page .manz-category-grid .card .card__media .media img { object-fit: cover; }
+body.manz-catalog-page .manz-category-grid .card .card__media .media img.manz-catalog-editorial-image { object-fit: contain; }
 body.manz-catalog-page .manz-category-grid .card .card__inner { border-radius: 5px; background: #e9e3d7; }
 .manz-catalog-photo-pending { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; background: #e9e3d7; color: #686855; font-family: 'Manz Jost', sans-serif; font-size: 11px; text-align: center; }
 body.manz-catalog-page .manz-category-grid .card .media > .manz-catalog-photo-pending { display: grid; width: 100%; height: 100%; }

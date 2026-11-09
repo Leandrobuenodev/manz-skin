@@ -3,9 +3,13 @@
   assign manz_category_collection = false
   assign manz_editorial_catalog = false
   assign manz_render_product_grid = true
+  assign manz_soap_first_order = false
   if collection.handle == 'all' or template.suffix == 'catalogo'
     assign manz_editorial_catalog = true
     assign manz_category_collection = true
+  endif
+  if manz_editorial_catalog and collection.handle == 'all' and collection.sort_by == blank
+    assign manz_soap_first_order = true
   endif
   assign show_card_availability = false
   if manz_editorial_catalog
@@ -209,19 +213,43 @@
                 grid--{{ section.settings.columns_desktop }}-col-desktop
               "
             >
+              {%- assign manz_catalog_card_index = 0 -%}
+              {%- for manz_catalog_pass in (1..2) -%}
               {%- for product in collection.products -%}
+                {%- liquid
+                  assign manz_render_catalog_product = true
+                  assign manz_product_is_soap = false
+                  for product_collection in product.collections
+                    if product_collection.handle == 'body'
+                      assign manz_product_is_soap = true
+                    endif
+                  endfor
+                  if manz_soap_first_order
+                    if manz_catalog_pass == 1 and manz_product_is_soap == false
+                      assign manz_render_catalog_product = false
+                    elsif manz_catalog_pass == 2 and manz_product_is_soap
+                      assign manz_render_catalog_product = false
+                    endif
+                  elsif manz_catalog_pass == 2
+                    assign manz_render_catalog_product = false
+                  endif
+                -%}
+                {%- if manz_render_catalog_product -%}
+                {%- assign manz_catalog_card_index = manz_catalog_card_index | plus: 1 -%}
                 {%- liquid
                   assign catalog_image = product.metafields.custom.catalog_image.value
                   assign catalog_asset = blank
                   assign catalog_photo_pending = false
-                  if manz_editorial_catalog and catalog_image == blank and product.featured_media == blank
+                  if manz_editorial_catalog or manz_soaps_collection
                     for image_block in section.blocks
                       if image_block.type == 'catalog_image' and image_block.settings.product.handle == product.handle
-                        assign catalog_image = image_block.settings.image
-                        if catalog_image == blank and image_block.settings.waiting_photo
+                        if image_block.settings.image != blank
+                          assign catalog_image = image_block.settings.image
+                        elsif image_block.settings.waiting_photo
                           assign catalog_photo_pending = true
-                        endif
-                        if catalog_image == blank and image_block.settings.use_theme_editorial and catalog_photo_pending == false
+                          assign catalog_image = blank
+                        elsif image_block.settings.use_theme_editorial
+                          assign catalog_image = blank
                           capture catalog_asset
                             render 'manz-catalog-editorial-asset', product_handle: product.handle
                           endcapture
@@ -238,10 +266,10 @@
                   endif
                 -%}
                 {%- if manz_soaps_collection -%}
-                  {%- if forloop.index > 6 -%}
+                  {%- if manz_catalog_card_index > 6 -%}
                     {%- assign lazy_load = true -%}
                   {%- endif -%}
-                {%- elsif forloop.index > 2 -%}
+                {%- elsif manz_catalog_card_index > 2 -%}
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
                 <li
@@ -251,7 +279,7 @@
                   {% endif %}
                   {% if settings.animations_reveal_on_scroll %}
                     data-cascade
-                    style="--animation-order: {{ forloop.index }};"
+                    style="--animation-order: {{ manz_catalog_card_index }};"
                   {% endif %}
                 >
                   {% render 'card-product',
@@ -273,6 +301,8 @@
                     section_id: section.id
                   %}
                 </li>
+                {%- endif -%}
+              {%- endfor -%}
               {%- endfor -%}
             </ul>
 
@@ -549,13 +579,13 @@
           "type": "image_picker",
           "id": "image",
           "label": "Fotografia para este catálogo",
-          "info": "Fallback apenas para produtos sem fotografia nativa e sem custom.catalog_image. Não muda as imagens globais."
+          "info": "Foto escolhida para os cards desta coleção. Não substitui a imagem principal do produto."
         },
         {
           "type": "checkbox",
           "id": "use_theme_editorial",
           "label": "Usar foto editorial já aprovada",
-          "info": "Fallback legado apenas quando o produto não tem fotografia nativa nem custom.catalog_image.",
+          "info": "Usa o asset editorial mapeado para o produto e substitui a imagem principal somente neste card.",
           "default": false
         },
         {

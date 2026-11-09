@@ -32,7 +32,7 @@
           "type": "catalog_image",
           "settings": {
             "product": "argila-amarela-argila-roxa-manteiga-de-manga-geranio",
-            "use_theme_editorial": true
+            "use_theme_editorial": false
           }
         },
         "catalog_photo_2": {
@@ -53,7 +53,7 @@
           "type": "catalog_image",
           "settings": {
             "product": "argila-vermelha-manteiga-de-karite-laranja-doce",
-            "use_theme_editorial": true
+            "use_theme_editorial": false
           }
         },
         "catalog_photo_5": {
