@@ -32,7 +32,7 @@
           "type": "catalog_image",
           "settings": {
             "product": "argila-amarela-argila-roxa-manteiga-de-manga-geranio",
-            "use_theme_editorial": false
+            "use_theme_editorial": true
           }
         },
         "catalog_photo_2": {
@@ -53,7 +53,7 @@
           "type": "catalog_image",
           "settings": {
             "product": "argila-vermelha-manteiga-de-karite-laranja-doce",
-            "use_theme_editorial": false
+            "use_theme_editorial": true
           }
         },
         "catalog_photo_5": {
@@ -74,14 +74,14 @@
           "type": "catalog_image",
           "settings": {
             "product": "sabonete-de-calendula",
-            "waiting_photo": true
+            "use_theme_editorial": true
           }
         },
         "catalog_photo_8": {
           "type": "catalog_image",
           "settings": {
             "product": "sabonete-de-germe-de-trigo",
-            "waiting_photo": true
+            "use_theme_editorial": true
           }
         }
       },

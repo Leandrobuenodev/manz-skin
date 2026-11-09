@@ -240,6 +240,7 @@
                   assign catalog_image = product.metafields.custom.catalog_image.value
                   assign catalog_asset = blank
                   assign catalog_photo_pending = false
+                  assign catalog_use_theme_editorial = false
                   if manz_editorial_catalog or manz_soaps_collection
                     for image_block in section.blocks
                       if image_block.type == 'catalog_image' and image_block.settings.product.handle == product.handle
@@ -249,15 +250,17 @@
                           assign catalog_photo_pending = true
                           assign catalog_image = blank
                         elsif image_block.settings.use_theme_editorial
-                          assign catalog_image = blank
-                          capture catalog_asset
-                            render 'manz-catalog-editorial-asset', product_handle: product.handle
-                          endcapture
-                          assign catalog_asset = catalog_asset | strip
+                          assign catalog_use_theme_editorial = true
                         endif
                         break
                       endif
                     endfor
+                  endif
+                  if catalog_image == blank and catalog_photo_pending == false and catalog_use_theme_editorial
+                    capture catalog_asset
+                      render 'manz-catalog-editorial-asset', product_handle: product.handle
+                    endcapture
+                    assign catalog_asset = catalog_asset | strip
                   endif
                   assign lazy_load = false
                   assign soaps_show_secondary_image = section.settings.show_secondary_image

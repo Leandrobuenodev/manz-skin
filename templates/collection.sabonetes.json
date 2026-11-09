@@ -36,14 +36,16 @@
         "padding_bottom": 40
       },
       "blocks": {
-        "soap_photo_1": { "type": "catalog_image", "settings": { "product": "argila-amarela-argila-roxa-manteiga-de-manga-geranio", "use_theme_editorial": false } },
+        "soap_photo_1": { "type": "catalog_image", "settings": { "product": "argila-amarela-argila-roxa-manteiga-de-manga-geranio", "use_theme_editorial": true } },
         "soap_photo_2": { "type": "catalog_image", "settings": { "product": "argila-branca-rosa-mosqueta-palmarosa", "use_theme_editorial": true } },
         "soap_photo_3": { "type": "catalog_image", "settings": { "product": "argila-rosa-manteiga-de-cacau-lavanda", "use_theme_editorial": true } },
-        "soap_photo_4": { "type": "catalog_image", "settings": { "product": "argila-vermelha-manteiga-de-karite-laranja-doce", "use_theme_editorial": false } },
+        "soap_photo_4": { "type": "catalog_image", "settings": { "product": "argila-vermelha-manteiga-de-karite-laranja-doce", "use_theme_editorial": true } },
         "soap_photo_5": { "type": "catalog_image", "settings": { "product": "sabonete-preto", "use_theme_editorial": true } },
-        "soap_photo_6": { "type": "catalog_image", "settings": { "product": "sabonete-verde", "use_theme_editorial": true } }
+        "soap_photo_6": { "type": "catalog_image", "settings": { "product": "sabonete-verde", "use_theme_editorial": true } },
+        "soap_photo_7": { "type": "catalog_image", "settings": { "product": "sabonete-de-calendula", "use_theme_editorial": true } },
+        "soap_photo_8": { "type": "catalog_image", "settings": { "product": "sabonete-de-germe-de-trigo", "use_theme_editorial": true } }
       },
-      "block_order": ["soap_photo_1", "soap_photo_2", "soap_photo_3", "soap_photo_4", "soap_photo_5", "soap_photo_6"]
+      "block_order": ["soap_photo_1", "soap_photo_2", "soap_photo_3", "soap_photo_4", "soap_photo_5", "soap_photo_6", "soap_photo_7", "soap_photo_8"]
     },
     "manz-soaps-benefits": {
       "type": "manz-soaps-benefits",
