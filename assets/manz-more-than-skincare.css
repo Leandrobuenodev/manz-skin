@@ -380,9 +380,9 @@
   .manz-more__content {
     z-index: 2;
     top: 50%;
-    right: clamp(36px, 5.6vw, 116px);
+    right: clamp(32px, 4.8vw, 92px);
     left: auto;
-    width: clamp(420px, 41vw, 720px);
+    width: clamp(540px, 46vw, 820px);
     padding: 0;
     transform: translateY(-50%);
     border: 0;
@@ -395,7 +395,7 @@
   .manz-more__eyebrow { display: none; }
   .manz-more__heading {
     color: #fffdf6;
-    font-size: clamp(76px, 7.5vw, 112px);
+    font-size: clamp(90px, 8.6vw, 126px);
     letter-spacing: -.055em;
     line-height: .95;
     text-shadow: 0 2px 18px rgb(0 0 0 / 28%);
@@ -403,18 +403,18 @@
   .manz-more__heading > span > span { font-style: italic; }
   .manz-more__heading::after { display: none; }
   .manz-more__text {
-    max-width: min(100%, 540px);
+    max-width: min(100%, 640px);
     margin-top: clamp(16px, 1.4vw, 22px);
     color: #fffdf6;
-    font-size: clamp(16px, 1.1vw, 17px);
+    font-size: clamp(18px, 1.32vw, 19px);
     line-height: 1.5;
     letter-spacing: .003em;
     text-shadow: 0 1px 12px rgb(0 0 0 / 32%);
   }
   .manz-more__cta {
-    min-height: 44px;
+    min-height: 50px;
     margin-top: clamp(16px, 1.35vw, 22px);
-    padding: 0 17px;
+    padding: 0 21px;
     gap: 8px;
     border: 1px solid rgb(255 255 255 / 25%);
     border-radius: 999px;
@@ -423,7 +423,7 @@
     backdrop-filter: blur(5px) saturate(110%);
     box-shadow: 0 4px 14px rgb(0 0 0 / 6%), inset 0 1px 0 rgb(255 255 255 / 10%);
     color: #fffdf6;
-    font-size: clamp(14px, .95vw, 15px);
+    font-size: 16px;
     font-weight: 400;
     text-shadow: 0 1px 10px rgb(0 0 0 / 26%);
     transition: background-color 180ms ease, border-color 180ms ease;
