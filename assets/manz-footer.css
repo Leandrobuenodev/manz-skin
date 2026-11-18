@@ -13,6 +13,13 @@
   color: var(--manz-footer-foreground);
 }
 
+/* The section padding is set by footer-group.json in Shopify. The local
+   reference applies spacing inside the content wrapper instead. */
+.manz-footer.footer {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .manz-footer,
 .manz-footer * {
   box-sizing: border-box;
@@ -88,6 +95,16 @@
 }
 
 .manz-footer__wordmark--desktop { display: none; }
+
+/* A saved image block can still use the responsive wordmark mode. Keep the
+   uploaded logo available when the merchant explicitly selects Image. */
+.manz-footer__brand-content--wordmark .footer-block__image-wrapper {
+  display: none;
+}
+
+.manz-footer__brand-content--wordmark .manz-footer__wordmark--desktop {
+  display: inline-block;
+}
 
 .manz-footer .footer-block__details-content,
 .manz-footer .footer-block__details-content.rte,
@@ -548,14 +565,6 @@
     max-height: 88px;
     object-fit: contain;
     object-position: left center;
-  }
-
-  .manz-footer__brand-content--wordmark .footer-block__image-wrapper {
-    display: none;
-  }
-
-  .manz-footer__brand-content--wordmark .manz-footer__wordmark--desktop {
-    display: inline-block;
   }
 
   .manz-footer__wordmark {
